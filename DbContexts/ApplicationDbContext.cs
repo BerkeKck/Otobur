@@ -20,7 +20,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00345",
                     BitkininAdi = "Pinus pinea",
-                    MateryalCesidi = "Canlı Bitki",
+                    MateryalCesidi = MateryalCesidiEnum.CanliBitki,
                     Koken = "Kültür; Köken bilinmiyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -33,7 +33,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00346",
                     BitkininAdi = "Cedrus libani",
-                    MateryalCesidi = "Canlı Bitki",
+                    MateryalCesidi = MateryalCesidiEnum.CanliBitki,
                     Koken = "Köken bilgisi yok",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -46,7 +46,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00347",
                     BitkininAdi = "Aethionema turcica",
-                    MateryalCesidi = "Tohum",
+                    MateryalCesidi = MateryalCesidiEnum.Tohum,
                     Koken = "Doğal",
                     Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
                     Koordinat = "39°52'45.34'' K - 32°15'43.45'' D",
@@ -59,7 +59,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00348",
                     BitkininAdi = "Cota tinctoria",
-                    MateryalCesidi = "Tohum",
+                    MateryalCesidi = MateryalCesidiEnum.Tohum,
                     Koken = "Kültür; Köken Biliniyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -72,7 +72,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00349",
                     BitkininAdi = "Mespilus germanica",
-                    MateryalCesidi = "Çelik",
+                    MateryalCesidi = MateryalCesidiEnum.Celik,
                     Koken = "Kültür; Köken Biliniyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -85,7 +85,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00350",
                     BitkininAdi = "Malus sylvestris",
-                    MateryalCesidi = "Canlı Bitki",
+                    MateryalCesidi = MateryalCesidiEnum.CanliBitki,
                     Koken = "Kültür; Köken Biliniyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -98,7 +98,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00351",
                     BitkininAdi = "Aucuba japonica",
-                    MateryalCesidi = "Çelik",
+                    MateryalCesidi = MateryalCesidiEnum.Celik,
                     Koken = "Kültür; Köken Biliniyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -111,7 +111,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00352",
                     BitkininAdi = "Pelargonium quercetorum",
-                    MateryalCesidi = "Tohum",
+                    MateryalCesidi = MateryalCesidiEnum.Tohum,
                     Koken = "Doğal",
                     Lokasyon = "Bitlis; Tatvan, Demir Dağı, 1350 m",
                     Koordinat = "41°12'32.12'' K - 38°34'26.87'' D",
@@ -124,7 +124,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00353",
                     BitkininAdi = "Flueggea anatolica",
-                    MateryalCesidi = "Tohum",
+                    MateryalCesidi = MateryalCesidiEnum.Tohum,
                     Koken = "Doğal",
                     Lokasyon = "Mersin; Kadıncık Vadisi, 455 m",
                     Koordinat = "37°24'33.01'' K - 34°23'24.53'' D",
@@ -137,7 +137,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00354",
                     BitkininAdi = "Thermopsis turcica",
-                    MateryalCesidi = "Tohum",
+                    MateryalCesidi = MateryalCesidiEnum.Tohum,
                     Koken = "Doğal",
                     Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
                     Koordinat = "39°23'13.45'' K - 31°23'15.42'' D",
@@ -150,7 +150,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00355",
                     BitkininAdi = "Crocus biflorus",
-                    MateryalCesidi = "Soğan",
+                    MateryalCesidi = MateryalCesidiEnum.Sogan,
                     Koken = "Doğal",
                     Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
                     Koordinat = "39°12'23.44'' K - 39°34'32.44'' D",

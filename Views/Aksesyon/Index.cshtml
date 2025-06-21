@@ -1,2 +1,33 @@
-﻿
+﻿@model List<AksesyonDefteri>
 <h1>Aksesyon Kayıt</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Bitkinin Adi</th>
+        <th>Aksesyon Numarasi</th>
+        <th>Materyal çeşidi</th>
+        <th>Koken</th>
+        <th>Lokasyon</th>
+        <th>Koordinat</th>
+        <th>Toplanma Tarihi</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model.OrderBy(u=>u.BitkininAdi))
+        {
+            <tr>
+                <td>@obj.BitkininAdi</td>
+                <td>@obj.AksesyonNumarasi</td>
+                <td>@obj.MateryalCesidi</td>
+                <td>@obj.Koken</td>
+                <td>@obj.Lokasyon</td>
+                <td>@obj.Koordinat</td>
+                <td>
+                    @(obj.ToplanmaTarihi == DateTime.MinValue 
+                        ? "-" 
+                        : obj.ToplanmaTarihi.ToString("dd.MM.yyyy"))
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
