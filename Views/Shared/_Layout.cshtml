@@ -1,49 +1,88 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Otobur</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Otobur.styles.css" asp-append-version="true" />
+    <style>
+        .icon-btn, .avatar-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            box-shadow: none;
+            outline: none;
+        }
+        .icon-btn:focus, .avatar-btn:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Otobur</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="~/icons/Otobur.Icon.svg" alt="Otobur Logo" style="width:48px;height:48px;" />
+                <span class="logo-text">OTOBUR</span>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Otobur - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <nav>
+                <a class="menu-item" asp-controller="Aksesyon" asp-action="Index">
+                    <div class="menu-icon">
+                        <img src="~/icons/Aksesyon.svg" alt="Aksesyon Kayıt" style="height:48px;" />
+                    </div>
+                    <span>Aksesyon Kayıt</span>
+                </a>
+                <a class="menu-item" asp-controller="Veritabani" asp-action="Index">
+                    <div class="menu-icon">
+                        <img src="~/icons/Veritabani.svg" alt="Veritabanı Sorgu" style="height:48px;" />
+                    </div>
+                    <span>Veritabanı Sorgu</span>
+                </a>
+                <a class="menu-item" asp-controller="Herbaryum" asp-action="Index">
+                    <div class="menu-icon">
+                        <img src="~/icons/Herbaryum.svg" alt="Herbaryum" style="height:48px;" />
+                    </div>
+                    <span>Herbaryum</span>
+                </a>
+                <a class="menu-item" asp-controller="Yetkilendirme" asp-action="Index">
+                    <div class="menu-icon">
+                        <img src="~/icons/Yetkilendirme.svg" alt="Yetkilendirme" style="height:48px;" />
+                    </div>
+                    <span>Yetkilendirme</span>
+                </a>
+            </nav>
+        </aside>
+        <div class="content-area">
+            <header class="topbar">
+                <form class="search-bar" onsubmit="return false;">
+                    <input type="text" placeholder="Ara..." />
+                </form>
+                <div class="topbar-icons">
+                    <button class="icon-btn" title="Gece Modu">
+                        <img src="~/icons/Gece.mod.svg" alt="Gece Modu" class="icon" style="height:24px;" />
+                    </button>
+                    <button class="icon-btn" title="Bildirimler">
+                        <img src="~/icons/Bildirimler.svg" alt="Bildirimler" class="icon" style="height:24px;" />
+                    </button>
+                    <span class="user-name">Berke Küçük</span>
+                    <button class="avatar-btn" title="Profil">
+                        <img src="~/images/profile.jpg" alt="Profil Fotoğrafı" class="avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'" />
+                        <span class="avatar-placeholder" style="width:36px;height:36px;border-radius:50%;background:#bbb;display:inline-block;"></span>
+                    </button>
+                    <button class="icon-btn" title="Ayarlar">
+                        <img src="~/icons/Ayarlar.svg" alt="Ayarlar" class="icon" style="height:24px;" />
+                    </button>
+                </div>
+            </header>
+            <main>
+                @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    </div>
 </body>
 </html>

@@ -1,22 +1,137 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.main-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 260px;
+    background: #fff;
+    box-shadow: 2px 0 8px #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 24px 16px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 2px 2px 6px #eee;
+    text-decoration: none;
+    color: #222;
+    width: 180px;
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+}
+
+    .menu-item:hover {
+        box-shadow: 2px 4px 12px #ccc;
+    }
+
+    .menu-item .menu-icon {
+        height: 48px;
+        margin-bottom: 8px;
+    }
+
+.content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    background: #fff;
+    box-shadow: 0 2px 8px #eee;
+    padding: 0 32px;
+}
+
+.search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+    .search-bar input {
+        width: 350px;
+        height: 36px;
+        border-radius: 18px;
+        border: none;
+        background: #ddd;
+        padding: 0 16px;
+        font-size: 1rem;
+    }
+
+.topbar-icons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.user-name {
+    font-weight: 500;
+}
+
+main {
+    flex: 1;
+    padding: 32px;
+    background: #fafafa;
 }
