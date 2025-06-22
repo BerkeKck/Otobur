@@ -18,5 +18,9 @@ namespace Otobur.Controllers
             var kullanicilar = _db.Kullanicilar.ToList();
             return View(kullanicilar);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

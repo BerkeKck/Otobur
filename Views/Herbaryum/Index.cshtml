@@ -1,13 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Herbaryum";
-}
-@model List<HerbaryumDefteri>
+﻿@model List<HerbaryumDefteri>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-<h1>Herbaryum</h1>
 <div class="container">
     <div class="row pt-4 pb-3">
-        <div class="col-12">
-            <h2 class="text-primary">Herbaryum Tablosu</h2>
+        <div class="col-6">
+            <h2 class="text-primary">Herbaryum Kayıt</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Herbaryum" asp-action="Create" class="btn btn-success">
+                <i class="bi bi-plus-lg"></i> Yeni Herbaryum Girişi 
+            </a>
         </div>
     </div>
     <table class="table table-bordered table-striped">

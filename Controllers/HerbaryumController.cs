@@ -18,5 +18,9 @@ namespace Otobur.Controllers
             var herbaryumList = _db.HerbaryumDefteri.ToList();
             return View(herbaryumList);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

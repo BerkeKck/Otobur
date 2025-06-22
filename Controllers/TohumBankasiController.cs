@@ -20,4 +20,8 @@ public class TohumBankasiController : Controller
             .ToList();
         return View(tohumlar);
     }
+    public IActionResult Create()
+    {
+        return View();
+    }
 }

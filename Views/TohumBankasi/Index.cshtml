@@ -1,13 +1,14 @@
-﻿@{
-    ViewData["Title"] = "TohumBankasi";
-}
-
-@model List<TohumBankasi>
-
+﻿@model List<TohumBankasi>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <div class="container">
     <div class="row pt-4 pb-3">
-        <div class="col-12">
-            <h2 class="text-primary">Tohum Bankası Tablosu</h2>
+        <div class="col-6">
+            <h2 class="text-primary">Tohum Bankası Kayıt</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="TohumBankasi" asp-action="Create" class="btn btn-success">
+                <i class="bi bi-plus-lg"></i> Yeni Tohum Bankası Kayıt
+            </a>
         </div>
     </div>
     <table class="table table-bordered table-striped">

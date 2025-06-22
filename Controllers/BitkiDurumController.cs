@@ -21,5 +21,9 @@ namespace Otobur.Controllers
                 .ToList();
             return View(bitkiDurumList);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
