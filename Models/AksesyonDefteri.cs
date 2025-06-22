@@ -14,6 +14,9 @@ public class AksesyonDefteri
     public string ToplayiciAdi { get; set; }
     public string ToplayiciKodu { get; set; }
     public string ToplayiciNumarasi { get; set; }
+
+    // Navigation property
+    public HerbaryumDefteri Herbaryum { get; set; }
 }
 
 public enum MateryalCesidiEnum

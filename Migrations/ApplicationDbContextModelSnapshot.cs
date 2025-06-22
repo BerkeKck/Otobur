@@ -31,8 +31,9 @@ namespace Otobur.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Koken")
-                        .HasColumnType("int");
+                    b.Property<string>("Koken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Koordinat")
                         .IsRequired()
@@ -62,14 +63,14 @@ namespace Otobur.Migrations
 
                     b.HasKey("AksesyonNumarasi");
 
-                    b.ToTable("AksesyonNumarasi", (string)null);
+                    b.ToTable("AksesyonNumarasi");
 
                     b.HasData(
                         new
                         {
                             AksesyonNumarasi = "2023-00345",
                             BitkininAdi = "Pinus pinea",
-                            Koken = 0,
+                            Koken = "Kültür; Köken bilinmiyor",
                             Koordinat = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 0,
@@ -82,7 +83,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00346",
                             BitkininAdi = "Cedrus libani",
-                            Koken = 3,
+                            Koken = "Köken bilgisi yok",
                             Koordinat = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 0,
@@ -95,7 +96,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00347",
                             BitkininAdi = "Aethionema turcica",
-                            Koken = 2,
+                            Koken = "Doğal",
                             Koordinat = "39°52'45.34'' K - 32°15'43.45'' D",
                             Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
                             MateryalCesidi = 1,
@@ -108,7 +109,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00348",
                             BitkininAdi = "Cota tinctoria",
-                            Koken = 1,
+                            Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 1,
@@ -121,7 +122,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00349",
                             BitkininAdi = "Mespilus germanica",
-                            Koken = 1,
+                            Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 2,
@@ -134,7 +135,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00350",
                             BitkininAdi = "Malus sylvestris",
-                            Koken = 1,
+                            Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 0,
@@ -147,7 +148,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00351",
                             BitkininAdi = "Aucuba japonica",
-                            Koken = 1,
+                            Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 2,
@@ -160,7 +161,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00352",
                             BitkininAdi = "Pelargonium quercetorum",
-                            Koken = 2,
+                            Koken = "Doğal",
                             Koordinat = "41°12'32.12'' K - 38°34'26.87'' D",
                             Lokasyon = "Bitlis; Tatvan, Demir Dağı, 1350 m",
                             MateryalCesidi = 1,
@@ -173,7 +174,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00353",
                             BitkininAdi = "Flueggea anatolica",
-                            Koken = 2,
+                            Koken = "Doğal",
                             Koordinat = "37°24'33.01'' K - 34°23'24.53'' D",
                             Lokasyon = "Mersin; Kadıncık Vadisi, 455 m",
                             MateryalCesidi = 1,
@@ -186,7 +187,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00354",
                             BitkininAdi = "Thermopsis turcica",
-                            Koken = 2,
+                            Koken = "Doğal",
                             Koordinat = "39°23'13.45'' K - 31°23'15.42'' D",
                             Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
                             MateryalCesidi = 1,
@@ -199,7 +200,7 @@ namespace Otobur.Migrations
                         {
                             AksesyonNumarasi = "2023-00355",
                             BitkininAdi = "Crocus biflorus",
-                            Koken = 2,
+                            Koken = "Doğal",
                             Koordinat = "39°12'23.44'' K - 39°34'32.44'' D",
                             Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
                             MateryalCesidi = 3,
@@ -208,6 +209,121 @@ namespace Otobur.Migrations
                             ToplayiciKodu = "ECLK",
                             ToplayiciNumarasi = "1201"
                         });
+                });
+
+            modelBuilder.Entity("HerbaryumDefteri", b =>
+                {
+                    b.Property<int>("HerbaryumNo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HerbaryumNo"));
+
+                    b.Property<string>("AksesyonNumarasi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BitkininAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fotograf")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Koordinat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lokasyon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToplayiciAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToplayiciKodu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToplayiciNumarasi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HerbaryumNo");
+
+                    b.HasIndex("AksesyonNumarasi")
+                        .IsUnique();
+
+                    b.ToTable("HerbaryumDefteri");
+
+                    b.HasData(
+                        new
+                        {
+                            HerbaryumNo = 345,
+                            AksesyonNumarasi = "2023-00354",
+                            BitkininAdi = "Thermopsis turcica",
+                            Fotograf = "Var",
+                            Koordinat = "33°23'12,54'' K - 25°34'34,32'' D",
+                            Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
+                            ToplayiciAdi = "Birol Sever",
+                            ToplayiciKodu = "BRLS",
+                            ToplayiciNumarasi = "6754"
+                        },
+                        new
+                        {
+                            HerbaryumNo = 234,
+                            AksesyonNumarasi = "2023-00355",
+                            BitkininAdi = "Crocus biflorus",
+                            Fotograf = "Var",
+                            Koordinat = "39°21'23,34'' K - 34°32'34,44'' D",
+                            Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
+                            ToplayiciAdi = "Emrah Çelik",
+                            ToplayiciKodu = "ECLK",
+                            ToplayiciNumarasi = "1201"
+                        },
+                        new
+                        {
+                            HerbaryumNo = 123,
+                            AksesyonNumarasi = "2023-00350",
+                            BitkininAdi = "Malus sylvestris",
+                            Fotograf = "Yok",
+                            Koordinat = "-",
+                            Lokasyon = "-",
+                            ToplayiciAdi = "Bahçe Örneği",
+                            ToplayiciKodu = "-",
+                            ToplayiciNumarasi = "-"
+                        },
+                        new
+                        {
+                            HerbaryumNo = 456,
+                            AksesyonNumarasi = "2023-00347",
+                            BitkininAdi = "Aethionema turcica",
+                            Fotograf = "Var",
+                            Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
+                            Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
+                            ToplayiciAdi = "Adil Güner",
+                            ToplayiciKodu = "AG",
+                            ToplayiciNumarasi = "12321"
+                        });
+                });
+
+            modelBuilder.Entity("HerbaryumDefteri", b =>
+                {
+                    b.HasOne("AksesyonDefteri", "Aksesyon")
+                        .WithOne("Herbaryum")
+                        .HasForeignKey("HerbaryumDefteri", "AksesyonNumarasi")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Aksesyon");
+                });
+
+            modelBuilder.Entity("AksesyonDefteri", b =>
+                {
+                    b.Navigation("Herbaryum")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

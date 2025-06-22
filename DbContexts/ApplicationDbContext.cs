@@ -161,8 +161,14 @@ namespace Otobur.Data
                     ToplayiciNumarasi = "1201"
                 }
                 );
-                // HerbaryumDefteri HasData
-                modelBuilder.Entity<HerbaryumDefteri>().HasData(
+                    // HerbaryumDefteri HasData
+                    modelBuilder.Entity<HerbaryumDefteri>()
+                           .HasOne(h => h.Aksesyon)
+                           .WithOne(a => a.Herbaryum)
+                           .HasForeignKey<HerbaryumDefteri>(h => h.AksesyonNumarasi)
+                           .HasPrincipalKey<AksesyonDefteri>(a => a.AksesyonNumarasi)
+                           .OnDelete(DeleteBehavior.Restrict);
+                    modelBuilder.Entity<HerbaryumDefteri>().HasData(
                     new HerbaryumDefteri
                     {
                         HerbaryumNo = 345,
@@ -210,7 +216,7 @@ namespace Otobur.Data
                         Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
                         AksesyonNumarasi = "2023-00347",
                         Fotograf = "Var"
-                }
+                    }
             );
         }
 

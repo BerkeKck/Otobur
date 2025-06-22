@@ -12,8 +12,8 @@ using Otobur.Data;
 namespace Otobur.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250621182539_AksesyonDummy")]
-    partial class AksesyonDummy
+    [Migration("20250622105200_KeyStructureBetweenTables")]
+    partial class KeyStructureBetweenTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,6 +212,121 @@ namespace Otobur.Migrations
                             ToplayiciKodu = "ECLK",
                             ToplayiciNumarasi = "1201"
                         });
+                });
+
+            modelBuilder.Entity("HerbaryumDefteri", b =>
+                {
+                    b.Property<int>("HerbaryumNo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HerbaryumNo"));
+
+                    b.Property<string>("AksesyonNumarasi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BitkininAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fotograf")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Koordinat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lokasyon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToplayiciAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToplayiciKodu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToplayiciNumarasi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HerbaryumNo");
+
+                    b.HasIndex("AksesyonNumarasi")
+                        .IsUnique();
+
+                    b.ToTable("HerbaryumDefteri");
+
+                    b.HasData(
+                        new
+                        {
+                            HerbaryumNo = 345,
+                            AksesyonNumarasi = "2023-00354",
+                            BitkininAdi = "Thermopsis turcica",
+                            Fotograf = "Var",
+                            Koordinat = "33°23'12,54'' K - 25°34'34,32'' D",
+                            Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
+                            ToplayiciAdi = "Birol Sever",
+                            ToplayiciKodu = "BRLS",
+                            ToplayiciNumarasi = "6754"
+                        },
+                        new
+                        {
+                            HerbaryumNo = 234,
+                            AksesyonNumarasi = "2023-00355",
+                            BitkininAdi = "Crocus biflorus",
+                            Fotograf = "Var",
+                            Koordinat = "39°21'23,34'' K - 34°32'34,44'' D",
+                            Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
+                            ToplayiciAdi = "Emrah Çelik",
+                            ToplayiciKodu = "ECLK",
+                            ToplayiciNumarasi = "1201"
+                        },
+                        new
+                        {
+                            HerbaryumNo = 123,
+                            AksesyonNumarasi = "2023-00350",
+                            BitkininAdi = "Malus sylvestris",
+                            Fotograf = "Yok",
+                            Koordinat = "-",
+                            Lokasyon = "-",
+                            ToplayiciAdi = "Bahçe Örneği",
+                            ToplayiciKodu = "-",
+                            ToplayiciNumarasi = "-"
+                        },
+                        new
+                        {
+                            HerbaryumNo = 456,
+                            AksesyonNumarasi = "2023-00347",
+                            BitkininAdi = "Aethionema turcica",
+                            Fotograf = "Var",
+                            Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
+                            Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
+                            ToplayiciAdi = "Adil Güner",
+                            ToplayiciKodu = "AG",
+                            ToplayiciNumarasi = "12321"
+                        });
+                });
+
+            modelBuilder.Entity("HerbaryumDefteri", b =>
+                {
+                    b.HasOne("AksesyonDefteri", "Aksesyon")
+                        .WithOne("Herbaryum")
+                        .HasForeignKey("HerbaryumDefteri", "AksesyonNumarasi")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Aksesyon");
+                });
+
+            modelBuilder.Entity("AksesyonDefteri", b =>
+                {
+                    b.Navigation("Herbaryum")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

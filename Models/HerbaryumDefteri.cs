@@ -10,6 +10,11 @@ public class HerbaryumDefteri
     public string ToplayiciNumarasi { get; set; }
     public string Lokasyon { get; set; }
     public string Koordinat { get; set; }
-    public string AksesyonNumarasi { get; set; }
+
+    [Required]
+    public string AksesyonNumarasi { get; set; } //Foreign key to AksesyonDefteri
     public string Fotograf { get; set; }
+
+    // Navigation property to AksesyonDefteri
+    public AksesyonDefteri Aksesyon { get; set; }
 }
