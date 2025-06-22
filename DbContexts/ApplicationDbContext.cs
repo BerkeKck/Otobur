@@ -14,6 +14,7 @@ namespace Otobur.Data
         public DbSet<HerbaryumDefteri> HerbaryumDefteri { get; set; }
         public DbSet<TohumBankasi> TohumBankasi { get; set; }
         public DbSet<Kullanici> Kullanicilar { get; set; }
+        public DbSet<BitkiDurum> BitkiDurum { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -262,6 +263,48 @@ namespace Otobur.Data
                     BulunduguDolap = "1A2"
                 }
                 );
+
+            // BitkiDurum ile AksesyonDefteri arasında birebir ilişki
+            modelBuilder.Entity<BitkiDurum>()
+                .HasOne(b => b.Aksesyon)
+                .WithOne()
+                .HasForeignKey<BitkiDurum>(b => b.AksesyonNumarasi)
+                .HasPrincipalKey<AksesyonDefteri>(a => a.AksesyonNumarasi)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // BitkiDurum seed
+            modelBuilder.Entity<BitkiDurum>().HasData(
+                new BitkiDurum
+                {
+                    AksesyonNumarasi = "2023-00345",
+                    GozlemTarihi = new DateTime(2025, 4, 12),
+                    BahcedeBulunduguYer = "Merkez Ada; Üst Gölet Alanı",
+                    YerKodu = "1-ÜG",
+                    BitkininDurumu = "İyi",
+                    VejetasyonDurumu = "Yapraklı",
+                    Gozlem = "-"
+                },
+                new BitkiDurum
+                {
+                    AksesyonNumarasi = "2023-00346",
+                    GozlemTarihi = new DateTime(2025, 5, 13),
+                    BahcedeBulunduguYer = "Etrüjül Adası; Bataklık Bölümü",
+                    YerKodu = "2-BB",
+                    BitkininDurumu = "Mükemmel",
+                    VejetasyonDurumu = "Yapraklı ve Kozalak Oluşumu Başlamış",
+                    Gozlem = "-"
+                },
+                new BitkiDurum
+                {
+                    AksesyonNumarasi = "2023-00350",
+                    GozlemTarihi = new DateTime(2025, 3, 1),
+                    BahcedeBulunduguYer = "Trakya Adası; Meyve Bahçesi",
+                    YerKodu = "8-MB",
+                    BitkininDurumu = "Vasat",
+                    VejetasyonDurumu = "Yapraklı ve Çiçekli",
+                    Gozlem = "Yapraklarda buruşukluk hastalığı gözlendi, DECIS ilacı uygulandı"
+                }
+            );
 
             // Kullanici seed
             modelBuilder.Entity<Kullanici>().HasData(

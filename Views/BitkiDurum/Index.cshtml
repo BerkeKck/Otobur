@@ -1,5 +1,41 @@
 ﻿@{
     ViewData["Title"] = "Bitki Durum";
 }
-<h2>Bitki Durum</h2>
-<p>Bitki Durum ekranı buraya gelecek.</p>
+@model List<BitkiDurum>
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-12">
+            <h2 class="text-primary">Bitki Durum Tablosu</h2>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Aksesyon Numarası</th>
+                <th>Bitkinin Adı</th>
+                <th>Gözlem Tarihi</th>
+                <th>Bahçede Bulunduğu Yer</th>
+                <th>Yer Kodu</th>
+                <th>Bitkinin Durumu</th>
+                <th>Vejetasyon Durumu</th>
+                <th>Gözlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model)
+            {
+                <tr>
+                    <td>@obj.AksesyonNumarasi</td>
+                    <td>@obj.Aksesyon?.BitkininAdi</td>
+                    <td>@obj.GozlemTarihi.ToString("dd.MM.yyyy")</td>
+                    <td>@obj.BahcedeBulunduguYer</td>
+                    <td>@obj.YerKodu</td>
+                    <td>@obj.BitkininDurumu</td>
+                    <td>@obj.VejetasyonDurumu</td>
+                    <td>@obj.Gozlem</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
