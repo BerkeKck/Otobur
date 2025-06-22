@@ -1,4 +1,45 @@
 ﻿@{
     ViewData["Title"] = "Yetkilendirme";
 }
+@model List<Kullanici>
+
 <h1>Yetkilendirme</h1>
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-12">
+            <h2 class="text-primary">Kullanıcılar Defteri</h2>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Kullanıcı Adı</th>
+                <th>Kullanıcı Kodu</th>
+                <th>Parola</th>
+                <th>Telefon</th>
+                <th>E-Posta</th>
+                <th>Görebileceği Tablolar</th>
+                <th>Kayıt Yapabileceği Tablolar</th>
+                <th>Kayıt Silebilme</th>
+                <th>Kullanıcı Grubu</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var k in Model)
+            {
+                <tr>
+                    <td>@k.KullaniciAdi</td>
+                    <td>@k.KullaniciKodu</td>
+                    <td>@k.Parola</td>
+                    <td>@k.Telefon</td>
+                    <td>@k.Eposta</td>
+                    <td>@k.GorebilecegiTablolar</td>
+                    <td>@k.KayitYapabilecegiTablolar</td>
+                    <td>@(k.KayitSilebilme ? "Evet" : "Hayır")</td>
+                    <td>@k.KullaniciGrubu</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

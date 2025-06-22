@@ -13,6 +13,7 @@ namespace Otobur.Data
         public DbSet<AksesyonDefteri> AksesyonNumarasi { get; set; }
         public DbSet<HerbaryumDefteri> HerbaryumDefteri { get; set; }
         public DbSet<TohumBankasi> TohumBankasi { get; set; }
+        public DbSet<Kullanici> Kullanicilar { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -261,6 +262,70 @@ namespace Otobur.Data
                     BulunduguDolap = "1A2"
                 }
                 );
-            }
+
+            // Kullanici seed
+            modelBuilder.Entity<Kullanici>().HasData(
+                new Kullanici
+                {
+                    KullaniciAdi = "Adil Güner",
+                    KullaniciKodu = "AG",
+                    Parola = "parola1",
+                    Telefon = "0597 345 67 89",
+                    Eposta = "ornek@gmail.com",
+                    GorebilecegiTablolar = "",
+                    KayitYapabilecegiTablolar = "",
+                    KayitSilebilme = false,
+                    KullaniciGrubu = ""
+                },
+                new Kullanici
+                {
+                    KullaniciAdi = "Salih Sercan Kanoğlu",
+                    KullaniciKodu = "SKNG",
+                    Parola = "parola2",
+                    Telefon = "0587 123 45 67",
+                    Eposta = "ornek1@gmail.com",
+                    GorebilecegiTablolar = "",
+                    KayitYapabilecegiTablolar = "",
+                    KayitSilebilme = false,
+                    KullaniciGrubu = ""
+                },
+                new Kullanici
+                {
+                    KullaniciAdi = "Mahmut Can",
+                    KullaniciKodu = "MCAN",
+                    Parola = "parola3",
+                    Telefon = "0589 980 76 54",
+                    Eposta = "ornek2@gmail.com",
+                    GorebilecegiTablolar = "",
+                    KayitYapabilecegiTablolar = "",
+                    KayitSilebilme = false,
+                    KullaniciGrubu = ""
+                },
+                new Kullanici
+                {
+                    KullaniciAdi = "Birol Sever",
+                    KullaniciKodu = "BRLS",
+                    Parola = "parola4",
+                    Telefon = "0588 678 45 32",
+                    Eposta = "ornek3@gmail.com",
+                    GorebilecegiTablolar = "",
+                    KayitYapabilecegiTablolar = "",
+                    KayitSilebilme = false,
+                    KullaniciGrubu = ""
+                },
+                new Kullanici
+                {
+                    KullaniciAdi = "Emrah Çelik",
+                    KullaniciKodu = "ECLK",
+                    Parola = "parola5",
+                    Telefon = "0567 789 01 23",
+                    Eposta = "ornek4@gmail.com",
+                    GorebilecegiTablolar = "",
+                    KayitYapabilecegiTablolar = "",
+                    KayitSilebilme = false,
+                    KullaniciGrubu = ""
+                }
+            );
         }
+    }
 }
