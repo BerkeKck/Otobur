@@ -11,16 +11,17 @@ namespace Otobur.Data
 
         }
         public DbSet<AksesyonDefteri> AksesyonNumarasi { get; set; }
+        public DbSet<HerbaryumDefteri> HerbaryumDefteri { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Configure the primary key for AksesyonDefteri  
+            //AksesyonDefteri  
             modelBuilder.Entity<AksesyonDefteri>().HasData(
                 new AksesyonDefteri
                 {
                     AksesyonNumarasi = "2023-00345",
                     BitkininAdi = "Pinus pinea",
-                    MateryalCesidi = MateryalCesidiEnum.CanliBitki,
+                    MateryalCesidi = MateryalCesidiEnum.CanlıBitki,
                     Koken = "Kültür; Köken bilinmiyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -33,7 +34,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00346",
                     BitkininAdi = "Cedrus libani",
-                    MateryalCesidi = MateryalCesidiEnum.CanliBitki,
+                    MateryalCesidi = MateryalCesidiEnum.CanlıBitki,
                     Koken = "Köken bilgisi yok",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -72,7 +73,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00349",
                     BitkininAdi = "Mespilus germanica",
-                    MateryalCesidi = MateryalCesidiEnum.Celik,
+                    MateryalCesidi = MateryalCesidiEnum.Çelik,
                     Koken = "Kültür; Köken Biliniyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -85,7 +86,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00350",
                     BitkininAdi = "Malus sylvestris",
-                    MateryalCesidi = MateryalCesidiEnum.CanliBitki,
+                    MateryalCesidi = MateryalCesidiEnum.CanlıBitki,
                     Koken = "Kültür; Köken Biliniyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -98,7 +99,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00351",
                     BitkininAdi = "Aucuba japonica",
-                    MateryalCesidi = MateryalCesidiEnum.Celik,
+                    MateryalCesidi = MateryalCesidiEnum.Çelik,
                     Koken = "Kültür; Köken Biliniyor",
                     Lokasyon = "-",
                     Koordinat = "-",
@@ -150,7 +151,7 @@ namespace Otobur.Data
                 {
                     AksesyonNumarasi = "2023-00355",
                     BitkininAdi = "Crocus biflorus",
-                    MateryalCesidi = MateryalCesidiEnum.Sogan,
+                    MateryalCesidi = MateryalCesidiEnum.Soğan,
                     Koken = "Doğal",
                     Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
                     Koordinat = "39°12'23.44'' K - 39°34'32.44'' D",
@@ -159,7 +160,59 @@ namespace Otobur.Data
                     ToplayiciKodu = "ECLK",
                     ToplayiciNumarasi = "1201"
                 }
+                );
+                // HerbaryumDefteri HasData
+                modelBuilder.Entity<HerbaryumDefteri>().HasData(
+                    new HerbaryumDefteri
+                    {
+                        HerbaryumNo = 345,
+                        BitkininAdi = "Thermopsis turcica",
+                        ToplayiciAdi = "Birol Sever",
+                        ToplayiciKodu = "BRLS",
+                        ToplayiciNumarasi = "6754",
+                        Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
+                        Koordinat = "33°23'12,54'' K - 25°34'34,32'' D",
+                        AksesyonNumarasi = "2023-00354",
+                        Fotograf = "Var"
+                    },
+                    new HerbaryumDefteri
+                    {
+                        HerbaryumNo = 234,
+                        BitkininAdi = "Crocus biflorus",
+                        ToplayiciAdi = "Emrah Çelik",
+                        ToplayiciKodu = "ECLK",
+                        ToplayiciNumarasi = "1201",
+                        Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
+                        Koordinat = "39°21'23,34'' K - 34°32'34,44'' D",
+                        AksesyonNumarasi = "2023-00355",
+                        Fotograf = "Var"
+                    },
+                    new HerbaryumDefteri
+                    {
+                        HerbaryumNo = 123,
+                        BitkininAdi = "Malus sylvestris",
+                        ToplayiciAdi = "Bahçe Örneği",
+                        ToplayiciKodu = "-",
+                        ToplayiciNumarasi = "-",
+                        Lokasyon = "-",
+                        Koordinat = "-",
+                        AksesyonNumarasi = "2023-00350",
+                        Fotograf = "Yok"
+                    },
+                    new HerbaryumDefteri
+                    {
+                        HerbaryumNo = 456,
+                        BitkininAdi = "Aethionema turcica",
+                        ToplayiciAdi = "Adil Güner",
+                        ToplayiciKodu = "AG",
+                        ToplayiciNumarasi = "12321",
+                        Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
+                        Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
+                        AksesyonNumarasi = "2023-00347",
+                        Fotograf = "Var"
+                }
             );
         }
+
     }
 }

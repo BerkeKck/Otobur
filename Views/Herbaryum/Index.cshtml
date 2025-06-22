@@ -1,4 +1,44 @@
 ﻿@{
     ViewData["Title"] = "Herbaryum";
 }
+@model List<HerbaryumDefteri>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <h1>Herbaryum</h1>
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-12">
+            <h2 class="text-primary">Herbaryum Tablosu</h2>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Herbaryum No</th>
+                <th>Bitkinin Adı</th>
+                <th>Toplayıcı Adı</th>
+                <th>Toplayıcı Kodu</th>
+                <th>Toplayıcı No</th>
+                <th>Lokasyon</th>
+                <th>Koordinat</th>
+                <th>Aksesyon No</th>
+                <th>Fotoğraf</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model.OrderBy(u => u.HerbaryumNo))
+            {
+                <tr>
+                    <td>@obj.HerbaryumNo</td>
+                    <td>@obj.BitkininAdi</td>
+                    <td>@obj.ToplayiciAdi</td>
+                    <td>@obj.ToplayiciKodu</td>
+                    <td>@obj.ToplayiciNumarasi</td>
+                    <td>@obj.Lokasyon</td>
+                    <td>@obj.Koordinat</td>
+                    <td>@obj.AksesyonNo</td>
+                    <td>@obj.Fotograf</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

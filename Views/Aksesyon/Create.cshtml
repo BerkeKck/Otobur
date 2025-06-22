@@ -1,0 +1,58 @@
+﻿@model AksesyonDefteri
+
+<form method="post">
+    <div class="container" style="max-width: 700px;">
+        <div class="border p-4 mt-4 bg-white rounded shadow-sm">
+            <div class="row pb-2">
+                <h2 class="text-primary">Yeni Aksesyon Oluştur</h2>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Aksesyon Numarası</label>
+                    <input asp-for="AksesyonNumarasi" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Bitkinin Adı</label>
+                    <input asp-for="BitkininAdi" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Materyal Çeşidi</label>
+                    <select asp-for="MateryalCesidi" class="form-control" asp-items="Html.GetEnumSelectList<MateryalCesidiEnum>()"></select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Köken</label>
+                    <input asp-for="Koken" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Lokasyon</label>
+                    <input asp-for="Lokasyon" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Koordinat</label>
+                    <input asp-for="Koordinat" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Toplanma Tarihi</label>
+                    <input asp-for="ToplanmaTarihi" type="date" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Toplayıcı Adı</label>
+                    <input asp-for="ToplayiciAdi" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Toplayıcı Kodu</label>
+                    <input asp-for="ToplayiciKodu" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Toplayıcı Numarası</label>
+                    <input asp-for="ToplayiciNumarasi" class="form-control" />
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <a asp-controller="Aksesyon" asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+            </div>
+        </div>
+    </div>
+</form>

@@ -18,8 +18,8 @@ public class AksesyonDefteri
 
 public enum MateryalCesidiEnum
 {
-    CanliBitki,
+    CanlıBitki,
     Tohum,
-    Celik,
-    Sogan
+    Çelik,
+    Soğan
 }

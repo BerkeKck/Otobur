@@ -62,7 +62,7 @@ namespace Otobur.Migrations
 
                     b.HasKey("AksesyonNumarasi");
 
-                    b.ToTable("AksesyonNumarasi");
+                    b.ToTable("AksesyonNumarasi", (string)null);
 
                     b.HasData(
                         new
