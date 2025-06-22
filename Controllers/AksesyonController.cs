@@ -15,10 +15,22 @@ namespace Otobur.Controllers
             List<AksesyonDefteri> aksesyonList = _db.AksesyonNumarasi.ToList();
             return View(aksesyonList);
         }
-
+        // CREATE
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost] 
+        public IActionResult Create(AksesyonDefteri obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.AksesyonNumarasi.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
 
     }

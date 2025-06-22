@@ -12,34 +12,56 @@
         </div>
     </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>Bitkinin Adi</th>
-        <th>Aksesyon Numarasi</th>
-        <th>Materyal çeşidi</th>
-        <th>Koken</th>
-        <th>Lokasyon</th>
-        <th>Koordinat</th>
-        <th>Toplanma Tarihi</th>
-    </tr>
-    </thead>
-    <tbody>
-        @foreach(var obj in Model.OrderBy(u=>u.BitkininAdi))
-        {
+    <table class="table table-bordered table-striped">
+        <thead>
             <tr>
-                <td>@obj.BitkininAdi</td>
-                <td>@obj.AksesyonNumarasi</td>
-                <td>@obj.MateryalCesidi</td>
-                <td>@obj.Koken</td>
-                <td>@obj.Lokasyon</td>
-                <td>@obj.Koordinat</td>
+                <th>Aksesyon Numarasi</th>
+                <th>Bitkinin Adi</th>
+                <th>Materyal çeşidi</th>
+                <th>Koken</th>
+                <th>Lokasyon</th>
+                <th>Koordinat</th>
+                <th>Toplanma Tarihi</th>
+                <th>Toplayıcı Adı</th>
+                <th>Toplayıcı Kodu</th>
+                <th>Toplayıcı Numarası</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.OrderBy(u => u.BitkininAdi))
+            {
+                <tr>
+                    <td>@obj.AksesyonNumarasi</td>
+                    <td>@obj.BitkininAdi</td>
+                    <td>@obj.MateryalCesidi</td>
+                    <td>@obj.Koken</td>
+                    <td>@obj.Lokasyon</td>
+                    <td>@obj.Koordinat</td>
+                    <td>
+                        @(obj.ToplanmaTarihi == DateTime.MinValue
+                                            ? "-"
+                                            : obj.ToplanmaTarihi.ToString("dd.MM.yyyy"))
+                </td>
+                <td>@obj.ToplayiciAdi</td>
+                <td>@obj.ToplayiciKodu</td>
+                <td>@obj.ToplayiciNumarasi</td>
                 <td>
-                    @(obj.ToplanmaTarihi == DateTime.MinValue 
-                        ? "-" 
-                        : obj.ToplanmaTarihi.ToString("dd.MM.yyyy"))
+                    <div class="d-flex gap-2">
+                            <a asp-controller="Aksesyon" asp-action="Edit" asp-route-id="@obj.AksesyonNumarasi"
+                               class="btn btn-sm btn-outline-primary rounded-circle"
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="Düzenle">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-controller="Aksesyon" asp-action="Delete" asp-route-id="@obj.AksesyonNumarasi"
+                               class="btn btn-sm btn-outline-danger rounded-circle"
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="Sil">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
+             }
+        </tbody>
+    </table>
+</div>

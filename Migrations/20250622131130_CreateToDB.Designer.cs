@@ -12,8 +12,8 @@ using Otobur.Data;
 namespace Otobur.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250622110517_TohumBankasiCont")]
-    partial class TohumBankasiCont
+    [Migration("20250622131130_CreateToDB")]
+    partial class CreateToDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,7 +66,7 @@ namespace Otobur.Migrations
 
                     b.HasKey("AksesyonNumarasi");
 
-                    b.ToTable("AksesyonNumarasi");
+                    b.ToTable("AksesyonDefteri");
 
                     b.HasData(
                         new
@@ -102,7 +102,7 @@ namespace Otobur.Migrations
                             Koken = "Doğal",
                             Koordinat = "39°52'45.34'' K - 32°15'43.45'' D",
                             Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
-                            MateryalCesidi = 1,
+                            MateryalCesidi = 4,
                             ToplanmaTarihi = new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToplayiciAdi = "Asil Güner",
                             ToplayiciKodu = "AG",
@@ -115,7 +115,7 @@ namespace Otobur.Migrations
                             Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
                             Lokasyon = "-",
-                            MateryalCesidi = 1,
+                            MateryalCesidi = 4,
                             ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToplayiciAdi = "-",
                             ToplayiciKodu = "-",
@@ -128,7 +128,7 @@ namespace Otobur.Migrations
                             Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
                             Lokasyon = "-",
-                            MateryalCesidi = 2,
+                            MateryalCesidi = 5,
                             ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToplayiciAdi = "-",
                             ToplayiciKodu = "-",
@@ -154,7 +154,7 @@ namespace Otobur.Migrations
                             Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
                             Lokasyon = "-",
-                            MateryalCesidi = 2,
+                            MateryalCesidi = 5,
                             ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToplayiciAdi = "-",
                             ToplayiciKodu = "-",
@@ -167,7 +167,7 @@ namespace Otobur.Migrations
                             Koken = "Doğal",
                             Koordinat = "41°12'32.12'' K - 38°34'26.87'' D",
                             Lokasyon = "Bitlis; Tatvan, Demir Dağı, 1350 m",
-                            MateryalCesidi = 1,
+                            MateryalCesidi = 4,
                             ToplanmaTarihi = new DateTime(2022, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToplayiciAdi = "Salih Sercan Kanoğlu",
                             ToplayiciKodu = "SKNG",
@@ -180,7 +180,7 @@ namespace Otobur.Migrations
                             Koken = "Doğal",
                             Koordinat = "37°24'33.01'' K - 34°23'24.53'' D",
                             Lokasyon = "Mersin; Kadıncık Vadisi, 455 m",
-                            MateryalCesidi = 1,
+                            MateryalCesidi = 4,
                             ToplanmaTarihi = new DateTime(2023, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToplayiciAdi = "Mahmut Can",
                             ToplayiciKodu = "MCAN",
@@ -193,7 +193,7 @@ namespace Otobur.Migrations
                             Koken = "Doğal",
                             Koordinat = "39°23'13.45'' K - 31°23'15.42'' D",
                             Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
-                            MateryalCesidi = 1,
+                            MateryalCesidi = 4,
                             ToplanmaTarihi = new DateTime(2025, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToplayiciAdi = "Birol Sever",
                             ToplayiciKodu = "BRLS",
@@ -206,11 +206,76 @@ namespace Otobur.Migrations
                             Koken = "Doğal",
                             Koordinat = "39°12'23.44'' K - 39°34'32.44'' D",
                             Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
-                            MateryalCesidi = 3,
+                            MateryalCesidi = 1,
                             ToplanmaTarihi = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToplayiciAdi = "Emrah Çelik",
                             ToplayiciKodu = "ECLK",
                             ToplayiciNumarasi = "1201"
+                        });
+                });
+
+            modelBuilder.Entity("BitkiDurum", b =>
+                {
+                    b.Property<string>("AksesyonNumarasi")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BahcedeBulunduguYer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BitkininDurumu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gozlem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("GozlemTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("VejetasyonDurumu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YerKodu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AksesyonNumarasi");
+
+                    b.ToTable("BitkiDurum");
+
+                    b.HasData(
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00345",
+                            BahcedeBulunduguYer = "Merkez Ada; Üst Gölet Alanı",
+                            BitkininDurumu = "İyi",
+                            Gozlem = "-",
+                            GozlemTarihi = new DateTime(2025, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VejetasyonDurumu = "Yapraklı",
+                            YerKodu = "1-ÜG"
+                        },
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00346",
+                            BahcedeBulunduguYer = "Etrüjül Adası; Bataklık Bölümü",
+                            BitkininDurumu = "Mükemmel",
+                            Gozlem = "-",
+                            GozlemTarihi = new DateTime(2025, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VejetasyonDurumu = "Yapraklı ve Kozalak Oluşumu Başlamış",
+                            YerKodu = "2-BB"
+                        },
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00350",
+                            BahcedeBulunduguYer = "Trakya Adası; Meyve Bahçesi",
+                            BitkininDurumu = "Vasat",
+                            Gozlem = "Yapraklarda buruşukluk hastalığı gözlendi, DECIS ilacı uygulandı",
+                            GozlemTarihi = new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VejetasyonDurumu = "Yapraklı ve Çiçekli",
+                            YerKodu = "8-MB"
                         });
                 });
 
@@ -312,6 +377,109 @@ namespace Otobur.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Kullanici", b =>
+                {
+                    b.Property<string>("KullaniciAdi")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Eposta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GorebilecegiTablolar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("KayitSilebilme")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KayitYapabilecegiTablolar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KullaniciGrubu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KullaniciKodu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Parola")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("KullaniciAdi");
+
+                    b.ToTable("Kullanicilar");
+
+                    b.HasData(
+                        new
+                        {
+                            KullaniciAdi = "Adil Güner",
+                            Eposta = "ornek@gmail.com",
+                            GorebilecegiTablolar = "",
+                            KayitSilebilme = false,
+                            KayitYapabilecegiTablolar = "",
+                            KullaniciGrubu = "",
+                            KullaniciKodu = "AG",
+                            Parola = "parola1",
+                            Telefon = "0597 345 67 89"
+                        },
+                        new
+                        {
+                            KullaniciAdi = "Salih Sercan Kanoğlu",
+                            Eposta = "ornek1@gmail.com",
+                            GorebilecegiTablolar = "",
+                            KayitSilebilme = false,
+                            KayitYapabilecegiTablolar = "",
+                            KullaniciGrubu = "",
+                            KullaniciKodu = "SKNG",
+                            Parola = "parola2",
+                            Telefon = "0587 123 45 67"
+                        },
+                        new
+                        {
+                            KullaniciAdi = "Mahmut Can",
+                            Eposta = "ornek2@gmail.com",
+                            GorebilecegiTablolar = "",
+                            KayitSilebilme = false,
+                            KayitYapabilecegiTablolar = "",
+                            KullaniciGrubu = "",
+                            KullaniciKodu = "MCAN",
+                            Parola = "parola3",
+                            Telefon = "0589 980 76 54"
+                        },
+                        new
+                        {
+                            KullaniciAdi = "Birol Sever",
+                            Eposta = "ornek3@gmail.com",
+                            GorebilecegiTablolar = "",
+                            KayitSilebilme = false,
+                            KayitYapabilecegiTablolar = "",
+                            KullaniciGrubu = "",
+                            KullaniciKodu = "BRLS",
+                            Parola = "parola4",
+                            Telefon = "0588 678 45 32"
+                        },
+                        new
+                        {
+                            KullaniciAdi = "Emrah Çelik",
+                            Eposta = "ornek4@gmail.com",
+                            GorebilecegiTablolar = "",
+                            KayitSilebilme = false,
+                            KayitYapabilecegiTablolar = "",
+                            KullaniciGrubu = "",
+                            KullaniciKodu = "ECLK",
+                            Parola = "parola5",
+                            Telefon = "0567 789 01 23"
+                        });
+                });
+
             modelBuilder.Entity("TohumBankasi", b =>
                 {
                     b.Property<string>("AksesyonNumarasi")
@@ -360,6 +528,17 @@ namespace Otobur.Migrations
                             BulunduguDolap = "1A2",
                             Miktar = "1 orta şişe (50 cl), 2 büyük şişe (100 cl)"
                         });
+                });
+
+            modelBuilder.Entity("BitkiDurum", b =>
+                {
+                    b.HasOne("AksesyonDefteri", "Aksesyon")
+                        .WithOne()
+                        .HasForeignKey("BitkiDurum", "AksesyonNumarasi")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Aksesyon");
                 });
 
             modelBuilder.Entity("HerbaryumDefteri", b =>
