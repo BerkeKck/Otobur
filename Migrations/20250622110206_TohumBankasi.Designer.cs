@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Otobur.Data;
 
@@ -11,9 +12,11 @@ using Otobur.Data;
 namespace Otobur.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250622110206_TohumBankasi")]
+    partial class TohumBankasi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -325,38 +328,6 @@ namespace Otobur.Migrations
                     b.HasKey("AksesyonNumarasi");
 
                     b.ToTable("TohumBankasi");
-
-                    b.HasData(
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00347",
-                            BulunduguDolap = "1A3",
-                            Miktar = "1 küçük şişe (30cl)"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00348",
-                            BulunduguDolap = "2B4",
-                            Miktar = "1 küçük şişe (30cl), 1 büyük şişe (100cl)"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00352",
-                            BulunduguDolap = "3A2",
-                            Miktar = "1 orta şişe (50 cl)"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00353",
-                            BulunduguDolap = "2D3",
-                            Miktar = "1 büyük şişe (100 cl)"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00354",
-                            BulunduguDolap = "1A2",
-                            Miktar = "1 orta şişe (50 cl), 2 büyük şişe (100 cl)"
-                        });
                 });
 
             modelBuilder.Entity("HerbaryumDefteri", b =>

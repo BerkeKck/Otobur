@@ -12,6 +12,7 @@ namespace Otobur.Data
         }
         public DbSet<AksesyonDefteri> AksesyonNumarasi { get; set; }
         public DbSet<HerbaryumDefteri> HerbaryumDefteri { get; set; }
+        public DbSet<TohumBankasi> TohumBankasi { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -161,64 +162,105 @@ namespace Otobur.Data
                     ToplayiciNumarasi = "1201"
                 }
                 );
-                    // HerbaryumDefteri HasData
-                    modelBuilder.Entity<HerbaryumDefteri>()
-                           .HasOne(h => h.Aksesyon)
-                           .WithOne(a => a.Herbaryum)
-                           .HasForeignKey<HerbaryumDefteri>(h => h.AksesyonNumarasi)
-                           .HasPrincipalKey<AksesyonDefteri>(a => a.AksesyonNumarasi)
-                           .OnDelete(DeleteBehavior.Restrict);
-                    modelBuilder.Entity<HerbaryumDefteri>().HasData(
-                    new HerbaryumDefteri
-                    {
-                        HerbaryumNo = 345,
-                        BitkininAdi = "Thermopsis turcica",
-                        ToplayiciAdi = "Birol Sever",
-                        ToplayiciKodu = "BRLS",
-                        ToplayiciNumarasi = "6754",
-                        Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
-                        Koordinat = "33°23'12,54'' K - 25°34'34,32'' D",
-                        AksesyonNumarasi = "2023-00354",
-                        Fotograf = "Var"
-                    },
-                    new HerbaryumDefteri
-                    {
-                        HerbaryumNo = 234,
-                        BitkininAdi = "Crocus biflorus",
-                        ToplayiciAdi = "Emrah Çelik",
-                        ToplayiciKodu = "ECLK",
-                        ToplayiciNumarasi = "1201",
-                        Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
-                        Koordinat = "39°21'23,34'' K - 34°32'34,44'' D",
-                        AksesyonNumarasi = "2023-00355",
-                        Fotograf = "Var"
-                    },
-                    new HerbaryumDefteri
-                    {
-                        HerbaryumNo = 123,
-                        BitkininAdi = "Malus sylvestris",
-                        ToplayiciAdi = "Bahçe Örneği",
-                        ToplayiciKodu = "-",
-                        ToplayiciNumarasi = "-",
-                        Lokasyon = "-",
-                        Koordinat = "-",
-                        AksesyonNumarasi = "2023-00350",
-                        Fotograf = "Yok"
-                    },
-                    new HerbaryumDefteri
-                    {
-                        HerbaryumNo = 456,
-                        BitkininAdi = "Aethionema turcica",
-                        ToplayiciAdi = "Adil Güner",
-                        ToplayiciKodu = "AG",
-                        ToplayiciNumarasi = "12321",
-                        Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
-                        Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
-                        AksesyonNumarasi = "2023-00347",
-                        Fotograf = "Var"
-                    }
-            );
-        }
+            // HerbaryumDefteri HasData
+            modelBuilder.Entity<HerbaryumDefteri>()
+                   .HasOne(h => h.Aksesyon)
+                   .WithOne(a => a.Herbaryum)
+                   .HasForeignKey<HerbaryumDefteri>(h => h.AksesyonNumarasi)
+                   .HasPrincipalKey<AksesyonDefteri>(a => a.AksesyonNumarasi)
+                   .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<HerbaryumDefteri>().HasData(
+            new HerbaryumDefteri
+            {
+                HerbaryumNo = 345,
+                BitkininAdi = "Thermopsis turcica",
+                ToplayiciAdi = "Birol Sever",
+                ToplayiciKodu = "BRLS",
+                ToplayiciNumarasi = "6754",
+                Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
+                Koordinat = "33°23'12,54'' K - 25°34'34,32'' D",
+                AksesyonNumarasi = "2023-00354",
+                Fotograf = "Var"
+            },
+            new HerbaryumDefteri
+            {
+                HerbaryumNo = 234,
+                BitkininAdi = "Crocus biflorus",
+                ToplayiciAdi = "Emrah Çelik",
+                ToplayiciKodu = "ECLK",
+                ToplayiciNumarasi = "1201",
+                Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
+                Koordinat = "39°21'23,34'' K - 34°32'34,44'' D",
+                AksesyonNumarasi = "2023-00355",
+                Fotograf = "Var"
+            },
+            new HerbaryumDefteri
+            {
+                HerbaryumNo = 123,
+                BitkininAdi = "Malus sylvestris",
+                ToplayiciAdi = "Bahçe Örneği",
+                ToplayiciKodu = "-",
+                ToplayiciNumarasi = "-",
+                Lokasyon = "-",
+                Koordinat = "-",
+                AksesyonNumarasi = "2023-00350",
+                Fotograf = "Yok"
+            },
+            new HerbaryumDefteri
+            {
+                HerbaryumNo = 456,
+                BitkininAdi = "Aethionema turcica",
+                ToplayiciAdi = "Adil Güner",
+                ToplayiciKodu = "AG",
+                ToplayiciNumarasi = "12321",
+                Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
+                Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
+                AksesyonNumarasi = "2023-00347",
+                Fotograf = "Var"
+            }
+    );
 
-    }
+            // TohumBankasi ile AksesyonDefteri arasında birebir ilişki
+            modelBuilder.Entity<TohumBankasi>()
+                .HasOne(t => t.Aksesyon)
+                .WithOne()
+                .HasForeignKey<TohumBankasi>(t => t.AksesyonNumarasi)
+                .HasPrincipalKey<AksesyonDefteri>(a => a.AksesyonNumarasi)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // TohumBankasi seed
+            modelBuilder.Entity<TohumBankasi>().HasData(
+                new TohumBankasi
+                {
+                    AksesyonNumarasi = "2023-00347",
+                    Miktar = "1 küçük şişe (30cl)",
+                    BulunduguDolap = "1A3"
+                },
+                new TohumBankasi
+                {
+                    AksesyonNumarasi = "2023-00348",
+                    Miktar = "1 küçük şişe (30cl), 1 büyük şişe (100cl)",
+                    BulunduguDolap = "2B4"
+                },
+                new TohumBankasi
+                {
+                    AksesyonNumarasi = "2023-00352",
+                    Miktar = "1 orta şişe (50 cl)",
+                    BulunduguDolap = "3A2"
+                },
+                new TohumBankasi
+                {
+                    AksesyonNumarasi = "2023-00353",
+                    Miktar = "1 büyük şişe (100 cl)",
+                    BulunduguDolap = "2D3"
+                },
+                new TohumBankasi
+                {
+                    AksesyonNumarasi = "2023-00354",
+                    Miktar = "1 orta şişe (50 cl), 2 büyük şişe (100 cl)",
+                    BulunduguDolap = "1A2"
+                }
+                );
+            }
+        }
 }
