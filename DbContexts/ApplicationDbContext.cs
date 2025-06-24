@@ -10,17 +10,17 @@ namespace Otobur.Data
         {
 
         }
-        public DbSet<AksesyonDefteri> AksesyonNumarasi { get; set; }
-        public DbSet<HerbaryumDefteri> HerbaryumDefteri { get; set; }
+        public DbSet<Aksesyon> AksesyonNumarasi { get; set; }
+        public DbSet<Herbaryum> HerbaryumDefteri { get; set; }
         public DbSet<TohumBankasi> TohumBankasi { get; set; }
         public DbSet<Kullanici> Kullanicilar { get; set; }
-        public DbSet<BitkiDurum> BitkiDurum { get; set; }
+        public DbSet<BitkiDurum> BitkiDurumu { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             //AksesyonDefteri  
-            modelBuilder.Entity<AksesyonDefteri>().HasData(
-                new AksesyonDefteri
+            modelBuilder.Entity<Aksesyon>().HasData(
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00345",
                     BitkininAdi = "Pinus pinea",
@@ -33,7 +33,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "-",
                     ToplayiciNumarasi = "-"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00346",
                     BitkininAdi = "Cedrus libani",
@@ -46,7 +46,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "-",
                     ToplayiciNumarasi = "-"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00347",
                     BitkininAdi = "Aethionema turcica",
@@ -59,7 +59,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "AG",
                     ToplayiciNumarasi = "12321"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00348",
                     BitkininAdi = "Cota tinctoria",
@@ -72,7 +72,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "-",
                     ToplayiciNumarasi = "-"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00349",
                     BitkininAdi = "Mespilus germanica",
@@ -85,7 +85,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "-",
                     ToplayiciNumarasi = "-"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00350",
                     BitkininAdi = "Malus sylvestris",
@@ -98,7 +98,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "-",
                     ToplayiciNumarasi = "-"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00351",
                     BitkininAdi = "Aucuba japonica",
@@ -111,7 +111,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "-",
                     ToplayiciNumarasi = "-"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00352",
                     BitkininAdi = "Pelargonium quercetorum",
@@ -124,7 +124,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "SKNG",
                     ToplayiciNumarasi = "4532"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00353",
                     BitkininAdi = "Flueggea anatolica",
@@ -137,7 +137,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "MCAN",
                     ToplayiciNumarasi = "2345"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00354",
                     BitkininAdi = "Thermopsis turcica",
@@ -150,7 +150,7 @@ namespace Otobur.Data
                     ToplayiciKodu = "BRLS",
                     ToplayiciNumarasi = "6754"
                 },
-                new AksesyonDefteri
+                new Aksesyon
                 {
                     AksesyonNumarasi = "2023-00355",
                     BitkininAdi = "Crocus biflorus",
@@ -164,211 +164,6 @@ namespace Otobur.Data
                     ToplayiciNumarasi = "1201"
                 }
                 );
-            // HerbaryumDefteri HasData
-            modelBuilder.Entity<HerbaryumDefteri>()
-                   .HasOne(h => h.Aksesyon)
-                   .WithOne(a => a.Herbaryum)
-                   .HasForeignKey<HerbaryumDefteri>(h => h.AksesyonNumarasi)
-                   .HasPrincipalKey<AksesyonDefteri>(a => a.AksesyonNumarasi)
-                   .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<HerbaryumDefteri>().HasData(
-            new HerbaryumDefteri
-            {
-                HerbaryumNo = 345,
-                BitkininAdi = "Thermopsis turcica",
-                ToplayiciAdi = "Birol Sever",
-                ToplayiciKodu = "BRLS",
-                ToplayiciNumarasi = "6754",
-                Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
-                Koordinat = "33°23'12,54'' K - 25°34'34,32'' D",
-                AksesyonNumarasi = "2023-00354",
-                Fotograf = "Var"
-            },
-            new HerbaryumDefteri
-            {
-                HerbaryumNo = 234,
-                BitkininAdi = "Crocus biflorus",
-                ToplayiciAdi = "Emrah Çelik",
-                ToplayiciKodu = "ECLK",
-                ToplayiciNumarasi = "1201",
-                Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
-                Koordinat = "39°21'23,34'' K - 34°32'34,44'' D",
-                AksesyonNumarasi = "2023-00355",
-                Fotograf = "Var"
-            },
-            new HerbaryumDefteri
-            {
-                HerbaryumNo = 123,
-                BitkininAdi = "Malus sylvestris",
-                ToplayiciAdi = "Bahçe Örneği",
-                ToplayiciKodu = "-",
-                ToplayiciNumarasi = "-",
-                Lokasyon = "-",
-                Koordinat = "-",
-                AksesyonNumarasi = "2023-00350",
-                Fotograf = "Yok"
-            },
-            new HerbaryumDefteri
-            {
-                HerbaryumNo = 456,
-                BitkininAdi = "Aethionema turcica",
-                ToplayiciAdi = "Adil Güner",
-                ToplayiciKodu = "AG",
-                ToplayiciNumarasi = "12321",
-                Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
-                Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
-                AksesyonNumarasi = "2023-00347",
-                Fotograf = "Var"
-            }
-    );
-
-            // TohumBankasi ile AksesyonDefteri arasında birebir ilişki
-            modelBuilder.Entity<TohumBankasi>()
-                .HasOne(t => t.Aksesyon)
-                .WithOne()
-                .HasForeignKey<TohumBankasi>(t => t.AksesyonNumarasi)
-                .HasPrincipalKey<AksesyonDefteri>(a => a.AksesyonNumarasi)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // TohumBankasi seed
-            modelBuilder.Entity<TohumBankasi>().HasData(
-                new TohumBankasi
-                {
-                    AksesyonNumarasi = "2023-00347",
-                    Miktar = "1 küçük şişe (30cl)",
-                    BulunduguDolap = "1A3"
-                },
-                new TohumBankasi
-                {
-                    AksesyonNumarasi = "2023-00348",
-                    Miktar = "1 küçük şişe (30cl), 1 büyük şişe (100cl)",
-                    BulunduguDolap = "2B4"
-                },
-                new TohumBankasi
-                {
-                    AksesyonNumarasi = "2023-00352",
-                    Miktar = "1 orta şişe (50 cl)",
-                    BulunduguDolap = "3A2"
-                },
-                new TohumBankasi
-                {
-                    AksesyonNumarasi = "2023-00353",
-                    Miktar = "1 büyük şişe (100 cl)",
-                    BulunduguDolap = "2D3"
-                },
-                new TohumBankasi
-                {
-                    AksesyonNumarasi = "2023-00354",
-                    Miktar = "1 orta şişe (50 cl), 2 büyük şişe (100 cl)",
-                    BulunduguDolap = "1A2"
-                }
-                );
-
-            // BitkiDurum ile AksesyonDefteri arasında birebir ilişki
-            modelBuilder.Entity<BitkiDurum>()
-                .HasOne(b => b.Aksesyon)
-                .WithOne()
-                .HasForeignKey<BitkiDurum>(b => b.AksesyonNumarasi)
-                .HasPrincipalKey<AksesyonDefteri>(a => a.AksesyonNumarasi)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // BitkiDurum seed
-            modelBuilder.Entity<BitkiDurum>().HasData(
-                new BitkiDurum
-                {
-                    AksesyonNumarasi = "2023-00345",
-                    GozlemTarihi = new DateTime(2025, 4, 12),
-                    BahcedeBulunduguYer = "Merkez Ada; Üst Gölet Alanı",
-                    YerKodu = "1-ÜG",
-                    BitkininDurumu = "İyi",
-                    VejetasyonDurumu = "Yapraklı",
-                    Gozlem = "-"
-                },
-                new BitkiDurum
-                {
-                    AksesyonNumarasi = "2023-00346",
-                    GozlemTarihi = new DateTime(2025, 5, 13),
-                    BahcedeBulunduguYer = "Etrüjül Adası; Bataklık Bölümü",
-                    YerKodu = "2-BB",
-                    BitkininDurumu = "Mükemmel",
-                    VejetasyonDurumu = "Yapraklı ve Kozalak Oluşumu Başlamış",
-                    Gozlem = "-"
-                },
-                new BitkiDurum
-                {
-                    AksesyonNumarasi = "2023-00350",
-                    GozlemTarihi = new DateTime(2025, 3, 1),
-                    BahcedeBulunduguYer = "Trakya Adası; Meyve Bahçesi",
-                    YerKodu = "8-MB",
-                    BitkininDurumu = "Vasat",
-                    VejetasyonDurumu = "Yapraklı ve Çiçekli",
-                    Gozlem = "Yapraklarda buruşukluk hastalığı gözlendi, DECIS ilacı uygulandı"
-                }
-            );
-
-            // Kullanici seed
-            modelBuilder.Entity<Kullanici>().HasData(
-                new Kullanici
-                {
-                    KullaniciAdi = "Adil Güner",
-                    KullaniciKodu = "AG",
-                    Parola = "parola1",
-                    Telefon = "0597 345 67 89",
-                    Eposta = "ornek@gmail.com",
-                    GorebilecegiTablolar = "",
-                    KayitYapabilecegiTablolar = "",
-                    KayitSilebilme = false,
-                    KullaniciGrubu = ""
-                },
-                new Kullanici
-                {
-                    KullaniciAdi = "Salih Sercan Kanoğlu",
-                    KullaniciKodu = "SKNG",
-                    Parola = "parola2",
-                    Telefon = "0587 123 45 67",
-                    Eposta = "ornek1@gmail.com",
-                    GorebilecegiTablolar = "",
-                    KayitYapabilecegiTablolar = "",
-                    KayitSilebilme = false,
-                    KullaniciGrubu = ""
-                },
-                new Kullanici
-                {
-                    KullaniciAdi = "Mahmut Can",
-                    KullaniciKodu = "MCAN",
-                    Parola = "parola3",
-                    Telefon = "0589 980 76 54",
-                    Eposta = "ornek2@gmail.com",
-                    GorebilecegiTablolar = "",
-                    KayitYapabilecegiTablolar = "",
-                    KayitSilebilme = false,
-                    KullaniciGrubu = ""
-                },
-                new Kullanici
-                {
-                    KullaniciAdi = "Birol Sever",
-                    KullaniciKodu = "BRLS",
-                    Parola = "parola4",
-                    Telefon = "0588 678 45 32",
-                    Eposta = "ornek3@gmail.com",
-                    GorebilecegiTablolar = "",
-                    KayitYapabilecegiTablolar = "",
-                    KayitSilebilme = false,
-                    KullaniciGrubu = ""
-                },
-                new Kullanici
-                {
-                    KullaniciAdi = "Emrah Çelik",
-                    KullaniciKodu = "ECLK",
-                    Parola = "parola5",
-                    Telefon = "0567 789 01 23",
-                    Eposta = "ornek4@gmail.com",
-                    GorebilecegiTablolar = "",
-                    KayitYapabilecegiTablolar = "",
-                    KayitSilebilme = false,
-                    KullaniciGrubu = ""
-                }
-            );
         }
     }
 }

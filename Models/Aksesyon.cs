@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-public class AksesyonDefteri
+public class Aksesyon
 {
     [Key]
     [Required]
@@ -22,9 +22,6 @@ public class AksesyonDefteri
     public string ToplayiciAdi { get; set; }
     public string ToplayiciKodu { get; set; }
     public string ToplayiciNumarasi { get; set; }
-
-    // Navigation property
-    public HerbaryumDefteri Herbaryum { get; set; }
 }
 
 public enum MateryalCesidiEnum

@@ -11,5 +11,5 @@ public class TohumBankasi
     public string BulunduguDolap { get; set; }
 
     // Navigation property
-    public AksesyonDefteri Aksesyon { get; set; }
+    public Aksesyon Aksesyon { get; set; }
 }

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-public class HerbaryumDefteri
+public class Herbaryum
 {
     [Key]
     public int HerbaryumNo { get; set; }
@@ -16,5 +16,5 @@ public class HerbaryumDefteri
     public string Fotograf { get; set; }
 
     // Navigation property to AksesyonDefteri
-    public AksesyonDefteri Aksesyon { get; set; }
+    public Aksesyon Aksesyon { get; set; }
 }

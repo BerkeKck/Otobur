@@ -16,7 +16,7 @@ namespace Otobur.Controllers
 
         public IActionResult Index()
         {
-            var bitkiDurumList = _db.BitkiDurum
+            var bitkiDurumList = _db.BitkiDurumu
                 .Include(b => b.Aksesyon)
                 .ToList();
             return View(bitkiDurumList);
