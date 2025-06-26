@@ -1,7 +1,8 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 public class Aksesyon
 {
     [Key]
@@ -18,11 +19,17 @@ public class Aksesyon
     public string Koordinat { get; set; }
 
     [DataType(DataType.Date)]
-    public DateTime ToplanmaTarihi { get; set; }
+    public DateTime? ToplanmaTarihi { get; set; }
 
-    public string ToplayiciAdi { get; set; }
-    public string ToplayiciKodu { get; set; }
-    public string ToplayiciNumarasi { get; set; }
+    public string KullaniciAdi { get; set; }
+    public string KullaniciKodu { get; set; }
+    public string KullaniciNumarasi { get; set; }
+
+    // Navigation properties
+    [BindNever]
+    public BitkiDurum BitkiDurum { get; set; }
+    [BindNever]
+    public TohumBankasi TohumBankasi { get; set; }
 }
 
 public enum MateryalCesidiEnum

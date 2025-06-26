@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Otobur.Data;
 
@@ -11,9 +12,11 @@ using Otobur.Data;
 namespace Otobur.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250626094432_TryFix")]
+    partial class TryFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,12 +62,12 @@ namespace Otobur.Migrations
                     b.Property<int>("MateryalCesidi")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ToplanmaTarihi")
+                    b.Property<DateTime>("ToplanmaTarihi")
                         .HasColumnType("datetime2");
 
                     b.HasKey("AksesyonNumarasi");
 
-                    b.ToTable("Aksesyonlar");
+                    b.ToTable("AksesyonNumarasi");
 
                     b.HasData(
                         new

@@ -41,11 +41,11 @@
                     <td>
                         @(obj.ToplanmaTarihi == DateTime.MinValue
                                             ? "-"
-                                            : obj.ToplanmaTarihi.ToString("dd.MM.yyyy"))
+                                            : obj.ToplanmaTarihi?.ToString("dd.MM.yyyy"))
                 </td>
-                <td>@obj.ToplayiciAdi</td>
-                <td>@obj.ToplayiciKodu</td>
-                <td>@obj.ToplayiciNumarasi</td>
+                <td>@obj.KullaniciAdi</td>
+                <td>@obj.KullaniciKodu</td>
+                <td>@obj.KullaniciNumarasi</td>
                 <td>
                     <div class="d-flex gap-2">
                             <a asp-controller="Aksesyon" asp-action="Edit" asp-route-id="@obj.AksesyonNumarasi"

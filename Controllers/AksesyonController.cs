@@ -12,7 +12,7 @@ namespace Otobur.Controllers
         }
         public IActionResult Index()
         {
-            List<Aksesyon> aksesyonList = _db.AksesyonNumarasi.ToList();
+            List<Aksesyon> aksesyonList = _db.Aksesyonlar.ToList();
             return View(aksesyonList);
         }
         // CREATE
@@ -24,9 +24,9 @@ namespace Otobur.Controllers
         [HttpPost]
         public IActionResult Create(Aksesyon obj)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _db.AksesyonNumarasi.Add(obj);
+                _db.Aksesyonlar.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -40,7 +40,7 @@ namespace Otobur.Controllers
             {
                 return NotFound();
             }
-            var aksesyon = _db.AksesyonNumarasi.FirstOrDefault(a => a.AksesyonNumarasi == id);
+            var aksesyon = _db.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
             if (aksesyon == null)
             {
                 return NotFound();
@@ -57,14 +57,39 @@ namespace Otobur.Controllers
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
+            ModelState.Remove(nameof(Aksesyon.BitkiDurum));
+            ModelState.Remove(nameof(Aksesyon.TohumBankasi));
+            if (!ModelState.IsValid)
             {
-                _db.Update(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                ViewBag.Errors = errors;
+                return View(obj);
             }
-            return View(obj);
+
+            // Mevcut kaydı çek
+            var aksesyonFromDb = _db.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
+            if (aksesyonFromDb == null)
+            {
+                return NotFound();
+            }
+
+            // Sadece formdan gelen alanları güncelle
+            aksesyonFromDb.BitkininAdi = obj.BitkininAdi;
+            aksesyonFromDb.MateryalCesidi = obj.MateryalCesidi;
+            aksesyonFromDb.Koken = obj.Koken;
+            aksesyonFromDb.Lokasyon = obj.Lokasyon;
+            aksesyonFromDb.Koordinat = obj.Koordinat;
+            aksesyonFromDb.ToplanmaTarihi = obj.ToplanmaTarihi;
+            aksesyonFromDb.KullaniciAdi = obj.KullaniciAdi;
+            aksesyonFromDb.KullaniciKodu = obj.KullaniciKodu;
+            aksesyonFromDb.KullaniciNumarasi = obj.KullaniciNumarasi;
+            // BitkiDurum ve TohumBankasi alanları değişmeden kalır
+
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
+
+
         // GET: Aksesyon/Delete/{id}
         public IActionResult Delete(string id)
         {
@@ -72,7 +97,7 @@ namespace Otobur.Controllers
             {
                 return NotFound();
             }
-            var aksesyonFromDb = _db.AksesyonNumarasi.Find(id);
+            var aksesyonFromDb = _db.Aksesyonlar.Find(id);
             if (aksesyonFromDb == null)
             {
                 return NotFound();
@@ -82,15 +107,14 @@ namespace Otobur.Controllers
 
         // POST: Aksesyon/Delete/{id}
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(string id)
         {
-            var aksesyon = _db.AksesyonNumarasi.Find(id);
+            var aksesyon = _db.Aksesyonlar.Find(id);
             if (aksesyon == null)
             {
                 return NotFound();
             }
-            _db.AksesyonNumarasi.Remove(aksesyon);
+            _db.Aksesyonlar.Remove(aksesyon);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

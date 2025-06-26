@@ -19,13 +19,13 @@
             <dt class="col-sm-4">Koordinat</dt>
             <dd class="col-sm-8">@Model.Koordinat</dd>
             <dt class="col-sm-4">Toplanma Tarihi</dt>
-            <dd class="col-sm-8">@Model.ToplanmaTarihi.ToShortDateString()</dd>
+            <dd class="col-sm-8">@Model.ToplanmaTarihi?.ToShortDateString()</dd>
             <dt class="col-sm-4">Toplayıcı Adı</dt>
-            <dd class="col-sm-8">@Model.ToplayiciAdi</dd>
+            <dd class="col-sm-8">@Model.KullaniciAdi</dd>
             <dt class="col-sm-4">Toplayıcı Kodu</dt>
-            <dd class="col-sm-8">@Model.ToplayiciKodu</dd>
+            <dd class="col-sm-8">@Model.KullaniciKodu</dd>
             <dt class="col-sm-4">Toplayıcı Numarası</dt>
-            <dd class="col-sm-8">@Model.ToplayiciNumarasi</dd>
+            <dd class="col-sm-8">@Model.KullaniciNumarasi</dd>
         </dl>
         <form asp-action="Delete" method="post">
             <input type="hidden" asp-for="AksesyonNumarasi" />

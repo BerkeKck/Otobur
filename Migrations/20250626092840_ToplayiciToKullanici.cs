@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Otobur.Migrations
 {
     /// <inheritdoc />
-    public partial class Hebaryum : Migration
+    public partial class ToplayiciToKullanici : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,9 +24,9 @@ namespace Otobur.Migrations
                     Lokasyon = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Koordinat = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ToplanmaTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ToplayiciAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToplayiciKodu = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToplayiciNumarasi = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    KullaniciAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KullaniciKodu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KullaniciNumarasi = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,7 +37,8 @@ namespace Otobur.Migrations
                 name: "Kullanicilar",
                 columns: table => new
                 {
-                    KullaniciAdi = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    KullaniciNumarasi = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    KullaniciAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     KullaniciKodu = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Parola = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -49,7 +50,7 @@ namespace Otobur.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Kullanicilar", x => x.KullaniciAdi);
+                    table.PrimaryKey("PK_Kullanicilar", x => x.KullaniciNumarasi);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,9 +83,9 @@ namespace Otobur.Migrations
                     HerbaryumNo = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BitkininAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToplayiciAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToplayiciKodu = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToplayiciNumarasi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KullaniciAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KullaniciKodu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KullaniciNumarasi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Lokasyon = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Koordinat = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AksesyonNumarasi = table.Column<string>(type: "nvarchar(20)", nullable: false),
@@ -122,20 +123,53 @@ namespace Otobur.Migrations
 
             migrationBuilder.InsertData(
                 table: "AksesyonNumarasi",
-                columns: new[] { "AksesyonNumarasi", "BitkininAdi", "Koken", "Koordinat", "Lokasyon", "MateryalCesidi", "ToplanmaTarihi", "ToplayiciAdi", "ToplayiciKodu", "ToplayiciNumarasi" },
+                columns: new[] { "AksesyonNumarasi", "BitkininAdi", "Koken", "Koordinat", "KullaniciAdi", "KullaniciKodu", "KullaniciNumarasi", "Lokasyon", "MateryalCesidi", "ToplanmaTarihi" },
                 values: new object[,]
                 {
-                    { "2023-00345", "Pinus pinea", "Kültür; Köken bilinmiyor", "-", "-", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "-", "-", "-" },
-                    { "2023-00346", "Cedrus libani", "Köken bilgisi yok", "-", "-", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "-", "-", "-" },
-                    { "2023-00347", "Aethionema turcica", "Doğal", "39°52'45.34'' K - 32°15'43.45'' D", "Ankara; Beypazarı, Çakal gölü, 1750 m", 4, new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "Asil Güner", "AG", "12321" },
-                    { "2023-00348", "Cota tinctoria", "Kültür; Köken Biliniyor", "-", "-", 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "-", "-", "-" },
-                    { "2023-00349", "Mespilus germanica", "Kültür; Köken Biliniyor", "-", "-", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "-", "-", "-" },
-                    { "2023-00350", "Malus sylvestris", "Kültür; Köken Biliniyor", "-", "-", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "-", "-", "-" },
-                    { "2023-00351", "Aucuba japonica", "Kültür; Köken Biliniyor", "-", "-", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "-", "-", "-" },
-                    { "2023-00352", "Pelargonium quercetorum", "Doğal", "41°12'32.12'' K - 38°34'26.87'' D", "Bitlis; Tatvan, Demir Dağı, 1350 m", 4, new DateTime(2022, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Salih Sercan Kanoğlu", "SKNG", "4532" },
-                    { "2023-00353", "Flueggea anatolica", "Doğal", "37°24'33.01'' K - 34°23'24.53'' D", "Mersin; Kadıncık Vadisi, 455 m", 4, new DateTime(2023, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mahmut Can", "MCAN", "2345" },
-                    { "2023-00354", "Thermopsis turcica", "Doğal", "39°23'13.45'' K - 31°23'15.42'' D", "Konya; Eber Gölü çevresi, 876 m", 4, new DateTime(2025, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Birol Sever", "BRLS", "6754" },
-                    { "2023-00355", "Crocus biflorus", "Doğal", "39°12'23.44'' K - 39°34'32.44'' D", "Erzincan; Keşiş Dağı, 1786 m", 1, new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Emrah Çelik", "ECLK", "1201" }
+                    { "2023-00345", "Pinus pinea", "Kültür; Köken bilinmiyor", "-", "-", "-", "-", "-", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00346", "Cedrus libani", "Köken bilgisi yok", "-", "-", "-", "-", "-", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00347", "Aethionema turcica", "Doğal", "39°52'45.34'' K - 32°15'43.45'' D", "Asil Güner", "AG", "12321", "Ankara; Beypazarı, Çakal gölü, 1750 m", 4, new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00348", "Cota tinctoria", "Kültür; Köken Biliniyor", "-", "-", "-", "-", "-", 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00349", "Mespilus germanica", "Kültür; Köken Biliniyor", "-", "-", "-", "-", "-", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00350", "Malus sylvestris", "Kültür; Köken Biliniyor", "-", "-", "-", "-", "-", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00351", "Aucuba japonica", "Kültür; Köken Biliniyor", "-", "-", "-", "-", "-", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00352", "Pelargonium quercetorum", "Doğal", "41°12'32.12'' K - 38°34'26.87'' D", "Salih Sercan Kanoğlu", "SKNG", "4532", "Bitlis; Tatvan, Demir Dağı, 1350 m", 4, new DateTime(2022, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00353", "Flueggea anatolica", "Doğal", "37°24'33.01'' K - 34°23'24.53'' D", "Mahmut Can", "MCAN", "2345", "Mersin; Kadıncık Vadisi, 455 m", 4, new DateTime(2023, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00354", "Thermopsis turcica", "Doğal", "39°23'13.45'' K - 31°23'15.42'' D", "Birol Sever", "BRLS", "6754", "Konya; Eber Gölü çevresi, 876 m", 4, new DateTime(2025, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "2023-00355", "Crocus biflorus", "Doğal", "39°12'23.44'' K - 39°34'32.44'' D", "Emrah Çelik", "ECLK", "1201", "Erzincan; Keşiş Dağı, 1786 m", 1, new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BitkiDurumu",
+                columns: new[] { "AksesyonNumarasi", "BahcedeBulunduguYer", "BitkininDurumu", "Gozlem", "GozlemTarihi", "VejetasyonDurumu", "YerKodu" },
+                values: new object[,]
+                {
+                    { "2023-00345", "Merkez Ada; Üst Gölet Alanı", "İyi", "-", new DateTime(2025, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Yapraklı", "1-ÜG" },
+                    { "2023-00346", "Ertuğrul Adası; Bataklık Bölümü", "Mükemmel", "-", new DateTime(2025, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "Yapraklı ve Kozalak Oluşumu Başlamış", "2-BB" },
+                    { "2023-00350", "Trakya Adası; Meyve Bahçesi", "Vasat", "Yapraklarda buruşukluk hastalığı gözlendi, DECIS ilacı uygulandı", new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Yapraklı ve Çiçekli", "8-MB" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "HerbaryumDefteri",
+                columns: new[] { "HerbaryumNo", "AksesyonNumarasi", "BitkininAdi", "Fotograf", "Koordinat", "KullaniciAdi", "KullaniciKodu", "KullaniciNumarasi", "Lokasyon" },
+                values: new object[,]
+                {
+                    { 123, "2023-00350", "Malus sylvestris", "Yok", "-", "Bahçe Örneği", "-", "-", "-" },
+                    { 234, "2023-00355", "Crocus biflorus", "Var", "39°21'23,34'' K - 34°32'34,44'' D", "Emrah Çelik", "ECLK", "1201", "Erzincan; Keşiş Dağı, 1786 m." },
+                    { 345, "2023-00354", "Thermopsis turcica", "Var", "39°23'12,54'' K - 25°34'34,32'' D", "Birol Sever", "BRLS", "6754", "Konya; Eber Gölü çevresi, 876 m." },
+                    { 456, "2023-00347", "Aethionema turcica", "Var", "36°52'45,34'' K - 23°15'34,45'' D", "Adil Güner", "AG", "12321", "Ankara; Beypazarı, Çakal gölü, 1750 m." }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TohumBankasi",
+                columns: new[] { "AksesyonNumarasi", "BulunduguDolap", "Miktar" },
+                values: new object[,]
+                {
+                    { "2023-00347", "1A3", "1 küçük şişe (30cl)" },
+                    { "2023-00348", "2B4", "1 küçük şişe (30cl), 1 büyük şişe (100cl)" },
+                    { "2023-00352", "3A2", "1 orta şişe (50 cl)" },
+                    { "2023-00353", "2D3", "1 büyük şişe (100 cl)" },
+                    { "2023-00354", "1A2", "1 orta şişe (50 cl), 2 büyük şişe (100 cl)" }
                 });
 
             migrationBuilder.CreateIndex(

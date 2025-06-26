@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 public class Kullanici
 {
     [Key]
+    public string KullaniciNumarasi { get; set; } // KullaniciAdi yerine KullaniciNumarasi kullanýldý
     public string KullaniciAdi { get; set; }
     public string KullaniciKodu { get; set; }
     public string Parola { get; set; } 

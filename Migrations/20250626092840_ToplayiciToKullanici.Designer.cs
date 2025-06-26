@@ -12,8 +12,8 @@ using Otobur.Data;
 namespace Otobur.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250626082335_Hebaryum")]
-    partial class Hebaryum
+    [Migration("20250626092840_ToplayiciToKullanici")]
+    partial class ToplayiciToKullanici
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,18 @@ namespace Otobur.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("KullaniciAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KullaniciKodu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KullaniciNumarasi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Lokasyon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -52,18 +64,6 @@ namespace Otobur.Migrations
 
                     b.Property<DateTime>("ToplanmaTarihi")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ToplayiciAdi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ToplayiciKodu")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ToplayiciNumarasi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AksesyonNumarasi");
 
@@ -76,12 +76,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Pinus pinea",
                             Koken = "Kültür; Köken bilinmiyor",
                             Koordinat = "-",
+                            KullaniciAdi = "-",
+                            KullaniciKodu = "-",
+                            KullaniciNumarasi = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 0,
-                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "-",
-                            ToplayiciKodu = "-",
-                            ToplayiciNumarasi = "-"
+                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -89,12 +89,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Cedrus libani",
                             Koken = "Köken bilgisi yok",
                             Koordinat = "-",
+                            KullaniciAdi = "-",
+                            KullaniciKodu = "-",
+                            KullaniciNumarasi = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 0,
-                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "-",
-                            ToplayiciKodu = "-",
-                            ToplayiciNumarasi = "-"
+                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -102,12 +102,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Aethionema turcica",
                             Koken = "Doğal",
                             Koordinat = "39°52'45.34'' K - 32°15'43.45'' D",
+                            KullaniciAdi = "Asil Güner",
+                            KullaniciKodu = "AG",
+                            KullaniciNumarasi = "12321",
                             Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
                             MateryalCesidi = 4,
-                            ToplanmaTarihi = new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "Asil Güner",
-                            ToplayiciKodu = "AG",
-                            ToplayiciNumarasi = "12321"
+                            ToplanmaTarihi = new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -115,12 +115,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Cota tinctoria",
                             Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
+                            KullaniciAdi = "-",
+                            KullaniciKodu = "-",
+                            KullaniciNumarasi = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 4,
-                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "-",
-                            ToplayiciKodu = "-",
-                            ToplayiciNumarasi = "-"
+                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -128,12 +128,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Mespilus germanica",
                             Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
+                            KullaniciAdi = "-",
+                            KullaniciKodu = "-",
+                            KullaniciNumarasi = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 5,
-                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "-",
-                            ToplayiciKodu = "-",
-                            ToplayiciNumarasi = "-"
+                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -141,12 +141,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Malus sylvestris",
                             Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
+                            KullaniciAdi = "-",
+                            KullaniciKodu = "-",
+                            KullaniciNumarasi = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 0,
-                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "-",
-                            ToplayiciKodu = "-",
-                            ToplayiciNumarasi = "-"
+                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -154,12 +154,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Aucuba japonica",
                             Koken = "Kültür; Köken Biliniyor",
                             Koordinat = "-",
+                            KullaniciAdi = "-",
+                            KullaniciKodu = "-",
+                            KullaniciNumarasi = "-",
                             Lokasyon = "-",
                             MateryalCesidi = 5,
-                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "-",
-                            ToplayiciKodu = "-",
-                            ToplayiciNumarasi = "-"
+                            ToplanmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -167,12 +167,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Pelargonium quercetorum",
                             Koken = "Doğal",
                             Koordinat = "41°12'32.12'' K - 38°34'26.87'' D",
+                            KullaniciAdi = "Salih Sercan Kanoğlu",
+                            KullaniciKodu = "SKNG",
+                            KullaniciNumarasi = "4532",
                             Lokasyon = "Bitlis; Tatvan, Demir Dağı, 1350 m",
                             MateryalCesidi = 4,
-                            ToplanmaTarihi = new DateTime(2022, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "Salih Sercan Kanoğlu",
-                            ToplayiciKodu = "SKNG",
-                            ToplayiciNumarasi = "4532"
+                            ToplanmaTarihi = new DateTime(2022, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -180,12 +180,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Flueggea anatolica",
                             Koken = "Doğal",
                             Koordinat = "37°24'33.01'' K - 34°23'24.53'' D",
+                            KullaniciAdi = "Mahmut Can",
+                            KullaniciKodu = "MCAN",
+                            KullaniciNumarasi = "2345",
                             Lokasyon = "Mersin; Kadıncık Vadisi, 455 m",
                             MateryalCesidi = 4,
-                            ToplanmaTarihi = new DateTime(2023, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "Mahmut Can",
-                            ToplayiciKodu = "MCAN",
-                            ToplayiciNumarasi = "2345"
+                            ToplanmaTarihi = new DateTime(2023, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -193,12 +193,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Thermopsis turcica",
                             Koken = "Doğal",
                             Koordinat = "39°23'13.45'' K - 31°23'15.42'' D",
+                            KullaniciAdi = "Birol Sever",
+                            KullaniciKodu = "BRLS",
+                            KullaniciNumarasi = "6754",
                             Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
                             MateryalCesidi = 4,
-                            ToplanmaTarihi = new DateTime(2025, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "Birol Sever",
-                            ToplayiciKodu = "BRLS",
-                            ToplayiciNumarasi = "6754"
+                            ToplanmaTarihi = new DateTime(2025, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -206,12 +206,12 @@ namespace Otobur.Migrations
                             BitkininAdi = "Crocus biflorus",
                             Koken = "Doğal",
                             Koordinat = "39°12'23.44'' K - 39°34'32.44'' D",
+                            KullaniciAdi = "Emrah Çelik",
+                            KullaniciKodu = "ECLK",
+                            KullaniciNumarasi = "1201",
                             Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
                             MateryalCesidi = 1,
-                            ToplanmaTarihi = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ToplayiciAdi = "Emrah Çelik",
-                            ToplayiciKodu = "ECLK",
-                            ToplayiciNumarasi = "1201"
+                            ToplanmaTarihi = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -246,6 +246,38 @@ namespace Otobur.Migrations
                     b.HasKey("AksesyonNumarasi");
 
                     b.ToTable("BitkiDurumu");
+
+                    b.HasData(
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00345",
+                            BahcedeBulunduguYer = "Merkez Ada; Üst Gölet Alanı",
+                            BitkininDurumu = "İyi",
+                            Gozlem = "-",
+                            GozlemTarihi = new DateTime(2025, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VejetasyonDurumu = "Yapraklı",
+                            YerKodu = "1-ÜG"
+                        },
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00346",
+                            BahcedeBulunduguYer = "Ertuğrul Adası; Bataklık Bölümü",
+                            BitkininDurumu = "Mükemmel",
+                            Gozlem = "-",
+                            GozlemTarihi = new DateTime(2025, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VejetasyonDurumu = "Yapraklı ve Kozalak Oluşumu Başlamış",
+                            YerKodu = "2-BB"
+                        },
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00350",
+                            BahcedeBulunduguYer = "Trakya Adası; Meyve Bahçesi",
+                            BitkininDurumu = "Vasat",
+                            Gozlem = "Yapraklarda buruşukluk hastalığı gözlendi, DECIS ilacı uygulandı",
+                            GozlemTarihi = new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VejetasyonDurumu = "Yapraklı ve Çiçekli",
+                            YerKodu = "8-MB"
+                        });
                 });
 
             modelBuilder.Entity("Herbaryum", b =>
@@ -272,19 +304,19 @@ namespace Otobur.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("KullaniciAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KullaniciKodu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KullaniciNumarasi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Lokasyon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ToplayiciAdi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ToplayiciKodu")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ToplayiciNumarasi")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -293,11 +325,61 @@ namespace Otobur.Migrations
                     b.HasIndex("AksesyonNumarasi");
 
                     b.ToTable("HerbaryumDefteri");
+
+                    b.HasData(
+                        new
+                        {
+                            HerbaryumNo = 345,
+                            AksesyonNumarasi = "2023-00354",
+                            BitkininAdi = "Thermopsis turcica",
+                            Fotograf = "Var",
+                            Koordinat = "39°23'12,54'' K - 25°34'34,32'' D",
+                            KullaniciAdi = "Birol Sever",
+                            KullaniciKodu = "BRLS",
+                            KullaniciNumarasi = "6754",
+                            Lokasyon = "Konya; Eber Gölü çevresi, 876 m."
+                        },
+                        new
+                        {
+                            HerbaryumNo = 234,
+                            AksesyonNumarasi = "2023-00355",
+                            BitkininAdi = "Crocus biflorus",
+                            Fotograf = "Var",
+                            Koordinat = "39°21'23,34'' K - 34°32'34,44'' D",
+                            KullaniciAdi = "Emrah Çelik",
+                            KullaniciKodu = "ECLK",
+                            KullaniciNumarasi = "1201",
+                            Lokasyon = "Erzincan; Keşiş Dağı, 1786 m."
+                        },
+                        new
+                        {
+                            HerbaryumNo = 123,
+                            AksesyonNumarasi = "2023-00350",
+                            BitkininAdi = "Malus sylvestris",
+                            Fotograf = "Yok",
+                            Koordinat = "-",
+                            KullaniciAdi = "Bahçe Örneği",
+                            KullaniciKodu = "-",
+                            KullaniciNumarasi = "-",
+                            Lokasyon = "-"
+                        },
+                        new
+                        {
+                            HerbaryumNo = 456,
+                            AksesyonNumarasi = "2023-00347",
+                            BitkininAdi = "Aethionema turcica",
+                            Fotograf = "Var",
+                            Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
+                            KullaniciAdi = "Adil Güner",
+                            KullaniciKodu = "AG",
+                            KullaniciNumarasi = "12321",
+                            Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m."
+                        });
                 });
 
             modelBuilder.Entity("Kullanici", b =>
                 {
-                    b.Property<string>("KullaniciAdi")
+                    b.Property<string>("KullaniciNumarasi")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Eposta")
@@ -312,6 +394,10 @@ namespace Otobur.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("KayitYapabilecegiTablolar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KullaniciAdi")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -331,7 +417,7 @@ namespace Otobur.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("KullaniciAdi");
+                    b.HasKey("KullaniciNumarasi");
 
                     b.ToTable("Kullanicilar");
                 });
@@ -352,13 +438,45 @@ namespace Otobur.Migrations
                     b.HasKey("AksesyonNumarasi");
 
                     b.ToTable("TohumBankasi");
+
+                    b.HasData(
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00347",
+                            BulunduguDolap = "1A3",
+                            Miktar = "1 küçük şişe (30cl)"
+                        },
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00348",
+                            BulunduguDolap = "2B4",
+                            Miktar = "1 küçük şişe (30cl), 1 büyük şişe (100cl)"
+                        },
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00352",
+                            BulunduguDolap = "3A2",
+                            Miktar = "1 orta şişe (50 cl)"
+                        },
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00353",
+                            BulunduguDolap = "2D3",
+                            Miktar = "1 büyük şişe (100 cl)"
+                        },
+                        new
+                        {
+                            AksesyonNumarasi = "2023-00354",
+                            BulunduguDolap = "1A2",
+                            Miktar = "1 orta şişe (50 cl), 2 büyük şişe (100 cl)"
+                        });
                 });
 
             modelBuilder.Entity("BitkiDurum", b =>
                 {
                     b.HasOne("Aksesyon", "Aksesyon")
-                        .WithMany()
-                        .HasForeignKey("AksesyonNumarasi")
+                        .WithOne("BitkiDurum")
+                        .HasForeignKey("BitkiDurum", "AksesyonNumarasi")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -379,12 +497,21 @@ namespace Otobur.Migrations
             modelBuilder.Entity("TohumBankasi", b =>
                 {
                     b.HasOne("Aksesyon", "Aksesyon")
-                        .WithMany()
-                        .HasForeignKey("AksesyonNumarasi")
+                        .WithOne("TohumBankasi")
+                        .HasForeignKey("TohumBankasi", "AksesyonNumarasi")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Aksesyon");
+                });
+
+            modelBuilder.Entity("Aksesyon", b =>
+                {
+                    b.Navigation("BitkiDurum")
+                        .IsRequired();
+
+                    b.Navigation("TohumBankasi")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
