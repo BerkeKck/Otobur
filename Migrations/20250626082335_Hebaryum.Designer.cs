@@ -12,8 +12,8 @@ using Otobur.Data;
 namespace Otobur.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250622131130_CreateToDB")]
-    partial class CreateToDB
+    [Migration("20250626082335_Hebaryum")]
+    partial class Hebaryum
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,10 +25,11 @@ namespace Otobur.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AksesyonDefteri", b =>
+            modelBuilder.Entity("Aksesyon", b =>
                 {
                     b.Property<string>("AksesyonNumarasi")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("BitkininAdi")
                         .IsRequired()
@@ -66,7 +67,7 @@ namespace Otobur.Migrations
 
                     b.HasKey("AksesyonNumarasi");
 
-                    b.ToTable("AksesyonDefteri");
+                    b.ToTable("AksesyonNumarasi");
 
                     b.HasData(
                         new
@@ -217,7 +218,7 @@ namespace Otobur.Migrations
             modelBuilder.Entity("BitkiDurum", b =>
                 {
                     b.Property<string>("AksesyonNumarasi")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("BahcedeBulunduguYer")
                         .IsRequired()
@@ -244,42 +245,10 @@ namespace Otobur.Migrations
 
                     b.HasKey("AksesyonNumarasi");
 
-                    b.ToTable("BitkiDurum");
-
-                    b.HasData(
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00345",
-                            BahcedeBulunduguYer = "Merkez Ada; Üst Gölet Alanı",
-                            BitkininDurumu = "İyi",
-                            Gozlem = "-",
-                            GozlemTarihi = new DateTime(2025, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VejetasyonDurumu = "Yapraklı",
-                            YerKodu = "1-ÜG"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00346",
-                            BahcedeBulunduguYer = "Etrüjül Adası; Bataklık Bölümü",
-                            BitkininDurumu = "Mükemmel",
-                            Gozlem = "-",
-                            GozlemTarihi = new DateTime(2025, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VejetasyonDurumu = "Yapraklı ve Kozalak Oluşumu Başlamış",
-                            YerKodu = "2-BB"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00350",
-                            BahcedeBulunduguYer = "Trakya Adası; Meyve Bahçesi",
-                            BitkininDurumu = "Vasat",
-                            Gozlem = "Yapraklarda buruşukluk hastalığı gözlendi, DECIS ilacı uygulandı",
-                            GozlemTarihi = new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VejetasyonDurumu = "Yapraklı ve Çiçekli",
-                            YerKodu = "8-MB"
-                        });
+                    b.ToTable("BitkiDurumu");
                 });
 
-            modelBuilder.Entity("HerbaryumDefteri", b =>
+            modelBuilder.Entity("Herbaryum", b =>
                 {
                     b.Property<int>("HerbaryumNo")
                         .ValueGeneratedOnAdd()
@@ -289,7 +258,7 @@ namespace Otobur.Migrations
 
                     b.Property<string>("AksesyonNumarasi")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("BitkininAdi")
                         .IsRequired()
@@ -321,60 +290,9 @@ namespace Otobur.Migrations
 
                     b.HasKey("HerbaryumNo");
 
-                    b.HasIndex("AksesyonNumarasi")
-                        .IsUnique();
+                    b.HasIndex("AksesyonNumarasi");
 
                     b.ToTable("HerbaryumDefteri");
-
-                    b.HasData(
-                        new
-                        {
-                            HerbaryumNo = 345,
-                            AksesyonNumarasi = "2023-00354",
-                            BitkininAdi = "Thermopsis turcica",
-                            Fotograf = "Var",
-                            Koordinat = "33°23'12,54'' K - 25°34'34,32'' D",
-                            Lokasyon = "Konya; Eber Gölü çevresi, 876 m",
-                            ToplayiciAdi = "Birol Sever",
-                            ToplayiciKodu = "BRLS",
-                            ToplayiciNumarasi = "6754"
-                        },
-                        new
-                        {
-                            HerbaryumNo = 234,
-                            AksesyonNumarasi = "2023-00355",
-                            BitkininAdi = "Crocus biflorus",
-                            Fotograf = "Var",
-                            Koordinat = "39°21'23,34'' K - 34°32'34,44'' D",
-                            Lokasyon = "Erzincan; Keşiş Dağı, 1786 m",
-                            ToplayiciAdi = "Emrah Çelik",
-                            ToplayiciKodu = "ECLK",
-                            ToplayiciNumarasi = "1201"
-                        },
-                        new
-                        {
-                            HerbaryumNo = 123,
-                            AksesyonNumarasi = "2023-00350",
-                            BitkininAdi = "Malus sylvestris",
-                            Fotograf = "Yok",
-                            Koordinat = "-",
-                            Lokasyon = "-",
-                            ToplayiciAdi = "Bahçe Örneği",
-                            ToplayiciKodu = "-",
-                            ToplayiciNumarasi = "-"
-                        },
-                        new
-                        {
-                            HerbaryumNo = 456,
-                            AksesyonNumarasi = "2023-00347",
-                            BitkininAdi = "Aethionema turcica",
-                            Fotograf = "Var",
-                            Koordinat = "36°52'45,34'' K - 23°15'34,45'' D",
-                            Lokasyon = "Ankara; Beypazarı, Çakal gölü, 1750 m",
-                            ToplayiciAdi = "Adil Güner",
-                            ToplayiciKodu = "AG",
-                            ToplayiciNumarasi = "12321"
-                        });
                 });
 
             modelBuilder.Entity("Kullanici", b =>
@@ -416,74 +334,12 @@ namespace Otobur.Migrations
                     b.HasKey("KullaniciAdi");
 
                     b.ToTable("Kullanicilar");
-
-                    b.HasData(
-                        new
-                        {
-                            KullaniciAdi = "Adil Güner",
-                            Eposta = "ornek@gmail.com",
-                            GorebilecegiTablolar = "",
-                            KayitSilebilme = false,
-                            KayitYapabilecegiTablolar = "",
-                            KullaniciGrubu = "",
-                            KullaniciKodu = "AG",
-                            Parola = "parola1",
-                            Telefon = "0597 345 67 89"
-                        },
-                        new
-                        {
-                            KullaniciAdi = "Salih Sercan Kanoğlu",
-                            Eposta = "ornek1@gmail.com",
-                            GorebilecegiTablolar = "",
-                            KayitSilebilme = false,
-                            KayitYapabilecegiTablolar = "",
-                            KullaniciGrubu = "",
-                            KullaniciKodu = "SKNG",
-                            Parola = "parola2",
-                            Telefon = "0587 123 45 67"
-                        },
-                        new
-                        {
-                            KullaniciAdi = "Mahmut Can",
-                            Eposta = "ornek2@gmail.com",
-                            GorebilecegiTablolar = "",
-                            KayitSilebilme = false,
-                            KayitYapabilecegiTablolar = "",
-                            KullaniciGrubu = "",
-                            KullaniciKodu = "MCAN",
-                            Parola = "parola3",
-                            Telefon = "0589 980 76 54"
-                        },
-                        new
-                        {
-                            KullaniciAdi = "Birol Sever",
-                            Eposta = "ornek3@gmail.com",
-                            GorebilecegiTablolar = "",
-                            KayitSilebilme = false,
-                            KayitYapabilecegiTablolar = "",
-                            KullaniciGrubu = "",
-                            KullaniciKodu = "BRLS",
-                            Parola = "parola4",
-                            Telefon = "0588 678 45 32"
-                        },
-                        new
-                        {
-                            KullaniciAdi = "Emrah Çelik",
-                            Eposta = "ornek4@gmail.com",
-                            GorebilecegiTablolar = "",
-                            KayitSilebilme = false,
-                            KayitYapabilecegiTablolar = "",
-                            KullaniciGrubu = "",
-                            KullaniciKodu = "ECLK",
-                            Parola = "parola5",
-                            Telefon = "0567 789 01 23"
-                        });
                 });
 
             modelBuilder.Entity("TohumBankasi", b =>
                 {
                     b.Property<string>("AksesyonNumarasi")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("BulunduguDolap")
                         .IsRequired()
@@ -496,57 +352,25 @@ namespace Otobur.Migrations
                     b.HasKey("AksesyonNumarasi");
 
                     b.ToTable("TohumBankasi");
-
-                    b.HasData(
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00347",
-                            BulunduguDolap = "1A3",
-                            Miktar = "1 küçük şişe (30cl)"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00348",
-                            BulunduguDolap = "2B4",
-                            Miktar = "1 küçük şişe (30cl), 1 büyük şişe (100cl)"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00352",
-                            BulunduguDolap = "3A2",
-                            Miktar = "1 orta şişe (50 cl)"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00353",
-                            BulunduguDolap = "2D3",
-                            Miktar = "1 büyük şişe (100 cl)"
-                        },
-                        new
-                        {
-                            AksesyonNumarasi = "2023-00354",
-                            BulunduguDolap = "1A2",
-                            Miktar = "1 orta şişe (50 cl), 2 büyük şişe (100 cl)"
-                        });
                 });
 
             modelBuilder.Entity("BitkiDurum", b =>
                 {
-                    b.HasOne("AksesyonDefteri", "Aksesyon")
-                        .WithOne()
-                        .HasForeignKey("BitkiDurum", "AksesyonNumarasi")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Aksesyon", "Aksesyon")
+                        .WithMany()
+                        .HasForeignKey("AksesyonNumarasi")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Aksesyon");
                 });
 
-            modelBuilder.Entity("HerbaryumDefteri", b =>
+            modelBuilder.Entity("Herbaryum", b =>
                 {
-                    b.HasOne("AksesyonDefteri", "Aksesyon")
-                        .WithOne("Herbaryum")
-                        .HasForeignKey("HerbaryumDefteri", "AksesyonNumarasi")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Aksesyon", "Aksesyon")
+                        .WithMany()
+                        .HasForeignKey("AksesyonNumarasi")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Aksesyon");
@@ -554,19 +378,13 @@ namespace Otobur.Migrations
 
             modelBuilder.Entity("TohumBankasi", b =>
                 {
-                    b.HasOne("AksesyonDefteri", "Aksesyon")
-                        .WithOne()
-                        .HasForeignKey("TohumBankasi", "AksesyonNumarasi")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Aksesyon", "Aksesyon")
+                        .WithMany()
+                        .HasForeignKey("AksesyonNumarasi")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Aksesyon");
-                });
-
-            modelBuilder.Entity("AksesyonDefteri", b =>
-                {
-                    b.Navigation("Herbaryum")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

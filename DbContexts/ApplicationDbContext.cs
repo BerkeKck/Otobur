@@ -164,6 +164,15 @@ namespace Otobur.Data
                     ToplayiciNumarasi = "1201"
                 }
                 );
+            // HerbaryumDefteri
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Herbaryum>()
+                .HasOne(h => h.Aksesyon)
+                .WithMany() // or .WithMany(a => a.Herbaryumlar) if you have a collection
+                .HasForeignKey(h => h.AksesyonNumarasi)
+                .HasPrincipalKey(a => a.AksesyonNumarasi);
+
         }
     }
-}
+    }

@@ -6,6 +6,7 @@ public class Aksesyon
 {
     [Key]
     [Required]
+    [MaxLength(20)]
     public string AksesyonNumarasi { get; set; }
 
     [Required(ErrorMessage = "Bitkinin adý gereklidir.")]
