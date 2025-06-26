@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Otobur.Data; // DbContext için
+using Otobur.DataAccess.Data; // DbContext için
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 

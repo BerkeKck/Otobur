@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Otobur.Data;
+using Otobur.DataAccess.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
