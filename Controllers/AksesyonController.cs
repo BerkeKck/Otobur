@@ -53,12 +53,14 @@ namespace Otobur.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(string id, Aksesyon obj)
         {
+            // Navigation property hatalarını temizle
+            ModelState.Remove(nameof(Aksesyon.BitkiDurum));
+            ModelState.Remove(nameof(Aksesyon.TohumBankasi));
+
             if (id != obj.AksesyonNumarasi)
             {
                 return NotFound();
             }
-            ModelState.Remove(nameof(Aksesyon.BitkiDurum));
-            ModelState.Remove(nameof(Aksesyon.TohumBankasi));
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
@@ -66,14 +68,12 @@ namespace Otobur.Controllers
                 return View(obj);
             }
 
-            // Mevcut kaydı çek
             var aksesyonFromDb = _db.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
             if (aksesyonFromDb == null)
             {
                 return NotFound();
             }
 
-            // Sadece formdan gelen alanları güncelle
             aksesyonFromDb.BitkininAdi = obj.BitkininAdi;
             aksesyonFromDb.MateryalCesidi = obj.MateryalCesidi;
             aksesyonFromDb.Koken = obj.Koken;
@@ -83,7 +83,6 @@ namespace Otobur.Controllers
             aksesyonFromDb.KullaniciAdi = obj.KullaniciAdi;
             aksesyonFromDb.KullaniciKodu = obj.KullaniciKodu;
             aksesyonFromDb.KullaniciNumarasi = obj.KullaniciNumarasi;
-            // BitkiDurum ve TohumBankasi alanları değişmeden kalır
 
             _db.SaveChanges();
             return RedirectToAction("Index");

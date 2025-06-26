@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\Otobur.DataAccess\Otobur.DataAccess.csproj" />
+    <ProjectReference Include="..\Otobur.Models\Otobur.Models.csproj" />
   </ItemGroup>
 
 </Project>
