@@ -41,7 +41,12 @@ namespace Otobur.Controllers
             {
                 return NotFound();
             }
+            Aksesyon? aksesyonFromDb = _db.Aksesyonlar.Find(id);
+            Aksesyon? obj = _db.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
+            Aksesyon? AksesyonFromDb2 = _db.Aksesyonlar.Where(a => a.AksesyonNumarasi == id).FirstOrDefault();
+
             var aksesyon = _db.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
+
             if (aksesyon == null)
             {
                 return NotFound();
