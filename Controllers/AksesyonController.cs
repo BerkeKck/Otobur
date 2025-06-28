@@ -1,20 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Data;
+using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
 
 namespace Otobur.Controllers
 {
     public class AksesyonController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public AksesyonController(ApplicationDbContext db)
+        private readonly IAksesyonRepository _aksesyonRepo;  
+        public AksesyonController(IAksesyonRepository db)
         {
-            _db = db;
+            _aksesyonRepo = db;
         }
         public IActionResult Index()
         {
-            List<Aksesyon> aksesyonList = _db.Aksesyonlar.ToList();
-            return View(aksesyonList);
+            // Cast the result of _aksesyonRepo.GetAll() to IEnumerable<Aksesyon> before calling ToList()
+            List<Aksesyon> objAksesyonList = _aksesyonRepo.GetAll().ToList();
+            return View(objAksesyonList);
         }
         // CREATE
         public IActionResult Create()
@@ -25,10 +27,11 @@ namespace Otobur.Controllers
         [HttpPost]
         public IActionResult Create(Aksesyon obj)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _db.Aksesyonlar.Add(obj);
-                _db.SaveChanges();
+                _aksesyonRepo.Add(obj);
+                _aksesyonRepo.Save();    
+                TempData["success"] = "Aksesyon başarıyla eklendi.";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -41,17 +44,17 @@ namespace Otobur.Controllers
             {
                 return NotFound();
             }
-            Aksesyon? aksesyonFromDb = _db.Aksesyonlar.Find(id);
-            Aksesyon? obj = _db.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
-            Aksesyon? AksesyonFromDb2 = _db.Aksesyonlar.Where(a => a.AksesyonNumarasi == id).FirstOrDefault();
+            Aksesyon? aksesyonFromDb = _aksesyonRepo.Get(u => u.AksesyonNumarasi == id);
+            //Aksesyon? obj = _aksesyonRepo.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
+            //Aksesyon? AksesyonFromDb2 = _aksesyonRepo.Aksesyonlar.Where(a => a.AksesyonNumarasi == id).FirstOrDefault();
 
-            var aksesyon = _db.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
+            //var aksesyon = _aksesyonRepo.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
 
-            if (aksesyon == null)
+            if (aksesyonFromDb == null)
             {
                 return NotFound();
             }
-            return View(aksesyon);
+            return View(aksesyonFromDb);
         }
 
         // POST: Aksesyon/Edit/{id}
@@ -63,36 +66,17 @@ namespace Otobur.Controllers
             ModelState.Remove(nameof(Aksesyon.BitkiDurum));
             ModelState.Remove(nameof(Aksesyon.TohumBankasi));
 
-            if (id != obj.AksesyonNumarasi)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                _aksesyonRepo.Update(obj);
+                _aksesyonRepo.Save();
+                TempData["success"] = "Aksesyon başarıyla güncellendi.";
+                return RedirectToAction("Index");
             }
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                ViewBag.Errors = errors;
                 return View(obj);
             }
 
-            var aksesyonFromDb = _db.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
-            if (aksesyonFromDb == null)
-            {
-                return NotFound();
-            }
-
-            aksesyonFromDb.BitkininAdi = obj.BitkininAdi;
-            aksesyonFromDb.MateryalCesidi = obj.MateryalCesidi;
-            aksesyonFromDb.Koken = obj.Koken;
-            aksesyonFromDb.Lokasyon = obj.Lokasyon;
-            aksesyonFromDb.Koordinat = obj.Koordinat;
-            aksesyonFromDb.ToplanmaTarihi = obj.ToplanmaTarihi;
-            aksesyonFromDb.KullaniciAdi = obj.KullaniciAdi;
-            aksesyonFromDb.KullaniciKodu = obj.KullaniciKodu;
-            aksesyonFromDb.KullaniciNumarasi = obj.KullaniciNumarasi;
-
-            _db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+       
 
 
         // GET: Aksesyon/Delete/{id}
@@ -102,25 +86,26 @@ namespace Otobur.Controllers
             {
                 return NotFound();
             }
-            var aksesyonFromDb = _db.Aksesyonlar.Find(id);
+            Aksesyon? aksesyonFromDb = _aksesyonRepo.Get(u => u.AksesyonNumarasi == id);
+
             if (aksesyonFromDb == null)
             {
                 return NotFound();
             }
             return View(aksesyonFromDb);
         }
-
         // POST: Aksesyon/Delete/{id}
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(string id)
         {
-            var aksesyon = _db.Aksesyonlar.Find(id);
-            if (aksesyon == null)
+            Aksesyon? obj = _aksesyonRepo.Get(u => u.AksesyonNumarasi == id);  
+            if (obj == null)
             {
                 return NotFound();
             }
-            _db.Aksesyonlar.Remove(aksesyon);
-            _db.SaveChanges();
+            _aksesyonRepo.Remove(obj);
+            _aksesyonRepo.Save();
+            TempData["success"] = "Aksesyon başarıyla silindi.";
             return RedirectToAction("Index");
         }
     }
