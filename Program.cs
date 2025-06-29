@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IAksesyonRepository, AksesyonRepository>(); // Register the AksesyonRepository with dependency injection
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // dependency injection
 
 
 var app = builder.Build();
