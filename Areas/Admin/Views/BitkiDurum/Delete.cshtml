@@ -1,0 +1,31 @@
+﻿@using Otobur.Models.Models
+@model BitkiDurum
+
+<div class="container" style="max-width: 700px;">
+    <div class="border p-4 mt-4 bg-white rounded shadow-sm">
+        <h2 class="text-danger">Bitki Durum Sil</h2>
+        <hr />
+        <p>Bu kaydı silmek istediğinize emin misiniz?</p>
+        <dl class="row">
+            <dt class="col-sm-4">Aksesyon Numarası</dt>
+            <dd class="col-sm-8">@Model.AksesyonNumarasi</dd>
+            <dt class="col-sm-4">GozlemTarihi</dt>
+            <dd class="col-sm-8">@Model.GozlemTarihi.ToShortDateString()</dd>
+            <dt class="col-sm-4">Bahcede Bulundugu Yer</dt>
+            <dd class="col-sm-8">@Model.BahcedeBulunduguYer</dd>
+            <dt class="col-sm-4">Yer Kodu</dt>
+            <dd class="col-sm-8">@Model.YerKodu</dd>
+            <dt class="col-sm-4">Bitkinin Durumu</dt>
+            <dd class="col-sm-8">@Model.BitkininDurumu</dd>
+            <dt class="col-sm-4">Vejetasyon Durumu</dt>
+            <dd class="col-sm-8">@Model.VejetasyonDurumu</dd>
+            <dt class="col-sm-4">Gozlem</dt>
+            <dd class="col-sm-8">@Model.Gozlem</dd>
+        </dl>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="AksesyonNumarasi" />
+            <button type="submit" class="btn btn-danger">Sil</button>
+            <a asp-action="Index" class="btn btn-secondary">Vazgeç</a>
+        </form>
+    </div>
+</div>
