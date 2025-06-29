@@ -2,8 +2,9 @@
 using Otobur.DataAccess.Data;
 using System.Linq;
 
-namespace Otobur.Controllers
+namespace Otobur.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class YetkilendirmeController : Controller
     {
         private readonly ApplicationDbContext _db;

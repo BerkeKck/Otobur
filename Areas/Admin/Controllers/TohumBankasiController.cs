@@ -7,17 +7,17 @@ using System.Linq;
 namespace Otobur.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class HerbaryumController : Controller
+    public class TohumBankasiController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public HerbaryumController(IUnitOfWork unitOfWork)
+        public TohumBankasiController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            List<Herbaryum> objHerbaryumList = _unitOfWork.Herbaryum.GetAll().ToList();
-            return View(objHerbaryumList);
+            List<TohumBankasi> objTohumBankasiList = _unitOfWork.TohumBankasi.GetAll().ToList();
+            return View(objTohumBankasiList);
         }
         // CREATE
         public IActionResult Create()
@@ -26,47 +26,47 @@ namespace Otobur.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Herbaryum obj)
+        public IActionResult Create(TohumBankasi obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Herbaryum.Add(obj);
+                _unitOfWork.TohumBankasi.Add(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Herbaryum başarıyla eklendi.";
+                TempData["success"] = "TohumBankasi başarıyla eklendi.";
                 return RedirectToAction("Index");
             }
             return View(obj);
         }
 
-        // GET: Herbaryum/Edit/{id}
+        // GET: TohumBankasi/Edit/{id}
         public IActionResult Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            TohumBankasi? tohumBankasiFromDb = _unitOfWork.TohumBankasi.Get(u => u.AksesyonNumarasi == id);
 
-            if (herbaryumFromDb == null)
+            if (tohumBankasiFromDb == null)
             {
                 return NotFound();
             }
-            return View(herbaryumFromDb);
+            return View(tohumBankasiFromDb);
         }
 
-        // POST: Herbaryum/Edit/{id}
+        // POST: TohumBankasi/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, Herbaryum obj)
+        public IActionResult Edit(string id, TohumBankasi obj)
         {
             // Navigation property hatalarını temizle
-            ModelState.Remove(nameof(Herbaryum.AksesyonNumarasi));
+            ModelState.Remove(nameof(TohumBankasi.AksesyonNumarasi));
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.Herbaryum.Update(obj);
+                _unitOfWork.TohumBankasi.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Herbaryum başarıyla güncellendi.";
+                TempData["success"] = "TohumBankasi başarıyla güncellendi.";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -75,33 +75,33 @@ namespace Otobur.Areas.Admin.Controllers
 
 
 
-        // GET: Herbaryum/Delete/{id}
+        // GET: TohumBankasi/Delete/{id}
         public IActionResult Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            TohumBankasi? tohumBankasiFromDb = _unitOfWork.TohumBankasi.Get(u => u.AksesyonNumarasi == id);
 
-            if (herbaryumFromDb == null)
+            if (tohumBankasiFromDb == null)
             {
                 return NotFound();
             }
-            return View(herbaryumFromDb);
+            return View(tohumBankasiFromDb);
         }
-        // POST: Herbaryum/Delete/{id}
+        // POST: TohumBankasi/Delete/{id}
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(string id)
         {
-            Herbaryum? obj = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            TohumBankasi? obj = _unitOfWork.TohumBankasi.Get(u => u.AksesyonNumarasi == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _unitOfWork.Herbaryum.Remove(obj);
+            _unitOfWork.TohumBankasi.Remove(obj);
             _unitOfWork.Save();
-            TempData["success"] = "Herbaryum başarıyla silindi.";
+            TempData["success"] = "TohumBankasi başarıyla silindi.";
             return RedirectToAction("Index");
         }
     }
