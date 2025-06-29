@@ -3,8 +3,9 @@ using Otobur.DataAccess.Data;
 using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
 
-namespace Otobur.Controllers
+namespace Otobur.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AksesyonController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;  

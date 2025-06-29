@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Data;
 
-namespace Otobur.Controllers
+namespace Otobur.Areas.Kullanici.Controllers
 {
     public class HomeController : Controller
     {
