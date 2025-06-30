@@ -14,10 +14,18 @@ namespace Otobur.Areas.Admin.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            List<TohumBankasi> objTohumBankasiList = _unitOfWork.TohumBankasi.GetAll().ToList();
-            return View(objTohumBankasiList);
+            IEnumerable<TohumBankasi> objAksesyonList = _unitOfWork.TohumBankasi.GetAll();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                objAksesyonList = objAksesyonList
+                    .Where(x => x.AksesyonNumarasi.Contains(search, StringComparison.OrdinalIgnoreCase));
+            }
+
+            ViewBag.CurrentFilter = search;
+            return View(objAksesyonList.ToList());
         }
         // CREATE işlemini iptal ettik.
         //public IActionResult Create()

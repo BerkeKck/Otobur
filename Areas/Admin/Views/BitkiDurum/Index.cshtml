@@ -5,6 +5,12 @@
         <div class="row pt-4 pb-3">
             <div class="col-6">
                 <h2 class="text-primary">Bitki Durum Kayıt</h2>
+            <form method="get" asp-controller="Aksesyon" asp-action="Index" class="search-bar">
+                <div class="input-group">
+                    <input type="text" id="searchBox" class="form-control mb-3" placeholder="Aksesyon numarası ara...">
+                    </button>
+                </div>
+            </form>
             </div>
         </div>
     <table class="table table-bordered table-striped">
@@ -51,3 +57,15 @@
         </tbody>
     </table>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchBox").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("table tbody tr").filter(function () {
+                $(this).toggle($(this).find("td:first").text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

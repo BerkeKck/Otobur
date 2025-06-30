@@ -13,10 +13,18 @@ namespace Otobur.Areas.Admin.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            List<BitkiDurum> objBitkiDurumList = _unitOfWork.BitkiDurum.GetAll().ToList();
-            return View(objBitkiDurumList);
+            IEnumerable<BitkiDurum> objAksesyonList = _unitOfWork.BitkiDurum.GetAll();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                objAksesyonList = objAksesyonList
+                    .Where(x => x.AksesyonNumarasi.Contains(search, StringComparison.OrdinalIgnoreCase));
+            }
+
+            ViewBag.CurrentFilter = search;
+            return View(objAksesyonList.ToList());
         }
         // CREATE işlemini iptal ettik.
         //public IActionResult Create()

@@ -13,11 +13,18 @@ namespace Otobur.Areas.Admin.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            // Cast the result of _aksesyonRepo.GetAll() to IEnumerable<Aksesyon> before calling ToList()
-            List<Aksesyon> objAksesyonList = _unitOfWork.Aksesyon.GetAll().ToList();
-            return View(objAksesyonList);
+            IEnumerable<Aksesyon> objAksesyonList = _unitOfWork.Aksesyon.GetAll();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                objAksesyonList = objAksesyonList
+                    .Where(x => x.AksesyonNumarasi.Contains(search, StringComparison.OrdinalIgnoreCase));
+            }
+
+            ViewBag.CurrentFilter = search;
+            return View(objAksesyonList.ToList());
         }
         // CREATE
         public IActionResult Create()

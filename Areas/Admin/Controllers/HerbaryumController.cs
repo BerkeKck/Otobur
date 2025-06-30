@@ -14,10 +14,18 @@ namespace Otobur.Areas.Admin.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            List<Herbaryum> objHerbaryumList = _unitOfWork.Herbaryum.GetAll().ToList();
-            return View(objHerbaryumList);
+            IEnumerable<Herbaryum> objAksesyonList = _unitOfWork.Herbaryum.GetAll();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                objAksesyonList = objAksesyonList
+                    .Where(x => x.AksesyonNumarasi.Contains(search, StringComparison.OrdinalIgnoreCase));
+            }
+
+            ViewBag.CurrentFilter = search;
+            return View(objAksesyonList.ToList());
         }
         // CREATE işlemini iptal ettik.
         //public IActionResult Create()
