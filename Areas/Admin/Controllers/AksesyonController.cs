@@ -100,10 +100,9 @@ namespace Otobur.Areas.Admin.Controllers
 
         // POST: Aksesyon/Edit/{id}
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]  
         public IActionResult Edit(string id, Aksesyon obj)
         {
-            // Navigation property hatalarını temizle
             ModelState.Remove(nameof(Aksesyon.BitkiDurum));
             ModelState.Remove(nameof(Aksesyon.TohumBankasi));
 

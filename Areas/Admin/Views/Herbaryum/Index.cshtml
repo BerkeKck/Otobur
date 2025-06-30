@@ -10,14 +10,14 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Herbaryum No</th>
+                <th>Aksesyon No</th>
                 <th>Bitkinin Adı</th>
+                <th>Herbaryum No</th>
                 <th>Toplayıcı Adı</th>
                 <th>Toplayıcı Kodu</th>
                 <th>Toplayıcı No</th>
                 <th>Lokasyon</th>
                 <th>Koordinat</th>
-                <th>Aksesyon No</th>
                 <th>Fotoğraf</th>
             </tr>
         </thead>
@@ -25,14 +25,15 @@
             @foreach(var obj in Model.OrderBy(u => u.HerbaryumNo))
             {
                 <tr>
+                    <td>@obj.AksesyonNumarasi</td>
+                    <td>@obj.Aksesyon?.BitkininAdi</td>
                     <td>@obj.HerbaryumNo</td>
-                    <td>@obj.BitkininAdi</td>
                     <td>@obj.KullaniciAdi</td>
                     <td>@obj.KullaniciKodu</td>
                     <td>@obj.KullaniciNumarasi</td>
                     <td>@obj.Lokasyon</td>
                     <td>@obj.Koordinat</td>
-                    <td>@obj.AksesyonNumarasi</td>
+              
                     <td>@obj.Fotograf</td>
                     <td>
                     <div class="d-flex gap-2">

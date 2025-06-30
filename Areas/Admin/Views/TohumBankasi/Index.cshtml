@@ -1,5 +1,16 @@
 ﻿@using Otobur.Models.Models
 @model List<TohumBankasi>
+@if (ViewBag.Errors != null)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewBag.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <div class="container">
     <div class="row pt-4 pb-3">
@@ -26,12 +37,12 @@
                     <td>@obj.BulunduguDolap</td>
                     <td>
                         <div class="d-flex gap-2">
-                            <a asp-controller="Aksesyon" asp-action="Edit" asp-route-id="@obj.AksesyonNumarasi"
+                            <a asp-controller="TohumBankasi" asp-action="Edit" asp-route-id="@obj.AksesyonNumarasi"
                                class="btn btn-sm btn-outline-primary rounded-circle"
                                data-bs-toggle="tooltip" data-bs-placement="top" title="Düzenle">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a asp-controller="Aksesyon" asp-action="Delete" asp-route-id="@obj.AksesyonNumarasi"
+                            <a asp-controller="TohumBankasi" asp-action="Delete" asp-route-id="@obj.AksesyonNumarasi"
                                class="btn btn-sm btn-outline-danger rounded-circle"
                                data-bs-toggle="tooltip" data-bs-placement="top" title="Sil">
                                 <i class="bi bi-trash"></i>

@@ -1,6 +1,16 @@
 @using Otobur.Models.Models
 @model Herbaryum
-
+@if (ViewBag.Errors != null)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewBag.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
 <form asp-action="Edit" method="post" enctype="multipart/form-data">
     <div class="container" style="max-width: 700px;">
         <div class="border p-4 mt-4 bg-white rounded shadow-sm">
@@ -15,7 +25,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Bitkinin Adý</label>
-                    <input asp-for="BitkininAdi" class="form-control" readonly />
+                    <input asp-for="BitkininAdi" class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Herbaryum No</label>
@@ -43,7 +53,7 @@
                 </div>
                 <div class="col-md-12 mb-3">
                     <label class="form-label">Fotoðraf</label>
-                    <input asp-for="Fotograf" type="file" class="form-control" />
+                    <input asp-for="Fotograf" class="form-control" />
                 </div>
             </div>
             <div class="mt-3">
