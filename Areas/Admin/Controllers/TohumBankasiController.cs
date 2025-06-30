@@ -19,24 +19,24 @@ namespace Otobur.Areas.Admin.Controllers
             List<TohumBankasi> objTohumBankasiList = _unitOfWork.TohumBankasi.GetAll().ToList();
             return View(objTohumBankasiList);
         }
-        // CREATE
-        public IActionResult Create()
-        {
-            return View();
-        }
+        // CREATE işlemini iptal ettik.
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public IActionResult Create(TohumBankasi obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.TohumBankasi.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "TohumBankasi başarıyla eklendi.";
-                return RedirectToAction("Index");
-            }
-            return View(obj);
-        }
+        //[HttpPost]
+        //public IActionResult Create(TohumBankasi obj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _unitOfWork.TohumBankasi.Add(obj);
+        //        _unitOfWork.Save();
+        //        TempData["success"] = "TohumBankasi başarıyla eklendi.";
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(obj);
+        //}
 
         // GET: TohumBankasi/Edit/{id}
         public IActionResult Edit(string id)

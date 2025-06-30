@@ -1,0 +1,36 @@
+@using Otobur.Models.Models
+@model Herbaryum
+
+<div class="container" style="max-width: 700px;">
+    <div class="border p-4 mt-4 bg-white rounded shadow-sm">
+        <h2 class="text-danger">Herbaryum Kaydýný Sil</h2>
+        <hr />
+        <p>Bu kaydý silmek istediðinize emin misiniz?</p>
+        <dl class="row">
+            <dt class="col-sm-4">Aksesyon Numarasý</dt>
+            <dd class="col-sm-8">@Model.AksesyonNumarasi</dd>
+            <dt class="col-sm-4">Bitkinin Adý</dt>
+            <dd class="col-sm-8">@Model.BitkininAdi</dd>
+            <dt class="col-sm-4">Herbaryum No</dt>
+            <dd class="col-sm-8">@Model.HerbaryumNo</dd>
+            <dt class="col-sm-4">Toplayýcý Adý</dt>
+            <dd class="col-sm-8">@Model.KullaniciAdi</dd>
+            <dt class="col-sm-4">Toplayýcý Kodu</dt>
+            <dd class="col-sm-8">@Model.KullaniciKodu</dd>
+            <dt class="col-sm-4">Toplayýcý No</dt>
+            <dd class="col-sm-8">@Model.KullaniciNumarasi</dd>
+            <dt class="col-sm-4">Lokasyon</dt>
+            <dd class="col-sm-8">@Model.Lokasyon</dd>
+            <dt class="col-sm-4">Koordinat</dt>
+            <dd class="col-sm-8">@Model.Koordinat</dd>
+            <dt class="col-sm-4">Fotoðraf</dt>
+            <dd class="col-sm-8">@Model.Fotograf</dd>
+        </dl>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="AksesyonNumarasi" />
+            <input type="hidden" asp-for="HerbaryumNo" />
+            <button type="submit" class="btn btn-danger">Sil</button>
+            <a asp-action="Index" class="btn btn-secondary">Vazgeç</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+@using Otobur.Models.Models
+@model Herbaryum
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="container" style="max-width: 700px;">
+        <div class="border p-4 mt-4 bg-white rounded shadow-sm">
+            <div class="row pb-2">
+                <h2 class="text-primary">Herbaryum Kaydýný Düzenle</h2>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Aksesyon Numarasý</label>
+                    <input asp-for="AksesyonNumarasi" class="form-control" readonly />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Bitkinin Adý</label>
+                    <input asp-for="BitkininAdi" class="form-control" readonly />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Herbaryum No</label>
+                    <input asp-for="HerbaryumNo" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Toplayýcý Adý</label>
+                    <input asp-for="KullaniciAdi" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Toplayýcý Kodu</label>
+                    <input asp-for="KullaniciKodu" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Toplayýcý No</label>
+                    <input asp-for="KullaniciNumarasi" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Lokasyon</label>
+                    <input asp-for="Lokasyon" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Koordinat</label>
+                    <input asp-for="Koordinat" class="form-control" />
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Fotoðraf</label>
+                    <input asp-for="Fotograf" type="file" class="form-control" />
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- jQuery ve jQuery UI ekle (CDN üzerinden) -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+<script>
+    $(function () {
+        $("#AksesyonNumarasi").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Admin/Api/AksesyonAutocomplete',
+                    data: { term: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                var selectedAksesyon = ui.item.value;
+                $.ajax({
+                    url: '/Admin/Api/GetHerbaryumByAksesyon',
+                    data: { aksesyonNumarasi: selectedAksesyon },
+                    success: function (data) {
+                        if (data) {
+                            $("#HerbaryumNo").val(data.herbaryumNo);
+                            $("#BitkininAdi").val(data.bitkininAdi);
+                            $("#KullaniciAdi").val(data.kullaniciAdi);
+                            $("#KullaniciKodu").val(data.kullaniciKodu);
+                            $("#KullaniciNumarasi").val(data.kullaniciNumarasi);
+                            $("#Lokasyon").val(data.lokasyon);
+                            $("#Koordinat").val(data.koordinat);
+                            // Fotoðraf alaný için ek bir iþlem gerekebilir
+                        } else {
+                            $("#HerbaryumNo, #BitkininAdi, #KullaniciAdi, #KullaniciKodu, #KullaniciNumarasi, #Lokasyon, #Koordinat").val('');
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

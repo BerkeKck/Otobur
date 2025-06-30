@@ -1,0 +1,31 @@
+@using Otobur.Models.Models
+@model TohumBankasi
+
+<form asp-action="Edit" method="post">
+    <div class="container" style="max-width: 700px;">
+        <div class="border p-4 mt-4 bg-white rounded shadow-sm">
+            <div class="row pb-2">
+                <h2 class="text-primary">Tohum Bankasý Kaydýný Düzenle</h2>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Aksesyon Numarasý</label>
+                    <input asp-for="AksesyonNumarasi" class="form-control" readonly />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Miktar</label>
+                    <input asp-for="Miktar" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Bulunduðu Dolap</label>
+                    <input asp-for="BulunduguDolap" class="form-control" />
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+            </div>
+        </div>
+    </div>
+</form>

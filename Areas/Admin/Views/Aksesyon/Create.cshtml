@@ -1,6 +1,18 @@
 ﻿@using Otobur.Models.Models
 @model Aksesyon
 
+@if (ViewBag.Errors != null)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewBag.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
 <form method="post">
     <div class="container" style="max-width: 700px;">
         <div class="border p-4 mt-4 bg-white rounded shadow-sm">

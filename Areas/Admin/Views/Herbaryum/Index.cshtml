@@ -6,11 +6,6 @@
         <div class="col-6">
             <h2 class="text-primary">Herbaryum Kayıt</h2>
         </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Herbaryum" asp-action="Create" class="btn btn-success">
-                <i class="bi bi-plus-lg"></i> Yeni Herbaryum Girişi 
-            </a>
-        </div>
     </div>
     <table class="table table-bordered table-striped">
         <thead>
@@ -39,6 +34,20 @@
                     <td>@obj.Koordinat</td>
                     <td>@obj.AksesyonNumarasi</td>
                     <td>@obj.Fotograf</td>
+                    <td>
+                    <div class="d-flex gap-2">
+                        <a asp-controller="Herbaryum" asp-action="Edit" asp-route-id="@obj.AksesyonNumarasi"
+                           class="btn btn-sm btn-outline-primary rounded-circle"
+                           data-bs-toggle="tooltip" data-bs-placement="top" title="Düzenle">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a asp-controller="Herbaryum" asp-action="Delete" asp-route-id="@obj.AksesyonNumarasi"
+                           class="btn btn-sm btn-outline-danger rounded-circle"
+                           data-bs-toggle="tooltip" data-bs-placement="top" title="Sil">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                    </td>
                 </tr>
             }
         </tbody>

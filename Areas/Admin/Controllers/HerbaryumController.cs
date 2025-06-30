@@ -19,24 +19,24 @@ namespace Otobur.Areas.Admin.Controllers
             List<Herbaryum> objHerbaryumList = _unitOfWork.Herbaryum.GetAll().ToList();
             return View(objHerbaryumList);
         }
-        // CREATE
-        public IActionResult Create()
-        {
-            return View();
-        }
+        // CREATE işlemini iptal ettik.
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public IActionResult Create(Herbaryum obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Herbaryum.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Herbaryum başarıyla eklendi.";
-                return RedirectToAction("Index");
-            }
-            return View(obj);
-        }
+        //[HttpPost]
+        //public IActionResult Create(Herbaryum obj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _unitOfWork.Herbaryum.Add(obj);
+        //        _unitOfWork.Save();
+        //        TempData["success"] = "Herbaryum başarıyla eklendi.";
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(obj);
+        //}
 
         // GET: Herbaryum/Edit/{id}
         public IActionResult Edit(string id)

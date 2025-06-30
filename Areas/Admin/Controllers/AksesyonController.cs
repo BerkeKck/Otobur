@@ -28,15 +28,55 @@ namespace Otobur.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Aksesyon obj)
         {
+            // Navigation property hatalarını temizle
+            ModelState.Remove(nameof(Aksesyon.BitkiDurum));
+            ModelState.Remove(nameof(Aksesyon.TohumBankasi));
+
+            // EK: Aynı AksesyonNumarasi var mı kontrolü
+            var existing = _unitOfWork.Aksesyon.Get(a => a.AksesyonNumarasi == obj.AksesyonNumarasi);
+            if (existing != null)
+            {   
+                ModelState.AddModelError("AksesyonNumarasi", "Bu Aksesyon Numarası zaten mevcut.");
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return View(obj);
+            }
+
             if (ModelState.IsValid)
             {
                 _unitOfWork.Aksesyon.Add(obj);
+
+                // BitkiDurum için boş kayıt oluştur
+                var bitkiDurum = new BitkiDurum
+                {
+                    AksesyonNumarasi = obj.AksesyonNumarasi,
+                    // Diğer alanlar default/null bırakılır
+                };
+                _unitOfWork.BitkiDurum.Add(bitkiDurum);
+
+                // TohumBankasi için boş kayıt oluştur
+                var tohumBankasi = new TohumBankasi
+                {
+                    AksesyonNumarasi = obj.AksesyonNumarasi,
+                    // Diğer alanlar default/null bırakılır
+                };
+                _unitOfWork.TohumBankasi.Add(tohumBankasi);
+
+                // Herbaryum için boş kayıt oluştur
+                var herbaryum = new Herbaryum
+                {
+                    AksesyonNumarasi = obj.AksesyonNumarasi,
+                    // Diğer alanlar default/null bırakılır
+                };
+                _unitOfWork.Herbaryum.Add(herbaryum);
+
                 _unitOfWork.Save();    
                 TempData["success"] = "Aksesyon başarıyla eklendi.";
                 return RedirectToAction("Index");
             }
+            // Hataları ViewBag ile gönder
+            ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return View(obj);
-        }
+        }        
 
         // GET: Aksesyon/Edit/{id}
         public IActionResult Edit(string id)

@@ -18,24 +18,24 @@ namespace Otobur.Areas.Admin.Controllers
             List<BitkiDurum> objBitkiDurumList = _unitOfWork.BitkiDurum.GetAll().ToList();
             return View(objBitkiDurumList);
         }
-        // CREATE
-        public IActionResult Create()
-        {
-            return View();
-        }
+        // CREATE işlemini iptal ettik.
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public IActionResult Create(BitkiDurum obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.BitkiDurum.Add(obj);
-                _unitOfWork.Save();    
-                TempData["success"] = "BitkiDurum başarıyla eklendi.";
-                return RedirectToAction("Index");
-            }
-            return View(obj);
-        }
+        //[HttpPost]
+        //public IActionResult Create(BitkiDurum obj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _unitOfWork.BitkiDurum.Add(obj);
+        //        _unitOfWork.Save();    
+        //        TempData["success"] = "BitkiDurum başarıyla eklendi.";
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(obj);
+        //}
 
         // GET: BitkiDurum/Edit/{id}
         public IActionResult Edit(string id)
