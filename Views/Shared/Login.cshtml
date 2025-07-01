@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap";
+}
+<div class="container mt-5" style="max-width: 500px;">
+    <h2 class="text-primary mb-3">Giriş Yap</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    <form asp-action="Login" method="post">
+        <div class="form-group mb-2">
+            <label>E-posta</label>
+            <input name="eposta" type="email" class="form-control" required />
+        </div>
+        <div class="form-group mb-2">
+            <label>Parola</label>
+            <input name="parola" type="password" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Giriş Yap</button>
+    </form>
+</div>

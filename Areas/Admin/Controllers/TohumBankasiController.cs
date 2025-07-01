@@ -67,21 +67,24 @@ namespace Otobur.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(string id, TohumBankasi obj)
         {
-            // Navigation property hatalarını temizle
-            ModelState.Remove(nameof(TohumBankasi.AksesyonNumarasi));
+            ModelState.Remove(nameof(TohumBankasi.Aksesyon));
+
+            if (id != obj.AksesyonNumarasi)
+            {
+                return BadRequest();
+            }
 
             if (ModelState.IsValid)
             {
                 _unitOfWork.TohumBankasi.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "TohumBankasi başarıyla güncellendi.";
+                TempData["success"] = "Tohum Bankası kaydı güncellendi.";
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return View(obj);
         }
-
-
-
 
         // GET: TohumBankasi/Delete/{id}
         public IActionResult Delete(string id)

@@ -11,6 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // dependency injection
+builder.Services.AddSession();
+
 
 
 var app = builder.Build();
@@ -25,7 +27,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting(); 
 
 app.UseAuthorization();
@@ -33,5 +35,16 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Admin}/{controller=Aksesyon}/{action=Index}/{id?}");
+
+//app.MapAreaControllerRoute(
+//    name: "Kullanici",
+//    areaName: "Kullanici",
+//    pattern: "Kullanici/{controller=Account}/{action=Login}/{id?}"
+//);
+
+//app.MapAreaControllerRoute(
+//    name: "Admin",
+//    areaName: "Admin",
+//    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

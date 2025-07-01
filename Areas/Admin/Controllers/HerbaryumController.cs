@@ -67,21 +67,24 @@ namespace Otobur.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(string id, Herbaryum obj)
         {
-            // Navigation property hatalarını temizle
-            ModelState.Remove(nameof(Herbaryum.AksesyonNumarasi));
+            ModelState.Remove(nameof(Herbaryum.Aksesyon));
+
+            if (id != obj.AksesyonNumarasi)
+            {
+                return BadRequest();
+            }
 
             if (ModelState.IsValid)
             {
                 _unitOfWork.Herbaryum.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Herbaryum başarıyla güncellendi.";
+                TempData["success"] = "Herbaryum kaydı güncellendi.";
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return View(obj);
         }
-
-
-
 
         // GET: Herbaryum/Delete/{id}
         public IActionResult Delete(string id)

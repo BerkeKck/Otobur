@@ -67,7 +67,12 @@ namespace Otobur.Areas.Admin.Controllers
         public IActionResult Edit(string id, BitkiDurum obj)
         {
             // Navigation property hatalarını temizle
-            ModelState.Remove(nameof(BitkiDurum.AksesyonNumarasi));
+            ModelState.Remove(nameof(BitkiDurum.Aksesyon));
+
+            if (id != obj.AksesyonNumarasi)
+            {
+                return BadRequest();
+            }
 
             if (ModelState.IsValid)
             {
@@ -76,11 +81,10 @@ namespace Otobur.Areas.Admin.Controllers
                 TempData["success"] = "BitkiDurum başarıyla güncellendi.";
                 return RedirectToAction("Index");
             }
-                return View(obj);
-            }
 
-       
-
+            ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return View(obj);
+        }
 
         // GET: BitkiDurum/Delete/{id}
         public IActionResult Delete(string id)

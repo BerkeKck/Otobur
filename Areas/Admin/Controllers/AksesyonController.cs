@@ -56,7 +56,7 @@ namespace Otobur.Areas.Admin.Controllers
                 var bitkiDurum = new BitkiDurum
                 {
                     AksesyonNumarasi = obj.AksesyonNumarasi,
-                    // Diğer alanlar default/null bırakılır
+                    BitkininAdi = obj.BitkininAdi
                 };
                 _unitOfWork.BitkiDurum.Add(bitkiDurum);
 
@@ -64,6 +64,7 @@ namespace Otobur.Areas.Admin.Controllers
                 var tohumBankasi = new TohumBankasi
                 {
                     AksesyonNumarasi = obj.AksesyonNumarasi,
+                    BitkininAdi = obj.BitkininAdi
                     // Diğer alanlar default/null bırakılır
                 };
                 _unitOfWork.TohumBankasi.Add(tohumBankasi);
@@ -72,6 +73,8 @@ namespace Otobur.Areas.Admin.Controllers
                 var herbaryum = new Herbaryum
                 {
                     AksesyonNumarasi = obj.AksesyonNumarasi,
+                    BitkininAdi = obj.BitkininAdi
+
                     // Diğer alanlar default/null bırakılır
                 };
                 _unitOfWork.Herbaryum.Add(herbaryum);
@@ -105,9 +108,8 @@ namespace Otobur.Areas.Admin.Controllers
             return View(aksesyonFromDb);
         }
 
-        // POST: Aksesyon/Edit/{id}
         [HttpPost]
-        [ValidateAntiForgeryToken]  
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(string id, Aksesyon obj)
         {
             ModelState.Remove(nameof(Aksesyon.BitkiDurum));
@@ -115,15 +117,44 @@ namespace Otobur.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                // 1. Aksesyon güncelle
                 _unitOfWork.Aksesyon.Update(obj);
+
+                // 2. BitkiDurum güncelle
+                var bitkiDurum = _unitOfWork.BitkiDurum.Get(b => b.AksesyonNumarasi == obj.AksesyonNumarasi);
+                if (bitkiDurum != null)
+                {
+                    bitkiDurum.BitkininAdi = obj.BitkininAdi;
+                    _unitOfWork.BitkiDurum.Update(bitkiDurum);
+                }
+
+                // 3. TohumBankasi güncelle
+                var tohumBankasi = _unitOfWork.TohumBankasi.Get(t => t.AksesyonNumarasi == obj.AksesyonNumarasi);
+                if (tohumBankasi != null)
+                {
+                    tohumBankasi.BitkininAdi = obj.BitkininAdi;
+                    _unitOfWork.TohumBankasi.Update(tohumBankasi);
+                }
+
+                // 4. Herbaryum güncelle
+                var herbaryum = _unitOfWork.Herbaryum.Get(h => h.AksesyonNumarasi == obj.AksesyonNumarasi);
+                if (herbaryum != null)
+                {
+                    herbaryum.BitkininAdi = obj.BitkininAdi;
+                    _unitOfWork.Herbaryum.Update(herbaryum);
+                }
+
+                // 5. Değişiklikleri kaydet
                 _unitOfWork.Save();
-                TempData["success"] = "Aksesyon başarıyla güncellendi.";
+
+                TempData["success"] = "Aksesyon ve ilişkili kayıtlar başarıyla güncellendi.";
                 return RedirectToAction("Index");
             }
-                return View(obj);
-            }
 
-       
+            return View(obj);
+        }
+
+
 
 
         // GET: Aksesyon/Delete/{id}
