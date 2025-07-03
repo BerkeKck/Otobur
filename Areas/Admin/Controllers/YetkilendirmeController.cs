@@ -19,9 +19,6 @@ namespace Otobur.Areas.Admin.Controllers
             var kullanicilar = _db.Kullanicilar.ToList();
             return View(kullanicilar);
         }
-        public IActionResult Create()
-        {
-            return View();
-        }
+      
     }
 }
