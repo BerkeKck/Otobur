@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var kullaniciGrubu = Context.Session.GetString("KullaniciGrubu");
+    var kullaniciAdi = Context.Session.GetString("KullaniciAdi");
+    var areaName = kullaniciGrubu == "Sistem Yöneticisi" ? "Admin" : "Kullanici";
+    bool isLoggedIn = !string.IsNullOrEmpty(kullaniciAdi);
+}
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
@@ -24,7 +31,7 @@
                 outline: none;
                 box-shadow: none;
             }
-        /* Sağ üst linklerin biraz yan yana ve uyumlu görünmesi için */
+
         .topbar-icons a.btn-link {
             color: #fff;
             margin-left: 15px;
@@ -45,42 +52,45 @@
                 <span class="logo-text">OTOBUR</span>
             </div>
             <nav>
-                <a class="menu-item" asp-area="Admin" asp-controller="Aksesyon" asp-action="Index">
+                <a class="menu-item" asp-area="@areaName" asp-controller="Aksesyon" asp-action="Index">
                     <div class="menu-icon">
                         <img src="~/icons/Aksesyon.svg" alt="Aksesyon Kayıt" style="height:48px;" />
                     </div>
                     <span>Aksesyon Kayıt</span>
                 </a>
-                <a class="menu-item" asp-area="Admin" asp-controller="Veritabani" asp-action="Index">
+                <a class="menu-item" asp-area="@areaName" asp-controller="Veritabani" asp-action="Index">
                     <div class="menu-icon">
                         <img src="~/icons/Veritabani.svg" alt="Veritabani Sorgu" style="height:48px;" />
                     </div>
                     <span>Veritabani Sorgu</span>
                 </a>
-                <a class="menu-item" asp-area="Admin" asp-controller="Herbaryum" asp-action="Index">
+                <a class="menu-item" asp-area="@areaName" asp-controller="Herbaryum" asp-action="Index">
                     <div class="menu-icon">
                         <img src="~/icons/Herbaryum.svg" alt="Herbaryum" style="height:48px;" />
                     </div>
                     <span>Herbaryum</span>
                 </a>
-                <a class="menu-item" asp-area="Admin" asp-controller="BitkiDurum" asp-action="Index">
+                <a class="menu-item" asp-area="@areaName" asp-controller="BitkiDurum" asp-action="Index">
                     <div class="menu-icon">
                         <img src="~/icons/BitkiDurum.svg" alt="Bitki Durum" style="height:48px;" />
                     </div>
                     <span>Bitki Durum</span>
                 </a>
-                <a class="menu-item" asp-area="Admin" asp-controller="TohumBankasi" asp-action="Index">
+                <a class="menu-item" asp-area="@areaName" asp-controller="TohumBankasi" asp-action="Index">
                     <div class="menu-icon">
                         <img src="~/icons/TohumBankasi.svg" alt="Tohum Bankası" style="height:48px;" />
                     </div>
                     <span>Tohum Bankası</span>
                 </a>
-                <a class="menu-item" asp-area="Admin" asp-controller="Yetkilendirme" asp-action="Index">
-                    <div class="menu-icon">
-                        <img src="~/icons/Yetkilendirme.svg" alt="Yetkilendirme" style="height:48px;" />
-                    </div>
-                    <span>Yetkilendirme</span>
-                </a>
+                @if (kullaniciGrubu == "Sistem Yöneticisi")
+                {
+                    <a class="menu-item" asp-area="Admin" asp-controller="Yetkilendirme" asp-action="Index">
+                        <div class="menu-icon">
+                            <img src="~/icons/Yetkilendirme.svg" alt="Yetkilendirme" style="height:48px;" />
+                        </div>
+                        <span>Yetkilendirme</span>
+                    </a>
+                }
             </nav>
         </aside>
         <div class="content-area">
@@ -94,12 +104,16 @@
                     <button class="icon-btn" title="Bildirimler" type="button">
                         <img src="~/icons/Bildirimler.svg" alt="Bildirimler" class="icon" style="height:24px;" />
                     </button>
-
-                    <span class="user-name ms-3">Berke Küçük</span>
-
-                    <a href="/Kullanici/Account/Login" class="btn btn-link ms-3 text-black">Login</a>
-                    <a href="/Kullanici/Account/Register" class="btn btn-link ms-2 text-black">Register</a>
-
+                    @if (isLoggedIn)
+                    {
+                        <span class="user-name ms-3">@kullaniciAdi</span>
+                        <a href="/Kullanici/Account/Logout" class="btn btn-link ms-3 text-black">Çıkış</a>
+                    }
+                    else
+                    {
+                        <a href="/Kullanici/Account/Login" class="btn btn-link ms-3 text-black">Login</a>
+                        <a href="/Kullanici/Account/Register" class="btn btn-link ms-2 text-black">Register</a>
+                    }
                     <button class="avatar-btn ms-3" title="Profil" type="button">
                         <img src="~/images/profile.jpg" alt="Profil Fotoğrafı" class="avatar rounded-circle" style="width:36px;height:36px;object-fit:cover;" onerror="this.style.display='none'" />
                         <span class="avatar-placeholder" style="width:36px;height:36px;border-radius:50%;background:#bbb;display:inline-block;"></span>
