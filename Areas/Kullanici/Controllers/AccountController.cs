@@ -5,6 +5,7 @@ namespace Otobur.Areas.Kullanici.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Otobur.DataAccess.Repository.IRepository;
     using Otobur.Models.Models;
+    using Microsoft.AspNetCore.Http;
 
     [Area("Kullanici")]
     public class AccountController : Controller
@@ -30,19 +31,24 @@ namespace Otobur.Areas.Kullanici.Controllers
                 ModelState.AddModelError("Eposta", "Bu e-posta zaten kayıtlı.");
                 return View(user);
             }
+            if (_unitOfWork.Kullanici.Get(u => u.KullaniciAdi == user.KullaniciAdi) != null)
+            {
+                ModelState.AddModelError("KullaniciAdi", "Bu kullanıcı adı zaten alınmış.");
+                return View(user);
+            }
 
             if (ModelState.IsValid)
             {
                 user.KullaniciNumarasi = Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
-                user.KullaniciKodu = user.KullaniciAdi.Substring(0, 2).ToUpper();
+                user.KullaniciKodu = user.KullaniciKodu ?? user.KullaniciAdi.Substring(0, 2).ToUpper();
 
-                // basit default roller
+                // Basit default roller
                 user.KullaniciGrubu = "Kullanici";
                 user.GorebilecegiTablolar = "Aksesyon,BitkiDurum";
                 user.KayitYapabilecegiTablolar = "Aksesyon";
                 user.KayitSilebilme = false;
 
-                _unitOfWork.Kullanici.Add(user); 
+                _unitOfWork.Kullanici.Add(user);
                 _unitOfWork.Save();
                 TempData["success"] = "Kayıt başarılı!";
                 return RedirectToAction("Login");
@@ -58,9 +64,11 @@ namespace Otobur.Areas.Kullanici.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string eposta, string parola)
+        public IActionResult Login(string kullanici, string parola)
         {
-            var user = _unitOfWork.Kullanici.Get(u => u.Eposta == eposta && u.Parola == parola);
+            // kullanıcı adı veya e-posta ile giriş
+            var user = _unitOfWork.Kullanici.Get(u =>
+                (u.KullaniciAdi == kullanici || u.Eposta == kullanici) && u.Parola == parola);
 
             if (user != null)
             {
@@ -68,10 +76,19 @@ namespace Otobur.Areas.Kullanici.Controllers
                 HttpContext.Session.SetString("KullaniciGrubu", user.KullaniciGrubu);
                 HttpContext.Session.SetString("KullaniciNumarasi", user.KullaniciNumarasi);
                 TempData["success"] = "Giriş başarılı!";
-                return RedirectToAction("Index", "Home");
+
+                // Yönlendirme: Sistem Yöneticisi ise Admin area'ya, değilse Kullanici area'ya
+                if (user.KullaniciGrubu == "Sistem Yöneticisi")
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Kullanici" });
+                }
             }
 
-            ViewBag.Error = "Geçersiz e-posta veya parola.";
+            ViewBag.Error = "Geçersiz kullanıcı adı/e-posta veya parola.";
             return View();
         }
 

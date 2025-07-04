@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = "/Areas/Kullanici/Views/Shared/_AuthLayout.cshtml";
+}
+<div class="auth-container">
+    <img src="~/icons/Otobur.Icon.svg" alt="Otobur Logo" class="auth-logo" />
+    <h2>Giriş Yap</h2>
+    @if (ViewBag.Error != null)
+    {
+        <div class="auth-error-message">@ViewBag.Error</div>
+    }
+    <form asp-action="Login" method="post" novalidate>
+        <div class="auth-field">
+            <input name="kullanici" placeholder="Kullanıcı Adı veya E-posta" required />
+        </div>
+        <div class="auth-field">
+            <input name="parola" type="password" placeholder="Parola" required />
+        </div>
+        <button type="submit" class="auth-btn">Giriş Yap</button>
+    </form>
+    <p class="auth-link">Hesabınız yok mu? <a asp-area="Kullanici" asp-action="Register" asp-controller="Account">Kayıt Ol</a></p>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

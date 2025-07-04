@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Otobur.Areas.Kullanici.Controllers
+namespace Otobur.Areas.Admin.Controllers
 {
-    [Area("Kullanici")]
+    [Area("Admin")]
     public class HomeController : Controller
     {
         public IActionResult Index()

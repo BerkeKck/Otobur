@@ -33,18 +33,17 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Account}/{action=Login}/{id?}");
+
+app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Admin}/{controller=Aksesyon}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
-//app.MapAreaControllerRoute(
-//    name: "Kullanici",
-//    areaName: "Kullanici",
-//    pattern: "Kullanici/{controller=Account}/{action=Login}/{id?}"
-//);
-
-//app.MapAreaControllerRoute(
-//    name: "Admin",
-//    areaName: "Admin",
-//    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/Kullanici/Account/Login");
+    return Task.CompletedTask;
+});
 
 app.Run();
