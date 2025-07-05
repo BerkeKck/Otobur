@@ -2,6 +2,7 @@
 @{
     var kullaniciGrubu = Context.Session.GetString("KullaniciGrubu");
     var kullaniciAdi = Context.Session.GetString("KullaniciAdi");
+    var kullaniciEposta = Context.Session.GetString("Eposta");
     var areaName = kullaniciGrubu == "Sistem Yöneticisi" ? "Admin" : "Kullanici";
     bool isLoggedIn = !string.IsNullOrEmpty(kullaniciAdi);
 }
@@ -12,37 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Otobur</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/landing.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/hamburger.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        .icon-btn, .avatar-btn {
-            background: none;
-            border: none;
-            padding: 0;
-            margin: 0 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            box-shadow: none;
-            outline: none;
-        }
-
-            .icon-btn:focus, .avatar-btn:focus {
-                outline: none;
-                box-shadow: none;
-            }
-
-        .topbar-icons a.btn-link {
-            color: #fff;
-            margin-left: 15px;
-            text-decoration: none;
-        }
-
-            .topbar-icons a.btn-link:hover {
-                text-decoration: underline;
-                color: #ccc;
-            }
-    </style>
 </head>
 <body>
     <div class="main-layout">
@@ -98,27 +70,17 @@
                 <form class="search-bar" onsubmit="return false;">
                 </form>
                 <div class="topbar-icons d-flex align-items-center">
-                    <button class="icon-btn" title="Gece Modu" type="button">
-                        <img src="~/icons/Gece.mod.svg" alt="Gece Modu" class="icon" style="height:24px;" />
-                    </button>
-                    <button class="icon-btn" title="Bildirimler" type="button">
-                        <img src="~/icons/Bildirimler.svg" alt="Bildirimler" class="icon" style="height:24px;" />
-                    </button>
+                    
                     @if (isLoggedIn)
                     {
                         <span class="user-name ms-3">@kullaniciAdi</span>
-                        <a href="/Kullanici/Account/Logout" class="btn btn-link ms-3 text-black">Çıkış</a>
                     }
                     else
                     {
                         <a href="/Kullanici/Account/Login" class="btn btn-link ms-3 text-black">Login</a>
                         <a href="/Kullanici/Account/Register" class="btn btn-link ms-2 text-black">Register</a>
                     }
-                    <button class="avatar-btn ms-3" title="Profil" type="button">
-                        <img src="~/images/profile.jpg" alt="Profil Fotoğrafı" class="avatar rounded-circle" style="width:36px;height:36px;object-fit:cover;" onerror="this.style.display='none'" />
-                        <span class="avatar-placeholder" style="width:36px;height:36px;border-radius:50%;background:#bbb;display:inline-block;"></span>
-                    </button>
-                    <button class="icon-btn" title="Ayarlar" type="button">
+                    <button class="icon-btn" id="openHamburgerMenu" title="Ayarlar" type="button">
                         <img src="~/icons/Ayarlar.svg" alt="Ayarlar" class="icon" style="height:24px;" />
                     </button>
                 </div>
@@ -128,7 +90,46 @@
             </main>
         </div>
     </div>
+
+    <!-- Hamburger Menu (İzole) -->
+    <div class="hamburger-root">
+        <div id="hamburgerMenu" class="hamburger-menu">
+            <div class="hamburger-header">
+                <button class="close-btn" id="closeHamburgerMenu" aria-label="Kapat">&times;</button>
+                <div class="profile-section">
+                    <img src="~/images/profile.jpg" alt="Profil Fotoğrafı" class="avatar" />
+                    <div class="profile-info">
+                        <div class="profile-name">@kullaniciAdi</div>
+                        <div class="profile-email">@kullaniciEposta</div>
+                    </div>
+                </div>
+            </div>
+            <ul class="hamburger-list">
+                <li>
+                    <button class="menu-item" id="toggleDarkMode">
+                        <img src="~/icons/Gece.mod.svg" alt="Gece Modu" class="icon" />
+                        <span>Gece Modu</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="menu-item">
+                        <img src="~/icons/Bildirimler.svg" alt="Bildirimler" class="icon" />
+                        <span>Bildirimler</span>
+                    </button>
+                </li>
+                <li>
+                    <a class="menu-item" href="/Kullanici/Account/Logout">
+                        <img src="~/icons/Cıkıs.svg" alt="Çıkış" class="icon" />
+                        <span>Çıkış Yap</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="hamburgerOverlay" class="hamburger-overlay"></div>
+    </div>
+
     @RenderSection("Styles", required: false)
     @RenderSection("Scripts", required: false)
+    <script src="~/js/hamburger.js" asp-append-version="true"></script>
 </body>
 </html>

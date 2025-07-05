@@ -1,0 +1,97 @@
+.hamburger-root .hamburger-menu {
+    position: fixed;
+    top: 0;
+    right: -340px;
+    width: 320px;
+    height: 100vh;
+    background: #232a36;
+    color: #fff;
+    box-shadow: -2px 0 24px #000a;
+    z-index: 2000;
+    transition: right 0.3s cubic-bezier(.4,0,.2,1); 
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+.hamburger-root .hamburger-menu.open {
+    right: 0;
+}
+.hamburger-root .hamburger-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-bottom: 1px solid #333;
+    position: relative;
+}
+.hamburger-root .close-btn {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.hamburger-root .profile-section {
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+.hamburger-root .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    background: #444;
+}
+.hamburger-root .profile-info {
+    display: flex;
+    flex-direction: column;
+}
+.hamburger-root .profile-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.hamburger-root .profile-email {
+    font-size: 0.95rem;
+    color: #8ceabb;
+}
+.hamburger-root .hamburger-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0 0;
+    flex: 1;
+}
+.hamburger-root .hamburger-list li {
+    margin: 0;
+}
+.hamburger-root .menu-item {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: left;
+    gap: 1rem;
+}
+.hamburger-root .menu-item:hover {
+    background: #2f3b4c;
+}
+.hamburger-root .hamburger-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1999;
+}
+.hamburger-root .hamburger-menu.open ~ .hamburger-overlay {
+    display: block;
+}

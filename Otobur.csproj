@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Otobur.Models\Otobur.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Shared\Controllers\" />
+    <Folder Include="Areas\Shared\Views\" />
+  </ItemGroup>
+
 </Project>
