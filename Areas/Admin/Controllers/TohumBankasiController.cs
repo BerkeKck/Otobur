@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Data; // DbContext için
 using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
+using Otobur.Utility;
 using System.Linq;
 
 namespace Otobur.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_User}")]
     public class TohumBankasiController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

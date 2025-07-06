@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Repository.IRepository;
+using Otobur.Utility;
 using System.Linq.Dynamic.Core;
 
 namespace Otobur.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_User}")]
     public class VeritabaniController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

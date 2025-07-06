@@ -14,8 +14,10 @@
 <body>
     <div class="main-layout d-flex">
         <!-- Sidebar -->
-        <aside class="sidebar bg-light p-3">
-            <div class="logo d-flex align-items-center mb-4">
+        @if (User.IsInRole(SD.Role_Admin))
+        {
+            <aside class="sidebar bg-light p-3">
+                <div class="logo d-flex align-items-center mb-4">
                 <img src="~/icons/Otobur.Icon.svg" alt="Otobur Logo" style="width:48px;height:48px;" />
                 <span class="ms-2 fs-4 fw-bold">OTOBUR</span>
             </div>
@@ -47,6 +49,7 @@
                 </a>
             </nav>
         </aside>
+       }
         <div class="content-area">
             <header class="topbar d-flex align-items-center justify-content-between px-3 py-2 text-black">
                 <form class="search-bar" onsubmit="return false;">

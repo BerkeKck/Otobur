@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Data;
 using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
+using Otobur.Utility;
 
 namespace Otobur.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_User}")]
     public class BitkiDurumController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;  
