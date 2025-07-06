@@ -10,10 +10,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages(); 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // dependency injection
-builder.Services.AddScoped<IEmailSender, EmailSender>(); // Email sender service
+//builder.Services.AddScoped<IEmailSender, EmailSender>(); // Email sender service
 builder.Services.AddSession();
 
 
@@ -36,11 +36,6 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:Kullanici}/{controller=Home}/{action=Login}/{id?}");
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Account}/{action=Login}/{id?}");
-
+    name: "default",
+    pattern: "{area=Admin}/{controller=Aksesyon}/{action=Index}/{id?}");
 app.Run();

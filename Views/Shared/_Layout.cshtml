@@ -1,11 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
-@{
-    var kullaniciGrubu = Context.Session.GetString("KullaniciGrubu");
-    var kullaniciAdi = Context.Session.GetString("KullaniciAdi");
-    var areaName = kullaniciGrubu == "Sistem Yöneticisi" ? "Admin" : "Kullanici";
-    bool isLoggedIn = !string.IsNullOrEmpty(kullaniciAdi);
-}
-
+﻿
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -28,33 +21,30 @@
             </div>
 
             <nav class="nav flex-column">
-                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="Aksesyon" asp-action="Index">
+                <a class="menu-item nav-link" asp-area="Admin" asp-controller="Aksesyon" asp-action="Index">
                     <img src="~/icons/Aksesyon.svg" alt="Aksesyon" style="height:32px;" class="me-2" />
                     Aksesyon Kayıt
                 </a>
-                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="Veritabani" asp-action="Index">
+                <a class="menu-item nav-link" asp-area="Admin" asp-controller="Veritabani" asp-action="Index">
                     <img src="~/icons/Veritabani.svg" alt="Veritabanı" style="height:32px;" class="me-2" />
                     Veritabanı Sorgu
                 </a>
-                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="Herbaryum" asp-action="Index">
+                <a class="menu-item nav-link" asp-area="Admin" asp-controller="Herbaryum" asp-action="Index">
                     <img src="~/icons/Herbaryum.svg" alt="Herbaryum" style="height:32px;" class="me-2" />
                     Herbaryum
                 </a>
-                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="BitkiDurum" asp-action="Index">
+                <a class="menu-item nav-link" asp-area="Admin" asp-controller="BitkiDurum" asp-action="Index">
                     <img src="~/icons/BitkiDurum.svg" alt="Bitki Durum" style="height:32px;" class="me-2" />
                     Bitki Durum
                 </a>
-                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="TohumBankasi" asp-action="Index">
+                <a class="menu-item nav-link" asp-area="Admin" asp-controller="TohumBankasi" asp-action="Index">
                     <img src="~/icons/TohumBankasi.svg" alt="Tohum Bankası" style="height:32px;" class="me-2" />
                     Tohum Bankası
                 </a>
-                @if (kullaniciGrubu == "Sistem Yöneticisi")
-                {
-                    <a class="menu-item nav-link" asp-area="Admin" asp-controller="Yetkilendirme" asp-action="Index">
-                        <img src="~/icons/Yetkilendirme.svg" alt="Yetkilendirme" style="height:32px;" class="me-2" />
-                        Yetkilendirme
-                    </a>
-                }
+                <a class="menu-item nav-link" asp-area="Admin" asp-controller="Yetkilendirme" asp-action="Index">
+                     <img src="~/icons/Yetkilendirme.svg" alt="Yetkilendirme" style="height:32px;" class="me-2" />
+                     Yetkilendirme
+                </a>
             </nav>
         </aside>
         <div class="content-area">
@@ -62,17 +52,9 @@
                 <form class="search-bar" onsubmit="return false;">
                 </form>
                 <div class="topbar-icons d-flex align-items-center">
-                    
-                    @if (isLoggedIn)
-                    {
-                        <span class="user-name ms-3">@kullaniciAdi</span>
-                    }
-                    else
-                    {
-                        <a href="/Kullanici/Account/Login" class="btn btn-link ms-3 text-black">Login</a>
-                        <a href="/Kullanici/Account/Register" class="btn btn-link ms-2 text-black">Register</a>
-                    }
-                    <button class="icon-btn" id="openHamburgerMenu" title="Ayarlar" type="button">
+                <a href="/Kullanici/Account/Login" class="btn btn-link ms-3 text-black">Login</a>
+                 <a href="/Kullanici/Account/Register" class="btn btn-link ms-2 text-black">Register</a> 
+                    <button class="icon-btn" id="Ayarlar" title="Ayarlar" type="button">
                         <img src="~/icons/Ayarlar.svg" alt="Ayarlar" class="icon" style="height:24px;" />
                     </button>
                 </div>

@@ -16,11 +16,6 @@ namespace Otobur.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var kullaniciGrubu = HttpContext.Session.GetString("KullaniciGrubu");
-            if (kullaniciGrubu != "Sistem Yöneticisi")
-            {
-                return RedirectToAction("Login", "Account", new { area = "Kullanici" });
-            }
             var kullanicilar = _unitOfWork.Kullanici.GetAll().ToList();
             return View(kullanicilar);
         }
