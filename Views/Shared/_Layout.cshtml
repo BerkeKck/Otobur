@@ -2,135 +2,83 @@
 @{
     var kullaniciGrubu = Context.Session.GetString("KullaniciGrubu");
     var kullaniciAdi = Context.Session.GetString("KullaniciAdi");
-    var kullaniciEposta = Context.Session.GetString("Eposta");
     var areaName = kullaniciGrubu == "Sistem Yöneticisi" ? "Admin" : "Kullanici";
     bool isLoggedIn = !string.IsNullOrEmpty(kullaniciAdi);
 }
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Otobur</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/hamburger.css" asp-append-version="true" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @RenderSection("Styles", required: false)
 </head>
 <body>
-    <div class="main-layout">
-        <aside class="sidebar">
-            <div class="logo">
+    <div class="main-layout d-flex">
+        <!-- Sidebar -->
+        <aside class="sidebar bg-light p-3">
+            <div class="logo d-flex align-items-center mb-4">
                 <img src="~/icons/Otobur.Icon.svg" alt="Otobur Logo" style="width:48px;height:48px;" />
-                <span class="logo-text">OTOBUR</span>
+                <span class="ms-2 fs-4 fw-bold">OTOBUR</span>
             </div>
-            <nav>
-                <a class="menu-item" asp-area="@areaName" asp-controller="Aksesyon" asp-action="Index">
-                    <div class="menu-icon">
-                        <img src="~/icons/Aksesyon.svg" alt="Aksesyon Kayıt" style="height:48px;" />
-                    </div>
-                    <span>Aksesyon Kayıt</span>
+
+            <nav class="nav flex-column">
+                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="Aksesyon" asp-action="Index">
+                    <img src="~/icons/Aksesyon.svg" alt="Aksesyon" style="height:32px;" class="me-2" />
+                    Aksesyon Kayıt
                 </a>
-                <a class="menu-item" asp-area="@areaName" asp-controller="Veritabani" asp-action="Index">
-                    <div class="menu-icon">
-                        <img src="~/icons/Veritabani.svg" alt="Veritabani Sorgu" style="height:48px;" />
-                    </div>
-                    <span>Veritabani Sorgu</span>
+                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="Veritabani" asp-action="Index">
+                    <img src="~/icons/Veritabani.svg" alt="Veritabanı" style="height:32px;" class="me-2" />
+                    Veritabanı Sorgu
                 </a>
-                <a class="menu-item" asp-area="@areaName" asp-controller="Herbaryum" asp-action="Index">
-                    <div class="menu-icon">
-                        <img src="~/icons/Herbaryum.svg" alt="Herbaryum" style="height:48px;" />
-                    </div>
-                    <span>Herbaryum</span>
+                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="Herbaryum" asp-action="Index">
+                    <img src="~/icons/Herbaryum.svg" alt="Herbaryum" style="height:32px;" class="me-2" />
+                    Herbaryum
                 </a>
-                <a class="menu-item" asp-area="@areaName" asp-controller="BitkiDurum" asp-action="Index">
-                    <div class="menu-icon">
-                        <img src="~/icons/BitkiDurum.svg" alt="Bitki Durum" style="height:48px;" />
-                    </div>
-                    <span>Bitki Durum</span>
+                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="BitkiDurum" asp-action="Index">
+                    <img src="~/icons/BitkiDurum.svg" alt="Bitki Durum" style="height:32px;" class="me-2" />
+                    Bitki Durum
                 </a>
-                <a class="menu-item" asp-area="@areaName" asp-controller="TohumBankasi" asp-action="Index">
-                    <div class="menu-icon">
-                        <img src="~/icons/TohumBankasi.svg" alt="Tohum Bankası" style="height:48px;" />
-                    </div>
-                    <span>Tohum Bankası</span>
+                <a class="menu-item nav-link" asp-area="@areaName" asp-controller="TohumBankasi" asp-action="Index">
+                    <img src="~/icons/TohumBankasi.svg" alt="Tohum Bankası" style="height:32px;" class="me-2" />
+                    Tohum Bankası
                 </a>
                 @if (kullaniciGrubu == "Sistem Yöneticisi")
                 {
-                    <a class="menu-item" asp-area="Admin" asp-controller="Yetkilendirme" asp-action="Index">
-                        <div class="menu-icon">
-                            <img src="~/icons/Yetkilendirme.svg" alt="Yetkilendirme" style="height:48px;" />
-                        </div>
-                        <span>Yetkilendirme</span>
+                    <a class="menu-item nav-link" asp-area="Admin" asp-controller="Yetkilendirme" asp-action="Index">
+                        <img src="~/icons/Yetkilendirme.svg" alt="Yetkilendirme" style="height:32px;" class="me-2" />
+                        Yetkilendirme
                     </a>
                 }
             </nav>
         </aside>
-        <div class="content-area">
-            <header class="topbar d-flex align-items-center justify-content-between px-3 py-2 text-black">
-                <form class="search-bar" onsubmit="return false;">
-                </form>
-                <div class="topbar-icons d-flex align-items-center">
+
+        <!-- Content Area -->
+        <div class="content-area flex-grow-1">
+            <!-- Topbar -->
+            <header class="topbar d-flex align-items-center justify-content-between px-4 py-2 border-bottom bg-white shadow-sm">
+                <div class="topbar-left">   
+                    <!-- Arama çubuğu veya başlık gelebilir -->
+                </div>
+                <div class="topbar-right d-flex align-items-center">
                     <partial name="_LoginPartial" />
-                    
-                    @if (isLoggedIn)
-                    {
-                        <span class="user-name ms-3">@kullaniciAdi</span>
-                    }
-                    else
-                    {
-                        <a href="/Kullanici/Account/Login" class="btn btn-link ms-3 text-black">Login</a>
-                        <a href="/Kullanici/Account/Register" class="btn btn-link ms-2 text-black">Register</a>
-                    }
-                    <button class="icon-btn" id="openHamburgerMenu" title="Ayarlar" type="button">
-                        <img src="~/icons/Ayarlar.svg" alt="Ayarlar" class="icon" style="height:24px;" />
-                    </button>
                 </div>
             </header>
-            <main class="p-3">
+
+            <!-- Main Content -->
+            <main class="p-4">
                 @RenderBody()
             </main>
         </div>
     </div>
 
-    <!-- Hamburger Menu (İzole) -->
-    <div class="hamburger-root">
-        <div id="hamburgerMenu" class="hamburger-menu">
-            <div class="hamburger-header">
-                <button class="close-btn" id="closeHamburgerMenu" aria-label="Kapat">&times;</button>
-                <div class="profile-section">
-                    <img src="~/images/profile.jpg" alt="Profil Fotoğrafı" class="avatar" />
-                    <div class="profile-info">
-                        <div class="profile-name">@kullaniciAdi</div>
-                        <div class="profile-email">@kullaniciEposta</div>
-                    </div>
-                </div>
-            </div>
-            <ul class="hamburger-list">
-                <li>
-                    <button class="menu-item" id="toggleDarkMode">
-                        <img src="~/icons/Gece.mod.svg" alt="Gece Modu" class="icon" />
-                        <span>Gece Modu</span>
-                    </button>
-                </li>
-                <li>
-                    <button class="menu-item">
-                        <img src="~/icons/Bildirimler.svg" alt="Bildirimler" class="icon" />
-                        <span>Bildirimler</span>
-                    </button>
-                </li>
-                <li>
-                    <a class="menu-item" href="/Kullanici/Account/Logout">
-                        <img src="~/icons/Cıkıs.svg" alt="Çıkış" class="icon" />
-                        <span>Çıkış Yap</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div id="hamburgerOverlay" class="hamburger-overlay"></div>
-    </div>
-
-    @RenderSection("Styles", required: false)
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
-    <script src="~/js/hamburger.js" asp-append-version="true"></script>
 </body>
 </html>
