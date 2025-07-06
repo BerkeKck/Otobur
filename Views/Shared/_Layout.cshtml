@@ -51,13 +51,12 @@
             <header class="topbar d-flex align-items-center justify-content-between px-3 py-2 text-black">
                 <form class="search-bar" onsubmit="return false;">
                 </form>
-                <div class="topbar-icons d-flex align-items-center">
-                <a href="/Kullanici/Account/Login" class="btn btn-link ms-3 text-black">Login</a>
-                 <a href="/Kullanici/Account/Register" class="btn btn-link ms-2 text-black">Register</a> 
+                <div class="topbar-icons me-auto">
+                    <partial name="_LoginPartial" />
                     <button class="icon-btn" id="Ayarlar" title="Ayarlar" type="button">
                         <img src="~/icons/Ayarlar.svg" alt="Ayarlar" class="icon" style="height:24px;" />
                     </button>
-                </div>
+                </div> 
             </header>
 
             <!-- Main Content -->
