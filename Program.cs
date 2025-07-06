@@ -2,9 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Otobur.DataAccess.Data;
 using Otobur.DataAccess.Repository;
 using Otobur.DataAccess.Repository.IRepository;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Otobur.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages(); 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // dependency injection
 builder.Services.AddScoped<IEmailSender, EmailSender>(); // Email sender service
@@ -35,9 +32,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting(); 
-app.UseAuthentication(); // Authentication middleware must be before Authorization
+
 app.UseAuthorization();
-app.MapRazorPages();
+
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:Kullanici}/{controller=Home}/{action=Login}/{id?}");

@@ -57,16 +57,24 @@
                 }
             </nav>
         </aside>
-
-        <!-- Content Area -->
-        <div class="content-area flex-grow-1">
-            <!-- Topbar -->
-            <header class="topbar d-flex align-items-center justify-content-between px-4 py-2 border-bottom bg-white shadow-sm">
-                <div class="topbar-left">   
-                    <!-- Arama çubuğu veya başlık gelebilir -->
-                </div>
-                <div class="topbar-right d-flex align-items-center">
-                    <partial name="_LoginPartial" />
+        <div class="content-area">
+            <header class="topbar d-flex align-items-center justify-content-between px-3 py-2 text-black">
+                <form class="search-bar" onsubmit="return false;">
+                </form>
+                <div class="topbar-icons d-flex align-items-center">
+                    
+                    @if (isLoggedIn)
+                    {
+                        <span class="user-name ms-3">@kullaniciAdi</span>
+                    }
+                    else
+                    {
+                        <a href="/Kullanici/Account/Login" class="btn btn-link ms-3 text-black">Login</a>
+                        <a href="/Kullanici/Account/Register" class="btn btn-link ms-2 text-black">Register</a>
+                    }
+                    <button class="icon-btn" id="openHamburgerMenu" title="Ayarlar" type="button">
+                        <img src="~/icons/Ayarlar.svg" alt="Ayarlar" class="icon" style="height:24px;" />
+                    </button>
                 </div>
             </header>
 
