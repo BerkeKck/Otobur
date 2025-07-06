@@ -24,7 +24,9 @@ namespace Otobur.Areas.Admin.Controllers
             var kullanicilar = _unitOfWork.Kullanici.GetAll().ToList();
             return View(kullanicilar);
         }
-
-        // Diğer action'larda da aynı kontrolü yapın
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
