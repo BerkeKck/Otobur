@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Otobur.DataAccess.Data;
 using Otobur.DataAccess.Repository;
 using Otobur.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddRazorPages(); 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // dependency injection
 builder.Services.AddSession();
 
@@ -29,9 +32,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 app.UseRouting(); 
-
+app.UseAuthentication(); // Authentication middleware must be before Authorization
 app.UseAuthorization();
-
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Account}/{action=Login}/{id?}");
