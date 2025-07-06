@@ -109,11 +109,10 @@ namespace Otobur.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
 
-            public string? KullaniciAdi { get; set; }
-            public string?  KullaniciKodu { get; set; }
-            public int? KullaniciNumarasi { get; set; }
-            public string? TelefonNumarasi { get; set; }
-
+            public string? UserName { get; set; }
+            public string?  UserCode { get; set; }
+            public int? UserNumber { get; set; }
+            public int? PhoneNumber { get; internal set; }
         };
 
        
@@ -149,10 +148,10 @@ namespace Otobur.Areas.Identity.Pages.Account
                 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                user.UserName = Input.KullaniciAdi;
-                user.KullaniciKodu = Input.KullaniciKodu;
-                user.KullaniciNumarasi = Input.KullaniciNumarasi;
-                user.PhoneNumber = Input.TelefonNumarasi;
+                user.UserName = Input.UserName;
+                user.UserCode = Input.UserCode;
+                user.UserNumber = Input.UserNumber;
+                user.PhoneNumber = Input.PhoneNumber;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

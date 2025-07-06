@@ -1,95 +1,78 @@
 ﻿@page
 @model RegisterModel
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
 
-<div class="card shadow border-0 mt4">
-    <div class="card-header bg-secondary bg-gradient m-lg-0 py-4">
-        <div class="row">
-            <div class="col-12 text-center ">
-                <h2 class="py-2 text-black">REGISTER</h2>
-            </div>
-        </div>
-    </div>
-    <div class="card-body py-4">
-        <div class="row pt-3">
-            <div class="col-md-12">
-                <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                    <h3 class="border-bottom pb-3 mb-4 text-secondary text-center">Create a new account.</h3>
-                    <hr />
-                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                    <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                        <label asp-for="Input.Email"class="ms-2 text-muted">Email</label>
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mb-3 col-6">
-                        <input asp-for="Input.KullaniciAdi" class="form-control" autocomplete="kullanici-adi" aria-required="true" placeholder="Username" />
-                        <label asp-for="Input.KullaniciAdi" class="ms-2 text-muted">Username</label>
-                        <span asp-validation-for="Input.KullaniciAdi" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mb-3 col-6">
-                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password" />
-                        <label asp-for="Input.Password" class="ms-2 text-muted">Password</label>
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mb-3 col-6">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
-                        <label asp-for="Input.ConfirmPassword" class="ms-2 text-muted">Confirm Password</label>
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Input.KullaniciKodu" class="form-control" autocomplete="kullanici-kodu" aria-required="true" placeholder="CODE" />
-                        <label asp-for="Input.KullaniciKodu" class="ms-2 text-muted">User Code</label>
-                        <span asp-validation-for="Input.KullaniciKodu" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Input.TelefonNumarasi" class="form-control" autocomplete="telefon-numarasi" aria-required="true" placeholder="0555-555-5555" />
-                        <label asp-for="Input.TelefonNumarasi" class="ms-2 text-muted">Telefon Numarası</label>
-                        <span asp-validation-for="Input.TelefonNumarasi" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mb-3 col-6">
-                        <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select"></select>
-                    </div>
-                    <div class="col-12">
-                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-12">
-                <section>
-                    <p class="divider-text d-flex pt-4">or</p>
-                    <h3>Use another service to register.</h3>
-                    @{
-                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                        {
-                            <div>
-                                <p>
-                                    There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                        article
-                                        about setting up this ASP.NET application to support logging in via external services
-                                    </a>.
-                                </p>
+<link rel="stylesheet" href="~/css/site-auth.css" asp-append-version="true" />
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="register-card shadow">
+                <div class="register-header">
+                    <img src="~/icons/Otobur.Icon.svg" alt="Otobur Logo" style="width:86px;height:86px;" class="mb-2" />
+                    <div class="register-title mb-1">Kayıt Ol</div>
+                    <div class="fw-light">Yeni bir hesap oluşturun</div>
+                </div>
+                <div class="p-4">
+                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post" autocomplete="off">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input asp-for="Input.Email" class="form-control" placeholder="Email" />
+                                <span asp-validation-for="Input.Email" class="text-danger small"></span>
                             </div>
-                        }
-                        else
-                        {
-                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                <div>
-                                    <p>
-                                        @foreach (var provider in Model.ExternalLogins!)
-                                        {
-                                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                        }
-                                    </p>
-                                </div>
-                            </form>
-                        }
-                    }
-                </section>
+                            <div class="col-md-6">
+                                <input asp-for="Input.UserName" class="form-control" placeholder="Kullanıcı Adı" />
+                                <span asp-validation-for="Input.UserName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Input.Password" class="form-control" placeholder="Şifre" type="password" />
+                                <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Şifre Tekrar" type="password" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Input.UserCode" class="form-control" placeholder="Kullanıcı Kodu" />
+                                <span asp-validation-for="Input.UserCode" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Telefon Numarası" />
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger small"></span>
+                            </div>
+                            <div class="col-12">
+                                <select asp-for="Input.Role" class="form-select">
+                                    <option value="">Rol Seçiniz</option>
+                                    <option value="Eğitimde">Eğitimde</option>
+                                    <option value="Normal Kullanici">Normal Kullanıcı</option>
+                                    <option value="Sistem Yöneticisi">Sistem Yöneticisi</option>
+                                </select>
+                                <span asp-validation-for="Input.Role" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-grid">
+                            <button type="submit" class="btn register-btn btn-lg">
+                                <i class="bi bi-person-plus me-2"></i>Kayıt Ol
+                            </button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a asp-page="./Login" class="btn btn-soil btn-sm px-4">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Giriş Yap
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3 register-link">
+                <a href="https://github.com/berkekck" target="_blank" class="text-muted text-decoration-none">Berke Küçük</a>
+                <span class="mx-2 text-muted">|</span>
+                <a href="https://www.ngbb.org.tr/" target="_blank" class="text-muted text-decoration-none">NGBB</a>
             </div>
         </div>
     </div>
 </div>
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

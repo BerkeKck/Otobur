@@ -1,4 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Admin Paneli";
 }
-<h2>Admin Paneline Hoş Geldiniz</h2>
+
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 text-center">
+            <!-- Logo -->
+            <img src="~/icons/Otobur.Icon.svg" alt="Otobur Logo" style="width:64px;height:64px;" />
+            <h1 class="display-5 fw-bold text-success mb-3">Otobur Uygulamasına Hoş Geldiniz</h1>
+            <p class="lead text-secondary mb-4">
+                Bitki koleksiyonunuzu kolayca yönetin, kayıtlarınızı güvenle saklayın ve modern arayüz ile verilerinize hızlıca ulaşın.
+            </p>
+            <a href="/Admin/Aksesyon" class="btn btn-success btn-lg px-5 shadow-sm">
+                <i class="bi bi-box-arrow-in-right"></i> Yönetim Paneline Git
+            </a>
+        </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title text-success mb-3">Neler Yapabilirsiniz?</h4>
+                    <ul class="list-unstyled fs-5">
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Aksesyon kayıtlarını görüntüleyin ve yönetin</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Kullanıcı yönetimi ve yetkilendirme</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Güvenli ve hızlı veri erişimi</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Modern ve kullanıcı dostu arayüz</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons CDN (gerekirse ekleyin) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
