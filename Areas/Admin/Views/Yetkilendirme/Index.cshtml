@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<IdentityUser>
+
+
+
+@{
+    ViewData["Title"] = "Kullanıcı Yönetimi";
+}
+
+<h2>Kullanıcı Yönetimi</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Kullanıcı Adı</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Kullanıcı Grubu</th>
+            <th>Kullanıcı Kodu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                <td>
+                    @{
+                        var userManager = Context.RequestServices.GetService(typeof(UserManager<IdentityUser>)) as UserManager<IdentityUser>;
+                        var roles = await userManager.GetRolesAsync(user);
+                    }
+                    @string.Join(", ", roles)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,71 @@
+﻿@using Otobur.Models.Models
+@model List<BitkiDurum>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <div class="container">
+        <div class="row pt-4 pb-3">
+            <div class="col-6">
+                <h2 class="text-primary">Bitki Durum Kayıt</h2>
+            <form method="get" asp-controller="Aksesyon" asp-action="Index" class="search-bar">
+                <div class="input-group">
+                    <input type="text" id="searchBox" class="form-control mb-3" placeholder="Aksesyon numarası ara...">
+                    </button>
+                </div>
+            </form>
+            </div>
+        </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Aksesyon Numarası</th>
+                <th>Bitkinin Adı</th>
+                <th>Gözlem Tarihi</th>
+                <th>Bahçede Bulunduğu Yer</th>
+                <th>Yer Kodu</th>
+                <th>Bitkinin Durumu</th>
+                <th>Vejetasyon Durumu</th>
+                <th>Gözlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model)
+            {
+                <tr>
+                    <td>@obj.AksesyonNumarasi</td>
+                    <td>@obj.BitkininAdi</td>
+                    <td>@obj.GozlemTarihi.ToString("dd.MM.yyyy")</td>
+                    <td>@obj.BahcedeBulunduguYer</td>
+                    <td>@obj.YerKodu</td>
+                    <td>@obj.BitkininDurumu</td>
+                    <td>@obj.VejetasyonDurumu</td>
+                    <td>@obj.Gozlem</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a asp-controller="BitkiDurum" asp-action="Edit" asp-route-id="@obj.AksesyonNumarasi"
+                               class="btn btn-sm btn-outline-primary rounded-circle"
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="Düzenle">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-controller="BitkiDurum" asp-action="Delete" asp-route-id="@obj.AksesyonNumarasi"
+                               class="btn btn-sm btn-outline-danger rounded-circle"
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="Sil">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchBox").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("table tbody tr").filter(function () {
+                $(this).toggle($(this).find("td:first").text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

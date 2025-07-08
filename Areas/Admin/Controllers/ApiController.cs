@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Data;
 using System.Linq;
 
-namespace Otobur.Areas.Admin.Controllers
+namespace Otobur.Views.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Api/[action]")]

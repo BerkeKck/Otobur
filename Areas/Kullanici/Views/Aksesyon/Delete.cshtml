@@ -1,0 +1,37 @@
+﻿@using Otobur.Models.Models
+@model Aksesyon
+
+<div class="container" style="max-width: 700px;">
+    <div class="border p-4 mt-4 bg-white rounded shadow-sm">
+        <h2 class="text-danger">Aksesyon Sil</h2>
+        <hr />
+        <p>Bu kaydı silmek istediğinize emin misiniz?</p>
+        <dl class="row">
+            <dt class="col-sm-4">Aksesyon Numarası</dt>
+            <dd class="col-sm-8">@Model.AksesyonNumarasi</dd>
+            <dt class="col-sm-4">Bitkinin Adı</dt>
+            <dd class="col-sm-8">@Model.BitkininAdi</dd>
+            <dt class="col-sm-4">Materyal Çeşidi</dt>
+            <dd class="col-sm-8">@Model.MateryalCesidi</dd>
+            <dt class="col-sm-4">Köken</dt>
+            <dd class="col-sm-8">@Model.Koken</dd>
+            <dt class="col-sm-4">Lokasyon</dt>
+            <dd class="col-sm-8">@Model.Lokasyon</dd>
+            <dt class="col-sm-4">Koordinat</dt>
+            <dd class="col-sm-8">@Model.Koordinat</dd>
+            <dt class="col-sm-4">Toplanma Tarihi</dt>
+            <dd class="col-sm-8">@Model.ToplanmaTarihi?.ToShortDateString()</dd>
+            <dt class="col-sm-4">Toplayıcı Adı</dt>
+            <dd class="col-sm-8">@Model.KullaniciAdi</dd>
+            <dt class="col-sm-4">Toplayıcı Kodu</dt>
+            <dd class="col-sm-8">@Model.KullaniciKodu</dd>
+            <dt class="col-sm-4">Toplayıcı Numarası</dt>
+            <dd class="col-sm-8">@Model.KullaniciNumarasi</dd>
+        </dl>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="AksesyonNumarasi" />
+            <button type="submit" class="btn btn-danger">Sil</button>
+            <a asp-action="Index" class="btn btn-secondary">Vazgeç</a>
+        </form>
+    </div>
+</div>

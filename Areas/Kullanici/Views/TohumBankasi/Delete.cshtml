@@ -1,0 +1,23 @@
+@using Otobur.Models.Models
+@model TohumBankasi
+
+<div class="container" style="max-width: 700px;">
+    <div class="border p-4 mt-4 bg-white rounded shadow-sm">
+        <h2 class="text-danger">Tohum Bankasý Kaydýný Sil</h2>
+        <hr />
+        <p>Bu kaydý silmek istediðinize emin misiniz?</p>
+        <dl class="row">
+            <dt class="col-sm-4">Aksesyon Numarasý</dt>
+            <dd class="col-sm-8">@Model.AksesyonNumarasi</dd>
+            <dt class="col-sm-4">Miktar</dt>
+            <dd class="col-sm-8">@Model.Miktar</dd>
+            <dt class="col-sm-4">Bulunduðu Dolap</dt>
+            <dd class="col-sm-8">@Model.BulunduguDolap</dd>
+        </dl>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="AksesyonNumarasi" />
+            <button type="submit" class="btn btn-danger">Sil</button>
+            <a asp-action="Index" class="btn btn-secondary">Vazgeç</a>
+        </form>
+    </div>
+</div>

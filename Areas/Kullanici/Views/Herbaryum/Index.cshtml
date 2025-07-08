@@ -1,0 +1,73 @@
+﻿@using Otobur.Models.Models
+@model List<Herbaryum>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">Herbaryum Kayıt</h2>
+            <form method="get" asp-controller="Aksesyon" asp-action="Index" class="search-bar">
+                <div class="input-group">
+                    <input type="text" id="searchBox" class="form-control mb-3" placeholder="Aksesyon numarası ara...">
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Aksesyon No</th>
+                <th>Bitkinin Adı</th>
+                <th>Herbaryum No</th>
+                <th>Toplayıcı Adı</th>
+                <th>Toplayıcı Kodu</th>
+                <th>Toplayıcı No</th>
+                <th>Lokasyon</th>
+                <th>Koordinat</th>
+                <th>Fotoğraf</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model.OrderBy(u => u.HerbaryumNo))
+            {
+                <tr>
+                    <td>@obj.AksesyonNumarasi</td>
+                    <td>@obj.BitkininAdi</td>
+                    <td>@obj.HerbaryumNo</td>
+                    <td>@obj.KullaniciAdi</td>
+                    <td>@obj.KullaniciKodu</td>
+                    <td>@obj.KullaniciNumarasi</td>
+                    <td>@obj.Lokasyon</td>
+                    <td>@obj.Koordinat</td>
+              
+                    <td>@obj.Fotograf</td>
+                    <td>
+                    <div class="d-flex gap-2">
+                        <a asp-controller="Herbaryum" asp-action="Edit" asp-route-id="@obj.AksesyonNumarasi"
+                           class="btn btn-sm btn-outline-primary rounded-circle"
+                           data-bs-toggle="tooltip" data-bs-placement="top" title="Düzenle">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a asp-controller="Herbaryum" asp-action="Delete" asp-route-id="@obj.AksesyonNumarasi"
+                           class="btn btn-sm btn-outline-danger rounded-circle"
+                           data-bs-toggle="tooltip" data-bs-placement="top" title="Sil">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchBox").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("table tbody tr").filter(function () {
+                $(this).toggle($(this).find("td:first").text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

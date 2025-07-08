@@ -1,24 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Otobur.DataAccess.Data;
+using Otobur.DataAccess.Data; // DbContext için
 using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
 using Otobur.Utility;
+using System.Linq;
 
-namespace Otobur.Views.Admin.Controllers
+namespace Otobur.Views.Kullanici.Controllers
 {
-    [Area("Admin")]
+    [Area("Kullanici")]
     [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_User}")]
-    public class BitkiDurumController : Controller
+    public class HerbaryumController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;  
-        public BitkiDurumController(IUnitOfWork unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+        public HerbaryumController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         public IActionResult Index(string search)
         {
-            IEnumerable<BitkiDurum> objAksesyonList = _unitOfWork.BitkiDurum.GetAll();
+            IEnumerable<Herbaryum> objAksesyonList = _unitOfWork.Herbaryum.GetAll();
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -36,41 +37,40 @@ namespace Otobur.Views.Admin.Controllers
         //}
 
         //[HttpPost]
-        //public IActionResult Create(BitkiDurum obj)
+        //public IActionResult Create(Herbaryum obj)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        _unitOfWork.BitkiDurum.Add(obj);
-        //        _unitOfWork.Save();    
-        //        TempData["success"] = "BitkiDurum başarıyla eklendi.";
+        //        _unitOfWork.Herbaryum.Add(obj);
+        //        _unitOfWork.Save();
+        //        TempData["success"] = "Herbaryum başarıyla eklendi.";
         //        return RedirectToAction("Index");
         //    }
         //    return View(obj);
         //}
 
-        // GET: BitkiDurum/Edit/{id}
+        // GET: Herbaryum/Edit/{id}
         public IActionResult Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            BitkiDurum? bitkiDurumFromDb = _unitOfWork.BitkiDurum.Get(u => u.AksesyonNumarasi == id);
+            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
 
-            if (bitkiDurumFromDb == null)
+            if (herbaryumFromDb == null)
             {
                 return NotFound();
             }
-            return View(bitkiDurumFromDb);
+            return View(herbaryumFromDb);
         }
 
-        // POST: BitkiDurum/Edit/{id}
+        // POST: Herbaryum/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, BitkiDurum obj)
+        public IActionResult Edit(string id, Herbaryum obj)
         {
-            // Navigation property hatalarını temizle
-            ModelState.Remove(nameof(BitkiDurum.Aksesyon));
+            ModelState.Remove(nameof(Herbaryum.Aksesyon));
 
             if (id != obj.AksesyonNumarasi)
             {
@@ -79,9 +79,9 @@ namespace Otobur.Views.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.BitkiDurum.Update(obj);
+                _unitOfWork.Herbaryum.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "BitkiDurum başarıyla güncellendi.";
+                TempData["success"] = "Herbaryum kaydı güncellendi.";
                 return RedirectToAction("Index");
             }
 
@@ -89,33 +89,33 @@ namespace Otobur.Views.Admin.Controllers
             return View(obj);
         }
 
-        // GET: BitkiDurum/Delete/{id}
+        // GET: Herbaryum/Delete/{id}
         public IActionResult Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            BitkiDurum? bitkiDurumFromDb = _unitOfWork.BitkiDurum.Get(u => u.AksesyonNumarasi == id);
+            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
 
-            if (bitkiDurumFromDb == null)
+            if (herbaryumFromDb == null)
             {
                 return NotFound();
             }
-            return View(bitkiDurumFromDb);
+            return View(herbaryumFromDb);
         }
-        // POST: BitkiDurum/Delete/{id}
+        // POST: Herbaryum/Delete/{id}
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(string id)
         {
-            BitkiDurum? obj = _unitOfWork.BitkiDurum.Get(u => u.AksesyonNumarasi == id);  
+            Herbaryum? obj = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _unitOfWork.BitkiDurum.Remove(obj);
+            _unitOfWork.Herbaryum.Remove(obj);
             _unitOfWork.Save();
-            TempData["success"] = "BitkiDurum başarıyla silindi.";
+            TempData["success"] = "Herbaryum başarıyla silindi.";
             return RedirectToAction("Index");
         }
     }

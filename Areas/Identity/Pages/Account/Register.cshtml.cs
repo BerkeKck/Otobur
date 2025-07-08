@@ -147,7 +147,7 @@ namespace Otobur.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.UserName = Input.UserName;
                 user.UserCode = Input.UserCode;
@@ -159,6 +159,12 @@ namespace Otobur.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // PhoneNumber'ı kaydet
+                    if (!string.IsNullOrEmpty(Input.PhoneNumber))
+                    {
+                        await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                    }
 
                     if (!String.IsNullOrEmpty(Input.Role))
                     {

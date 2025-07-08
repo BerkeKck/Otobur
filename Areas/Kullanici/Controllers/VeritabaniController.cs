@@ -4,9 +4,9 @@ using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Utility;
 using System.Linq.Dynamic.Core;
 
-namespace Otobur.Views.Admin.Controllers
+namespace Otobur.Views.Kullanici.Controllers
 {
-    [Area("Admin")]
+    [Area("Kullanici")]
     [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_User}")]
     public class VeritabaniController : Controller
     {

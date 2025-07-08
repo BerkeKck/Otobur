@@ -6,7 +6,7 @@ using Otobur.Models.Models;
 using Otobur.Utility;
 using System.Linq;
 
-namespace Otobur.Areas.Admin.Controllers
+namespace Otobur.Views.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_User}")]

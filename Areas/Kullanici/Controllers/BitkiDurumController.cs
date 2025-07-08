@@ -5,9 +5,9 @@ using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
 using Otobur.Utility;
 
-namespace Otobur.Views.Admin.Controllers
+namespace Otobur.Views.Kullanici.Controllers
 {
-    [Area("Admin")]
+    [Area("Kullanici")]
     [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_User}")]
     public class BitkiDurumController : Controller
     {
