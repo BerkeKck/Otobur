@@ -48,8 +48,41 @@
                      Yetkilendirme
                 </a>
             </nav>
-        </aside>
-       }
+            </aside>
+        }
+        @if (User.IsInRole(SD.Role_User))
+        {
+            <aside class="sidebar bg-light p-3">
+                <div class="logo d-flex align-items-center mb-4">
+                    <img src="~/icons/Otobur.Icon.svg" alt="Otobur Logo" style="width:48px;height:48px;" />
+                    <span class="ms-2 fs-4 fw-bold">OTOBUR</span>
+                </div>
+
+                <nav class="nav flex-column">
+                    <a class="menu-item nav-link" asp-area="Admin" asp-controller="Aksesyon" asp-action="Index">
+                        <img src="~/icons/Aksesyon.svg" alt="Aksesyon" style="height:32px;" class="me-2" />
+                        Aksesyon Kayıt
+                    </a>
+                    <a class="menu-item nav-link" asp-area="Admin" asp-controller="Veritabani" asp-action="Index">
+                        <img src="~/icons/Veritabani.svg" alt="Veritabanı" style="height:32px;" class="me-2" />
+                        Veritabanı Sorgu
+                    </a>
+                    <a class="menu-item nav-link" asp-area="Admin" asp-controller="Herbaryum" asp-action="Index">
+                        <img src="~/icons/Herbaryum.svg" alt="Herbaryum" style="height:32px;" class="me-2" />
+                        Herbaryum
+                    </a>
+                    <a class="menu-item nav-link" asp-area="Admin" asp-controller="BitkiDurum" asp-action="Index">
+                        <img src="~/icons/BitkiDurum.svg" alt="Bitki Durum" style="height:32px;" class="me-2" />
+                        Bitki Durum
+                    </a>
+                    <a class="menu-item nav-link" asp-area="Admin" asp-controller="TohumBankasi" asp-action="Index">
+                        <img src="~/icons/TohumBankasi.svg" alt="Tohum Bankası" style="height:32px;" class="me-2" />
+                        Tohum Bankası
+                    </a>
+                </nav>
+            </aside>
+        }
+
         <div class="content-area">
             <header class="topbar d-flex align-items-center justify-content-between px-3 py-2 text-black">
                 <form class="search-bar" onsubmit="return false;">

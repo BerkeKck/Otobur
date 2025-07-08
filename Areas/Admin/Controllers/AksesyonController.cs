@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Otobur.DataAccess.Data;
 using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
 using Otobur.Utility;
-using System.Configuration;
 
 namespace Otobur.Areas.Admin.Controllers
 {
@@ -12,12 +10,15 @@ namespace Otobur.Areas.Admin.Controllers
     [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_User}")]
     public class AksesyonController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;  
+        private readonly IUnitOfWork _unitOfWork;
+        private const int PageSize = 8;
+
         public AksesyonController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult Index(string search)
+
+        public IActionResult Index(string search, int page = 1)
         {
             IEnumerable<Aksesyon> objAksesyonList = _unitOfWork.Aksesyon.GetAll();
 
@@ -27,9 +28,20 @@ namespace Otobur.Areas.Admin.Controllers
                     .Where(x => x.AksesyonNumarasi.Contains(search, StringComparison.OrdinalIgnoreCase));
             }
 
+            int totalItems = objAksesyonList.Count();
+            var pagedList = objAksesyonList
+                .OrderBy(x => x.BitkininAdi)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
             ViewBag.CurrentFilter = search;
-            return View(objAksesyonList.ToList());
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / PageSize);
+
+            return View(pagedList);
         }
+
         // CREATE
         public IActionResult Create()
         {
@@ -39,14 +51,12 @@ namespace Otobur.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Aksesyon obj)
         {
-            // Navigation property hatalarını temizle
             ModelState.Remove(nameof(Aksesyon.BitkiDurum));
             ModelState.Remove(nameof(Aksesyon.TohumBankasi));
 
-            // EK: Aynı AksesyonNumarasi var mı kontrolü
             var existing = _unitOfWork.Aksesyon.Get(a => a.AksesyonNumarasi == obj.AksesyonNumarasi);
             if (existing != null)
-            {   
+            {
                 ModelState.AddModelError("AksesyonNumarasi", "Bu Aksesyon Numarası zaten mevcut.");
                 ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
                 return View(obj);
@@ -56,7 +66,6 @@ namespace Otobur.Areas.Admin.Controllers
             {
                 _unitOfWork.Aksesyon.Add(obj);
 
-                // BitkiDurum için boş kayıt oluştur
                 var bitkiDurum = new BitkiDurum
                 {
                     AksesyonNumarasi = obj.AksesyonNumarasi,
@@ -64,35 +73,28 @@ namespace Otobur.Areas.Admin.Controllers
                 };
                 _unitOfWork.BitkiDurum.Add(bitkiDurum);
 
-                // TohumBankasi için boş kayıt oluştur
                 var tohumBankasi = new TohumBankasi
                 {
                     AksesyonNumarasi = obj.AksesyonNumarasi,
                     BitkininAdi = obj.BitkininAdi
-                    // Diğer alanlar default/null bırakılır
                 };
                 _unitOfWork.TohumBankasi.Add(tohumBankasi);
 
-                // Herbaryum için boş kayıt oluştur
                 var herbaryum = new Herbaryum
                 {
                     AksesyonNumarasi = obj.AksesyonNumarasi,
                     BitkininAdi = obj.BitkininAdi
-
-                    // Diğer alanlar default/null bırakılır
                 };
                 _unitOfWork.Herbaryum.Add(herbaryum);
 
-                _unitOfWork.Save();    
+                _unitOfWork.Save();
                 TempData["success"] = "Aksesyon başarıyla eklendi.";
                 return RedirectToAction("Index");
             }
-            // Hataları ViewBag ile gönder
             ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return View(obj);
-        }        
+        }
 
-        // GET: Aksesyon/Edit/{id}
         public IActionResult Edit(string id)
         {
             if (id == null)
@@ -100,11 +102,6 @@ namespace Otobur.Areas.Admin.Controllers
                 return NotFound();
             }
             Aksesyon? aksesyonFromDb = _unitOfWork.Aksesyon.Get(u => u.AksesyonNumarasi == id);
-            //Aksesyon? obj = _aksesyonRepo.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
-            //Aksesyon? AksesyonFromDb2 = _aksesyonRepo.Aksesyonlar.Where(a => a.AksesyonNumarasi == id).FirstOrDefault();
-
-            //var aksesyon = _aksesyonRepo.Aksesyonlar.FirstOrDefault(a => a.AksesyonNumarasi == id);
-
             if (aksesyonFromDb == null)
             {
                 return NotFound();
@@ -121,10 +118,8 @@ namespace Otobur.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                // 1. Aksesyon güncelle
                 _unitOfWork.Aksesyon.Update(obj);
 
-                // 2. BitkiDurum güncelle
                 var bitkiDurum = _unitOfWork.BitkiDurum.Get(b => b.AksesyonNumarasi == obj.AksesyonNumarasi);
                 if (bitkiDurum != null)
                 {
@@ -132,7 +127,6 @@ namespace Otobur.Areas.Admin.Controllers
                     _unitOfWork.BitkiDurum.Update(bitkiDurum);
                 }
 
-                // 3. TohumBankasi güncelle
                 var tohumBankasi = _unitOfWork.TohumBankasi.Get(t => t.AksesyonNumarasi == obj.AksesyonNumarasi);
                 if (tohumBankasi != null)
                 {
@@ -140,7 +134,6 @@ namespace Otobur.Areas.Admin.Controllers
                     _unitOfWork.TohumBankasi.Update(tohumBankasi);
                 }
 
-                // 4. Herbaryum güncelle
                 var herbaryum = _unitOfWork.Herbaryum.Get(h => h.AksesyonNumarasi == obj.AksesyonNumarasi);
                 if (herbaryum != null)
                 {
@@ -148,7 +141,6 @@ namespace Otobur.Areas.Admin.Controllers
                     _unitOfWork.Herbaryum.Update(herbaryum);
                 }
 
-                // 5. Değişiklikleri kaydet
                 _unitOfWork.Save();
 
                 TempData["success"] = "Aksesyon ve ilişkili kayıtlar başarıyla güncellendi.";
@@ -158,10 +150,6 @@ namespace Otobur.Areas.Admin.Controllers
             return View(obj);
         }
 
-
-
-
-        // GET: Aksesyon/Delete/{id}
         public IActionResult Delete(string id)
         {
             if (id == null)
@@ -176,11 +164,11 @@ namespace Otobur.Areas.Admin.Controllers
             }
             return View(aksesyonFromDb);
         }
-        // POST: Aksesyon/Delete/{id}
+
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(string id)
         {
-            Aksesyon? obj = _unitOfWork.Aksesyon.Get(u => u.AksesyonNumarasi == id);  
+            Aksesyon? obj = _unitOfWork.Aksesyon.Get(u => u.AksesyonNumarasi == id);
             if (obj == null)
             {
                 return NotFound();

@@ -172,3 +172,92 @@ main {
     margin: auto 0.25rem;
     box-shadow: 0 -2px;
 }
+
+/* Baþlýk ve butonlar */
+.text-primary, .table thead th, h2, h1, h3, h4, h5, h6 {
+    color: #46250A !important; /* Kahverengi */
+}
+
+.btn-success, .btn-success:focus, .btn-success:active {
+    background-color: #4caf50 !important;
+    border-color: #4caf50 !important;
+    color: #fff !important;
+}
+
+.btn-success:hover {
+    background-color: #388e3c !important;
+    border-color: #388e3c !important;
+}
+
+.btn-soil, .btn-soil:focus, .btn-soil:active {
+    background-color: #46250A !important;
+    border-color: #46250A !important;
+    color: #fff !important;
+}
+
+.btn-soil:hover {
+    background-color: #2e1706 !important;
+    border-color: #2e1706 !important;
+}
+
+/* Tablo baþlýklarý ve satýrlarý */
+.table thead th {
+    background-color: rgba(70, 37, 10, 0.08); /* Transparan kahverengi */
+    color: #46250A;
+    font-weight: 600;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(76, 175, 80, 0.06); /* Transparan yeþil */
+}
+
+.table-bordered > :not(caption) > * > * {
+    border-color: #46250A33; /* Hafif kahverengi kenarlýk */
+}
+
+/* Arama kutusu ve placeholder */
+#searchBox, .form-control {
+    border: 1px solid #46250A33;
+    background-color: rgba(70, 37, 10, 0.03);
+}
+
+#searchBox::placeholder, .form-control::placeholder {
+    color: #46250A99;
+    opacity: 1;
+}
+
+/* Menü ve sidebar */
+.sidebar, .sidebar .nav-link.active, .sidebar .nav-link:focus {
+    background-color: rgba(70, 37, 10, 0.04) !important;
+    color: #46250A !important;
+    border-color: #46250A22 !important;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(76, 175, 80, 0.10) !important;
+    color: #388e3c !important;
+}
+
+/* Edit ve Delete butonlarý */
+.btn-outline-primary {
+    border-color: #4caf50 !important;
+    color: #4caf50 !important;
+    background: transparent !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #4caf50 !important;
+    color: #fff !important;
+}
+
+.btn-outline-danger {
+    border-color: #46250A !important;
+    color: #46250A !important;
+    background: transparent !important;
+}
+
+.btn-outline-danger:hover {
+    background-color: #46250A !important;
+    color: #fff !important;
+}
+

@@ -112,7 +112,8 @@ namespace Otobur.Areas.Identity.Pages.Account
             public string? UserName { get; set; }
             public string?  UserCode { get; set; }
             public int? UserNumber { get; set; }
-            public int? PhoneNumber { get; internal set; }
+            [Phone]
+            public string? PhoneNumber { get; set; }
         };
 
        
