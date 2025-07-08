@@ -108,10 +108,11 @@ namespace Otobur.Areas.Identity.Pages.Account
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
-
-            public string? UserName { get; set; }
-            public string?  UserCode { get; set; }
-            public int? UserNumber { get; set; }
+            [Required]
+            [Display(Name = "User Name")]
+            public string UserName { get; set; }
+            public string  UserCode { get; set; }
+            public int UserNumber { get; set; }
             [Phone]
             public string? PhoneNumber { get; set; }
         };
