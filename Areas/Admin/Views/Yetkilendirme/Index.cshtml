@@ -1,38 +1,39 @@
-﻿@using Microsoft.AspNetCore.Identity
-@model List<IdentityUser>
-
-
-
-@{
-    ViewData["Title"] = "Kullanıcı Yönetimi";
-}
+﻿@model List<Otobur.Models.Models.UserWithRolesViewModel>
 
 <h2>Kullanıcı Yönetimi</h2>
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Kullanıcı Adı</th>
-            <th>Email</th>
-            <th>Telefon</th>
-            <th>Kullanıcı Grubu</th>
-            <th>Kullanıcı Kodu</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
+<form method="post">
+    <table class="table table-bordered table-striped">
+        <thead>
             <tr>
-                <td>@user.UserName</td>
-                <td>@user.Email</td>
-                <td>@user.PhoneNumber</td>
-                <td>
-                    @{
-                        var userManager = Context.RequestServices.GetService(typeof(UserManager<IdentityUser>)) as UserManager<IdentityUser>;
-                        var roles = await userManager.GetRolesAsync(user);
-                    }
-                    @string.Join(", ", roles)
-                </td>
+                <th>Kullanıcı Adı</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Kullanıcı Grubu</th>
+                <th>GorebilecegiTablolar</th>
+                <th>KayitYapabilecegiTablolar</th>
+                <th>KayitSilebilme</th>
+
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input class="form-control" name="Users[@i].UserName" value="@Model[i].User.UserName" />
+                    </td>
+                    <td>
+                        <input class="form-control" name="Users[@i].Email" value="@Model[i].User.Email" />
+                    </td>
+                    <td>
+                        <input class="form-control" name="Users[@i].PhoneNumber" value="@Model[i].User.PhoneNumber" />
+                    </td>
+                    <td>
+                        @string.Join(", ", Model[i].Roles)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>

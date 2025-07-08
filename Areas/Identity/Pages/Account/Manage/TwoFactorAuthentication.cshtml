@@ -2,69 +2,135 @@
 @using Microsoft.AspNetCore.Http.Features
 @model TwoFactorAuthenticationModel
 @{
-    ViewData["Title"] = "Two-factor authentication (2FA)";
+    ViewData["Title"] = "İki Adımlı Doğrulama (2FA)";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
-@{
-    var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
-    @if (consentFeature?.CanTrack ?? true)
-    {
-        @if (Model.Is2faEnabled)
-        {
-            if (Model.RecoveryCodesLeft == 0)
-            {
-                <div class="alert alert-danger">
-                    <strong>You have no recovery codes left.</strong>
-                    <p>You must <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a> before you can log in with a recovery code.</p>
-                </div>
-            }
-            else if (Model.RecoveryCodesLeft == 1)
-            {
-                <div class="alert alert-danger">
-                    <strong>You have 1 recovery code left.</strong>
-                    <p>You can <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
-                </div>
-            }
-            else if (Model.RecoveryCodesLeft <= 3)
-            {
-                <div class="alert alert-warning">
-                    <strong>You have @Model.RecoveryCodesLeft recovery codes left.</strong>
-                    <p>You should <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
-                </div>
-            }
-
-            if (Model.IsMachineRemembered)
-            {
-                <form method="post" style="display: inline-block">
-                    <button type="submit" class="btn btn-primary">Forget this browser</button>
-                </form>
-            }
-            <a asp-page="./Disable2fa" class="btn btn-primary">Disable 2FA</a>
-            <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">Reset recovery codes</a>
-        }
-
-        <h4>Authenticator app</h4>
-        @if (!Model.HasAuthenticator)
-        {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Add authenticator app</a>
-        }
-        else
-        {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Set up authenticator app</a>
-            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">Reset authenticator app</a>
-        }
+<style>
+    .btn-soil {
+        color: #fff;
+        background-color: #462E1A;
+        border-color: #462E1A;
     }
-    else
-    {
-        <div class="alert alert-danger">
-            <strong>Privacy and cookie policy have not been accepted.</strong>
-            <p>You must accept the policy before you can enable two factor authentication.</p>
+
+        .btn-soil:hover, .btn-soil:focus {
+            color: #fff;
+            background-color: #3a2413;
+            border-color: #3a2413;
+        }
+
+    .card-custom {
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(70,46,26,0.08);
+        border: 1px solid #e5e5e5;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="card card-custom mt-4">
+            <div class="card-body p-4">
+                <h3 class="mb-4 text-center fw-bold text-success">
+                    <i class="bi bi-shield-lock me-2"></i>@ViewData["Title"]
+                </h3>
+                <partial name="_StatusMessage" for="StatusMessage" />
+                @{
+                    var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+                    if (consentFeature?.CanTrack ?? true)
+                    {
+                        if (Model.Is2faEnabled)
+                        {
+                            if (Model.RecoveryCodesLeft == 0)
+                            {
+                                <div class="alert alert-danger d-flex align-items-center gap-2">
+                                    <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                                    <div>
+                                        <strong>Hiç kurtarma kodunuz kalmadı.</strong>
+                                        <p>
+                                            <a asp-page="./GenerateRecoveryCodes">Yeni kurtarma kodları oluşturun</a> yoksa kurtarma kodu ile giriş yapamazsınız.
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                            else if (Model.RecoveryCodesLeft == 1)
+                            {
+                                <div class="alert alert-danger d-flex align-items-center gap-2">
+                                    <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                                    <div>
+                                        <strong>1 kurtarma kodunuz kaldı.</strong>
+                                        <p>
+                                            <a asp-page="./GenerateRecoveryCodes">Yeni kurtarma kodları oluşturabilirsiniz.</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                            else if (Model.RecoveryCodesLeft <= 3)
+                            {
+                                <div class="alert alert-warning d-flex align-items-center gap-2">
+                                    <i class="bi bi-exclamation-circle-fill fs-5"></i>
+                                    <div>
+                                        <strong>@Model.RecoveryCodesLeft kurtarma kodunuz kaldı.</strong>
+                                        <p>
+                                            <a asp-page="./GenerateRecoveryCodes">Yeni kurtarma kodları oluşturmanız önerilir.</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="mb-3 d-flex flex-wrap gap-2">
+                                @if (Model.IsMachineRemembered)
+                                {
+                                    <form method="post" style="display: inline-block">
+                                        <button type="submit" class="btn btn-soil btn-sm d-flex align-items-center gap-1">
+                                            <i class="bi bi-x-circle"></i> Bu tarayıcıyı unut
+                                        </button>
+                                    </form>
+                                }
+                                <a asp-page="./Disable2fa" class="btn btn-soil btn-sm d-flex align-items-center gap-1">
+                                    <i class="bi bi-shield-x"></i> 2FA'yı Devre Dışı Bırak
+                                </a>
+                                <a asp-page="./GenerateRecoveryCodes" class="btn btn-soil btn-sm d-flex align-items-center gap-1">
+                                    <i class="bi bi-arrow-repeat"></i> Kurtarma Kodlarını Sıfırla
+                                </a>
+                            </div>
+                        }
+
+                        <h4 class="mt-4 mb-3 fw-semibold">
+                            <i class="bi bi-phone"></i> Doğrulama Uygulaması
+                        </h4>
+                        <div class="d-flex flex-wrap gap-2">
+                            @if (!Model.HasAuthenticator)
+                            {
+                                <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-soil btn-sm d-flex align-items-center gap-1">
+                                    <i class="bi bi-plus-circle"></i> Doğrulama uygulaması ekle
+                                </a>
+                            }
+                            else
+                            {
+                                <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-soil btn-sm d-flex align-items-center gap-1">
+                                    <i class="bi bi-gear"></i> Doğrulama uygulamasını ayarla
+                                </a>
+                                <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-soil btn-sm d-flex align-items-center gap-1">
+                                    <i class="bi bi-arrow-clockwise"></i> Doğrulama uygulamasını sıfırla
+                                </a>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger d-flex align-items-center gap-2">
+                            <i class="bi bi-shield-exclamation fs-5"></i>
+                            <div>
+                                <strong>Gizlilik ve çerez politikası kabul edilmedi.</strong>
+                                <p>İki adımlı doğrulamayı etkinleştirmek için politikayı kabul etmelisiniz.</p>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
         </div>
-    }
-}
+    </div>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

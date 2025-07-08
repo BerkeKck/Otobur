@@ -1,24 +1,58 @@
 ﻿@page
 @model PersonalDataModel
 @{
-    ViewData["Title"] = "Personal Data";
+    ViewData["Title"] = "Kişisel Veriler";
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<style>
+    .btn-soil {
+        color: #fff;
+        background-color: #462E1A;
+        border-color: #462E1A;
+    }
 
-<div class="row">
-    <div class="col-md-6">
-        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
-        <p>
-            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-        </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post">
-            <button class="btn btn-primary" type="submit">Download</button>
-        </form>
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
-        </p>
+        .btn-soil:hover, .btn-soil:focus {
+            color: #fff;
+            background-color: #3a2413;
+            border-color: #3a2413;
+        }
+
+    .card-custom {
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(70,46,26,0.08);
+        border: 1px solid #e5e5e5;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="card card-custom mt-4">
+            <div class="card-body p-4">
+                <h3 class="mb-4 text-center fw-bold text-success">
+                    <i class="bi bi-person-lock me-2"></i>@ViewData["Title"]
+                </h3>
+                <p>
+                    Hesabınız bize verdiğiniz kişisel verileri içerir. Bu sayfadan verilerinizi indirebilir veya silebilirsiniz.
+                </p>
+                <div class="alert alert-danger d-flex align-items-center gap-2">
+                    <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                    <div>
+                        <strong>Bu verileri silmek hesabınızı kalıcı olarak kaldırır ve geri alınamaz.</strong>
+                    </div>
+                </div>
+                <form id="download-data" asp-page="DownloadPersonalData" method="post" class="mb-3">
+                    <button class="btn btn-soil d-flex align-items-center gap-2" type="submit">
+                        <i class="bi bi-download"></i>
+                        Verileri İndir
+                    </button>
+                </form>
+                <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger d-flex align-items-center gap-2">
+                    <i class="bi bi-trash"></i>
+                    Hesabı Sil
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -1,5 +1,5 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
         Layout = parentLayout.ToString();
     }
@@ -9,17 +9,54 @@
     }
 }
 
-<h1>Manage your account</h1>
+<style>
+    .card-custom {
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(70,46,26,0.08);
+        border: 1px solid #e5e5e5;
+        background: #fff;
+    }
 
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+    .manage-header {
+        font-weight: bold;
+        color: #462E1A;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .manage-subheader {
+        color: #198754;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card card-custom mt-4">
+            <div class="card-body p-4">
+                <h1 class="manage-header mb-3">
+                    <i class="bi bi-person-gear fs-2"></i>
+                    Hesabınızı Yönetin
+                </h1>
+                <h2 class="manage-subheader mb-3">
+                    <i class="bi bi-sliders"></i>
+                    Hesap Ayarlarını Değiştirin
+                </h2>
+                <hr />
+                <div class="row">
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <partial name="_ManageNav" />
+                    </div>
+                    <div class="col-md-9">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

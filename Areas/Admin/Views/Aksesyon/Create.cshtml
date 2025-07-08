@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Aksesyon Numarası</label>
-                    <input asp-for="AksesyonNumarasi" class="form-control" />
+                    <input asp-for="AksesyonNumarasi" class="form-control" readonly />
                     <span asp-validation-for="AksesyonNumarasi" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -53,20 +53,14 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Toplayıcı Adı</label>
-                    <input asp-for="KullaniciAdi" class="form-control" />
+                    <input asp-for="KullaniciAdi" class="form-control" readonly />
+                    <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Toplayıcı Kodu</label>
-                    <input asp-for="KullaniciKodu" class="form-control" />
+                    <input asp-for="KullaniciKodu" class="form-control" readonly />
+                    <span asp-validation-for="KullaniciKodu" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Toplayıcı Numarası</label>
-                    <input asp-for="KullaniciNumarasi" class="form-control" />
-                </div>
-            </div>
-            <div class="mt-3">
-                <button type="submit" class="btn btn-success">Kaydet</button>
-                <a asp-controller="Aksesyon" asp-action="Index" class="btn btn-secondary">Geri Dön</a>
             </div>
         </div>
     </div>

@@ -115,7 +115,7 @@ namespace Otobur.Areas.Identity.Pages.Account
             public int UserNumber { get; set; }
             [Phone]
             public string? PhoneNumber { get; set; }
-        };
+    };
 
        
 

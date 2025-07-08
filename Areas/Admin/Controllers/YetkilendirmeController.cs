@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Otobur.Utility;
-using Otobur.Models.Models; // ApplicationUser burada
+using Otobur.Models.Models;
+using Otobur.Models.Models.ViewModels;
+using UserWithRolesViewModel = Otobur.Models.Models.UserWithRolesViewModel; // ApplicationUser burada
 
 namespace Otobur.Areas.Admin.Controllers
 {
@@ -19,13 +21,25 @@ namespace Otobur.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var users = _userManager.Users.ToList();
-            return View(users);
+            var model = new List<UserWithRolesViewModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                model.Add(new UserWithRolesViewModel
+                {
+                    User = user,
+                    Roles = roles
+                });
+            }
+
+            return View(model);
         }
-    
-    public async Task<IActionResult> Create()
+
+        public async Task<IActionResult> Create()
         {
             var user = await _userManager.GetUserAsync(User);
             ViewBag.ToplayiciAdi = user.UserName;
