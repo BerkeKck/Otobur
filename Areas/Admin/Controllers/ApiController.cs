@@ -40,8 +40,6 @@ namespace Otobur.Views.Admin.Controllers
                 herbaryum.HerbaryumNo,
                 herbaryum.BitkininAdi,
                 herbaryum.KullaniciAdi,
-                herbaryum.KullaniciKodu,
-                herbaryum.KullaniciNumarasi,
                 herbaryum.Lokasyon,
                 herbaryum.Koordinat,
                 herbaryum.Fotograf

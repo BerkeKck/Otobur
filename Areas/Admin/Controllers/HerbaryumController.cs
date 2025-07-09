@@ -7,6 +7,7 @@ using Otobur.Models.Models;
 using Otobur.Utility;
 using System.Linq;
 using System.IO;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Otobur.Views.Admin.Controllers
 {
@@ -85,7 +86,21 @@ namespace Otobur.Views.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                // Fotoğraf yüklendiyse işle
+                // 1. Veritabanından mevcut nesneyi çek
+                var herbaryumFromDb = _unitOfWork.Herbaryum.Get(
+                    h => h.AksesyonNumarasi == obj.AksesyonNumarasi
+                );
+
+                if (herbaryumFromDb == null)
+                    return NotFound();
+
+                // 2. Alanları güncelle
+                herbaryumFromDb.BitkininAdi = obj.BitkininAdi;
+                herbaryumFromDb.KullaniciAdi = obj.KullaniciAdi;
+                herbaryumFromDb.Lokasyon = obj.Lokasyon;
+                herbaryumFromDb.Koordinat = obj.Koordinat;
+
+                // Fotoğraf işlemleri
                 if (FotoDosya != null && FotoDosya.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "herbaryum");
@@ -100,12 +115,23 @@ namespace Otobur.Views.Admin.Controllers
                         FotoDosya.CopyTo(stream);
                     }
 
-                    // Eski fotoğrafı silmek isterseniz burada silebilirsiniz
-
-                    obj.Fotograf = $"/uploads/herbaryum/{fileName}";
+                    herbaryumFromDb.Fotograf = $"/uploads/herbaryum/{fileName}";
                 }
 
-                _unitOfWork.Herbaryum.Update(obj);
+                // Otomatik Herbaryum No atama
+                if (herbaryumFromDb.HerbaryumNo == null)
+                {
+                    var maxNo = _unitOfWork.Herbaryum
+                        .GetAll()
+                        .Where(h => h.HerbaryumNo != null)
+                        .Select(h => h.HerbaryumNo.Value)
+                        .DefaultIfEmpty(0)
+                        .Max();
+
+                    herbaryumFromDb.HerbaryumNo = maxNo + 1;
+                }
+
+                _unitOfWork.Herbaryum.Update(herbaryumFromDb);
                 _unitOfWork.Save();
                 TempData["success"] = "Herbaryum kaydı güncellendi.";
                 return RedirectToAction("Index");

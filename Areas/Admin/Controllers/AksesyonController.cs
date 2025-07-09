@@ -116,8 +116,11 @@ namespace Otobur.Views.Admin.Controllers
 
                 var herbaryum = new Herbaryum
                 {
+                    KullaniciAdi = obj.KullaniciAdi,
                     AksesyonNumarasi = obj.AksesyonNumarasi,
-                    BitkininAdi = obj.BitkininAdi
+                    BitkininAdi = obj.BitkininAdi,
+                    Lokasyon = obj.Lokasyon,
+                    Koordinat = obj.Koordinat
                 };
                 _unitOfWork.Herbaryum.Add(herbaryum);
 
@@ -171,7 +174,10 @@ namespace Otobur.Views.Admin.Controllers
                 var herbaryum = _unitOfWork.Herbaryum.Get(h => h.AksesyonNumarasi == obj.AksesyonNumarasi);
                 if (herbaryum != null)
                 {
+                    herbaryum.KullaniciAdi = obj.KullaniciAdi;
                     herbaryum.BitkininAdi = obj.BitkininAdi;
+                    herbaryum.Lokasyon = obj.Lokasyon;
+                    herbaryum.Koordinat = obj.Koordinat;
                     _unitOfWork.Herbaryum.Update(herbaryum);
                 }
 

@@ -35,20 +35,20 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Bahçede Bulunduğu Yer</label>
-                        <input asp-for="BahcedeBulunduguYer" class="form-control" />
-                    </div>
+                    <select asp-for="BahcedeBulunduguYer" class="form-control" asp-items="Html.GetEnumSelectList<BahcedeBulunduguYerEnum>()"></select>
+                </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Yer Kodu</label>
-                        <input asp-for="YerKodu" class="form-control" />
-                    </div>
+                    <select asp-for="YerKodu" class="form-control" asp-items="Html.GetEnumSelectList<YerKoduEnum>()"></select>
+                </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Bitkinin Durumu</label>
-                        <input asp-for="BitkininDurumu" class="form-control" />
-                    </div>
+                    <select asp-for="BitkininDurumu" class="form-control" asp-items="Html.GetEnumSelectList<BitkininDurumuEnum>()"></select>
+                </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Vejetasyon Durumu</label>
-                        <input asp-for="VejetasyonDurumu" class="form-control" />
-                    </div>
+                    <select asp-for="VejetasyonDurumu" class="form-control" asp-items="Html.GetEnumSelectList<VejetasyonDurumuEnum>()"></select>
+                </div>
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Gözlem</label>
                         <textarea asp-for="Gozlem" class="form-control" rows="3"></textarea>
