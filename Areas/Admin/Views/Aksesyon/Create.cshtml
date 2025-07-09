@@ -105,7 +105,26 @@
 
     <script src="~/js/autocomplete.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('KokenSelect');
+            const input = document.getElementById('Koken');
+            if (select && input) {
+                select.addEventListener('change', function () {
+                    const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                    input.value = selected.join(', ');
+                });
 
+                // Sayfa yüklendiğinde mevcut değerleri seçili yap (Edit için)
+                if (input.value) {
+                    const selectedValues = input.value.split(',').map(x => x.trim());
+                    Array.from(select.options).forEach(opt => {
+                        opt.selected = selectedValues.includes(opt.value);
+                    });
+                }
+            }
+        });
+    </script>
     <script>
         let map, marker;
 

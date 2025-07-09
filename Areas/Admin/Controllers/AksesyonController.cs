@@ -78,7 +78,7 @@ namespace Otobur.Views.Admin.Controllers
                 KullaniciKodu = kullaniciKodu
             };
 
-            return View(model); 
+            return View(model);
         }
 
         [HttpPost]
@@ -227,6 +227,44 @@ namespace Otobur.Views.Admin.Controllers
                 .ToList();
 
             return Json(suggestions);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BitkiAdiOner(string term)
+        {
+            if (string.IsNullOrWhiteSpace(term))
+                return Json(new List<string>());
+
+            using var client = new HttpClient();
+            var url = $"https://list.worldfloraonline.org/matching_rest.php?input_string={Uri.EscapeDataString(term)}&fuzzy_names=2";
+            var response = await client.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                return Json(new List<string>());
+
+            var json = await response.Content.ReadAsStringAsync();
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+
+            var list = new List<string>();
+            if (doc.RootElement.TryGetProperty("candidates", out var candidates))
+            {
+                foreach (var c in candidates.EnumerateArray())
+                {
+                    if (c.TryGetProperty("full_name_plain", out var name))
+                        list.Add(name.GetString());
+                }
+            }
+            // Ana eşleşmeyi de ekle
+            if (doc.RootElement.TryGetProperty("match", out var match) && match.ValueKind == System.Text.Json.JsonValueKind.Object)
+            {
+                if (match.TryGetProperty("full_name_plain", out var mainName))
+                {
+                    var mainNameStr = mainName.GetString();
+                    if (!string.IsNullOrWhiteSpace(mainNameStr) && !list.Contains(mainNameStr))
+                        list.Insert(0, mainNameStr);
+                }
+            }
+            return Json(list);
         }
     }
 }

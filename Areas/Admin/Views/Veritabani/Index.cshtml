@@ -62,3 +62,18 @@
         </table>
     </div>
 }
+
+@{
+    var tablo = Context.Request.Query["tablo"];
+    var aksesyon = Context.Request.Query["aksesyon"];
+    var operatorType = Context.Request.Query["operator"];
+}
+
+<form method="get" asp-action="ExportToXml" asp-controller="Veritabani" asp-area="Admin" style="display:inline;">
+    <input type="hidden" name="tablo" value="@tablo" />
+    <input type="hidden" name="aksesyon" value="@aksesyon" />
+    <input type="hidden" name="operator" value="@operatorType" />
+    <button type="submit" class="btn btn-primary">
+        Export to XML
+    </button>
+</form>

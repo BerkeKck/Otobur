@@ -23,21 +23,29 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Aksesyon Numarası</label>
-                    <input asp-for="AksesyonNumarasi" class="form-control" />
+                    <input asp-for="AksesyonNumarasi" class="form-control" readonly />
                     <span asp-validation-for="AksesyonNumarasi" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Bitkinin Adı</label>
-                    <input asp-for="BitkininAdi" class="form-control" />
+                    <input id="BitkininAdi" name="BitkininAdi" class="form-control" />
                     <span asp-validation-for="BitkininAdi" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Materyal Çeşidi</label>
                     <select asp-for="MateryalCesidi" class="form-control" asp-items="Html.GetEnumSelectList<MateryalCesidiEnum>()"></select>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="mb-3">
                     <label class="form-label">Köken</label>
-                    <input asp-for="Koken" class="form-control" />
+                    <select id="KokenSelect" class="form-select" multiple size="6">
+                        <option value="Doğadan. Kökeni biliniyor.">Doğadan. Kökeni biliniyor.</option>
+                        <option value="Kültür. Kökeni bilinmiyor.">Kültür. Kökeni bilinmiyor.</option>
+                        <option value="Kültür. Kökeni biliniyor. - Botanik Bahçeleri veya Arboretumlardan">Kültür. Kökeni biliniyor. - Botanik Bahçeleri veya Arboretumlardan</option>
+                        <option value="Kültür. Kökeni biliniyor. - Firmalardan Satın Alma Yoluyla">Kültür. Kökeni biliniyor. - Firmalardan Satın Alma Yoluyla</option>
+                        <option value="Kültür. Kökeni biliniyor. - Şahıslardan Temin Yoluyla">Kültür. Kökeni biliniyor. - Şahıslardan Temin Yoluyla</option>
+                        <option value="Emin değil veya yeterli veri yok.">Emin değil veya yeterli veri yok.</option>
+                    </select>
+                    <input asp-for="Koken" id="Koken" class="form-control mt-2" readonly />
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Lokasyon</label>
@@ -45,7 +53,23 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Koordinat</label>
-                    <input asp-for="Koordinat" class="form-control" />
+                    <input asp-for="Koordinat" class="form-control" id="Koordinat" />
+                    <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#mapModal">
+                        Haritadan Seç
+                    </button>
+                </div>
+                <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="mapModalLabel">Haritadan Koordinat Seç</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                            </div>
+                            <div class="modal-body" style="height: 500px;">
+                                <div id="map" style="height: 100%; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Toplanma Tarihi</label>
@@ -53,21 +77,93 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Toplayıcı Adı</label>
-                    <input asp-for="KullaniciAdi" class="form-control" />
+                    <input asp-for="KullaniciAdi" class="form-control" readonly />
+                    <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Toplayıcı Kodu</label>
                     <input asp-for="KullaniciKodu" class="form-control" />
+                    <span asp-validation-for="KullaniciKodu" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Toplayıcı Numarası</label>
+                    <label class="form-label">Toplayıcı Numarasi</label>
                     <input asp-for="KullaniciNumarasi" class="form-control" />
+                    <span asp-validation-for="KullaniciNumarasi" class="text-danger"></span>
                 </div>
             </div>
-            <div class="mt-3">
-                <button type="submit" class="btn btn-success">Kaydet</button>
-                <a asp-controller="Aksesyon" asp-action="Index" class="btn btn-secondary">Geri Dön</a>
-            </div>
+            <button type="submit" class="btn btn-success">Kaydet</button>
         </div>
     </div>
 </form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+    <script src="~/js/autocomplete.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('KokenSelect');
+            const input = document.getElementById('Koken');
+            if (select && input) {
+                select.addEventListener('change', function () {
+                    const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                    input.value = selected.join(', ');
+                });
+
+                // Sayfa yüklendiğinde mevcut değerleri seçili yap (Edit için)
+                if (input.value) {
+                    const selectedValues = input.value.split(',').map(x => x.trim());
+                    Array.from(select.options).forEach(opt => {
+                        opt.selected = selectedValues.includes(opt.value);
+                    });
+                }
+            }
+        });
+    </script>
+    <script>
+        let map, marker;
+
+        function initMap() {
+            if (map) {
+                map.invalidateSize();
+                return;
+            }
+            map = L.map('map').setView([39.0, 35.0], 6); // Türkiye merkezli
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            map.on('click', function (e) {
+                if (marker) {
+                    marker.setLatLng(e.latlng);
+                } else {
+                    marker = L.marker(e.latlng).addTo(map);
+                }
+                document.getElementById('Koordinat').value = e.latlng.lat.toFixed(6) + ", " + e.latlng.lng.toFixed(6);
+
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}&accept-language=tr`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let city = "";
+                        if (data.address) {
+                            city = data.address.city || data.address.town || data.address.village || data.address.state || "";
+                        }
+                        document.getElementById('Lokasyon').value = city;
+                    });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var mapModal = document.getElementById('mapModal');
+            mapModal.addEventListener('shown.bs.modal', function () {
+                setTimeout(initMap, 200);
+            });
+        });
+    </script>
+}

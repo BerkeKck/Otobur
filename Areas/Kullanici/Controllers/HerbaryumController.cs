@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http; // Ekledik
 using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Data; // DbContext için
 using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
 using Otobur.Utility;
 using System.Linq;
+using System.IO;
 
 namespace Otobur.Views.Kullanici.Controllers
 {
@@ -19,17 +21,17 @@ namespace Otobur.Views.Kullanici.Controllers
         }
         public IActionResult Index(string search)
         {
-            // Navigation property ile birlikte çekiyoruz
-            var herbaryumList = _unitOfWork.Herbaryum.GetAll(includeProperties: "Aksesyon");
+            // Aksesyon navigation property ile birlikte çek
+            IEnumerable<Herbaryum> objAksesyonList = _unitOfWork.Herbaryum.GetAll(includeProperties: "Aksesyon");
 
             if (!string.IsNullOrEmpty(search))
             {
-                herbaryumList = herbaryumList
+                objAksesyonList = objAksesyonList
                     .Where(x => x.AksesyonNumarasi.Contains(search, StringComparison.OrdinalIgnoreCase));
             }
 
             ViewBag.CurrentFilter = search;
-            return View(herbaryumList.ToList());
+            return View(objAksesyonList.ToList());
         }
         // CREATE işlemini iptal ettik.
         //public IActionResult Create()
@@ -57,7 +59,10 @@ namespace Otobur.Views.Kullanici.Controllers
             {
                 return NotFound();
             }
-            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(
+                u => u.AksesyonNumarasi == id,
+                includeProperties: "Aksesyon"
+            );
 
             if (herbaryumFromDb == null)
             {
@@ -69,7 +74,7 @@ namespace Otobur.Views.Kullanici.Controllers
         // POST: Herbaryum/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, Herbaryum obj)
+        public IActionResult Edit(string id, Herbaryum obj, IFormFile? FotoDosya)
         {
             ModelState.Remove(nameof(Herbaryum.Aksesyon));
 
@@ -80,6 +85,26 @@ namespace Otobur.Views.Kullanici.Controllers
 
             if (ModelState.IsValid)
             {
+                // Fotoğraf yüklendiyse işle
+                if (FotoDosya != null && FotoDosya.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "herbaryum");
+                    if (!Directory.Exists(uploadsFolder))
+                        Directory.CreateDirectory(uploadsFolder);
+
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(FotoDosya.FileName)}";
+                    var filePath = Path.Combine(uploadsFolder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        FotoDosya.CopyTo(stream);
+                    }
+
+                    // Eski fotoğrafı silmek isterseniz burada silebilirsiniz
+
+                    obj.Fotograf = $"/uploads/herbaryum/{fileName}";
+                }
+
                 _unitOfWork.Herbaryum.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Herbaryum kaydı güncellendi.";
@@ -97,7 +122,10 @@ namespace Otobur.Views.Kullanici.Controllers
             {
                 return NotFound();
             }
-            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(
+                u => u.AksesyonNumarasi == id,
+                includeProperties: "Aksesyon"
+            );
 
             if (herbaryumFromDb == null)
             {
@@ -109,7 +137,7 @@ namespace Otobur.Views.Kullanici.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(string id)
         {
-            Herbaryum? obj = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            Herbaryum? obj = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id, includeProperties: "Aksesyon");
             if (obj == null)
             {
                 return NotFound();
@@ -118,6 +146,13 @@ namespace Otobur.Views.Kullanici.Controllers
             _unitOfWork.Save();
             TempData["success"] = "Herbaryum başarıyla silindi.";
             return RedirectToAction("Index");
+        }
+
+        // GET: Herbaryum/Defter
+        public IActionResult Defter()
+        {
+            var herbaryumlar = _unitOfWork.Herbaryum.GetAll().Where(x => !string.IsNullOrEmpty(x.Fotograf)).ToList();
+            return View(herbaryumlar);
         }
     }
 }
