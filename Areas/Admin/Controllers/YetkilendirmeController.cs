@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Otobur.Utility;
-using Otobur.Models.Models;
-using Otobur.Models.Models.ViewModels;
-using UserWithRolesViewModel = Otobur.Models.Models.UserWithRolesViewModel; // ApplicationUser burada
+using UserWithRolesViewModel = Otobur.Models.Models.ViewModels.UserWithRolesViewModel; // ApplicationUser burada
 
 namespace Otobur.Areas.Admin.Controllers
 {

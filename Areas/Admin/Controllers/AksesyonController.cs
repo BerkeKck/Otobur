@@ -86,6 +86,7 @@ namespace Otobur.Views.Admin.Controllers
             ModelState.Remove(nameof(Aksesyon.BitkiDurum));
             ModelState.Remove(nameof(Aksesyon.TohumBankasi));
 
+
             var existing = _unitOfWork.Aksesyon.Get(a => a.AksesyonNumarasi == obj.AksesyonNumarasi);
             if (existing != null)
             {

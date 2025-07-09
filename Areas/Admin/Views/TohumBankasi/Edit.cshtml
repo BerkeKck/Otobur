@@ -17,13 +17,76 @@
                     <label class="form-label">Bitkinin Adý</label>
                     <input asp-for="BitkininAdi" class="form-control" readonly />
                 </div>
-                <div class="col-md-6 mb-3">
+               @*  <div class="col-md-6 mb-3">
                     <label class="form-label">Miktar</label>
                     <input asp-for="Miktar" class="form-control" />
+                </div> *@
+                <div class="mb-3">
+                    <label for="bottleSize" class="form-label">Miktar</label>
+                    <div class="input-group">
+                        <select id="bottleSize" class="form-select">
+                            <option value="küçük þiþe (30 cl)">Küçük Þiþe (30 cl)</option>
+                            <option value="orta þiþe (50 cl)">Orta Þiþe (50 cl)</option>
+                            <option value="büyük þiþe (100 cl)">Büyük Þiþe (100 cl)</option>
+                        </select>
+                        <input type="number" id="bottleCount" class="form-control" min="1" value="1" style="max-width:80px;">
+                        <button type="button" class="btn btn-outline-success" id="addBottle">Ekle</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Eklenen Þiþeler</label>
+                    <ul id="bottleList" class="list-group mb-2"></ul>
+                    <input asp-for="Miktar" id="Miktar" class="form-control" readonly />
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Bulunduðu Dolap</label>
-                    <input asp-for="BulunduguDolap" class="form-control" />
+                    <div class="container px-0">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="1A1" id="dolap1A1">
+                                    <label class="form-check-label" for="dolap1A1">1A1</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="1A2" id="dolap1A2">
+                                    <label class="form-check-label" for="dolap1A2">1A2</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="1A3" id="dolap1A3">
+                                    <label class="form-check-label" for="dolap1A3">1A3</label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="1B1" id="dolap1B1">
+                                    <label class="form-check-label" for="dolap1B1">1B1</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="1B2" id="dolap1B2">
+                                    <label class="form-check-label" for="dolap1B2">1B2</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="1B3" id="dolap1B3">
+                                    <label class="form-check-label" for="dolap1B3">1B3</label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="2A1" id="dolap2A1">
+                                    <label class="form-check-label" for="dolap2A1">2A1</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="2A2" id="dolap2A2">
+                                    <label class="form-check-label" for="dolap2A2">2A2</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input dolap-radio" type="radio" name="BulunduguDolapRadio" value="2A3" id="dolap2A3">
+                                    <label class="form-check-label" for="dolap2A3">2A3</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input asp-for="BulunduguDolap" id="BulunduguDolap" class="form-control mt-2" readonly />
                 </div>
             </div>
             <div class="mt-3">
@@ -33,3 +96,55 @@
         </div>
     </div>
 </form>
+@section Scripts {
+    <script>
+        const bottleList = [];
+        document.getElementById('addBottle').onclick = function() {
+            const size = document.getElementById('bottleSize').value;
+            const count = parseInt(document.getElementById('bottleCount').value, 10);
+            if (!size || count < 1) return;
+            bottleList.push({ size, count });
+            updateBottleList();
+        };
+        function updateBottleList() {
+            const ul = document.getElementById('bottleList');
+            ul.innerHTML = '';
+            let miktarText = '';
+            bottleList.forEach((b, i) => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.textContent = `${b.count} ${b.size}`;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn btn-sm btn-danger';
+                btn.textContent = 'Sil';
+                btn.onclick = function() {
+                    bottleList.splice(i, 1);
+                    updateBottleList();
+                };
+                li.appendChild(btn);
+                ul.appendChild(li);
+                miktarText += (miktarText ? ', ' : '') + `${b.count} ${b.size}`;
+            });
+            document.getElementById('Miktar').value = miktarText;
+        }
+    </script>
+    <script>
+        // Radio seçimlerini inputa yaz
+        document.querySelectorAll('.dolap-radio').forEach(rb => {
+            rb.addEventListener('change', function () {
+                document.getElementById('BulunduguDolap').value = this.value;
+            });
+        });
+
+        // Sayfa yüklendiðinde mevcut deðeri seçili yap
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('BulunduguDolap');
+            if (input.value) {
+                document.querySelectorAll('.dolap-radio').forEach(rb => {
+                    rb.checked = (rb.value === input.value.trim());
+                });
+            }
+        });
+    </script>
+}

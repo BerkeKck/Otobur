@@ -19,16 +19,17 @@ namespace Otobur.Views.Kullanici.Controllers
         }
         public IActionResult Index(string search)
         {
-            IEnumerable<Herbaryum> objAksesyonList = _unitOfWork.Herbaryum.GetAll();
+            // Navigation property ile birlikte çekiyoruz
+            var herbaryumList = _unitOfWork.Herbaryum.GetAll(includeProperties: "Aksesyon");
 
             if (!string.IsNullOrEmpty(search))
             {
-                objAksesyonList = objAksesyonList
+                herbaryumList = herbaryumList
                     .Where(x => x.AksesyonNumarasi.Contains(search, StringComparison.OrdinalIgnoreCase));
             }
 
             ViewBag.CurrentFilter = search;
-            return View(objAksesyonList.ToList());
+            return View(herbaryumList.ToList());
         }
         // CREATE işlemini iptal ettik.
         //public IActionResult Create()

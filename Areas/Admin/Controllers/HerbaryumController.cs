@@ -19,7 +19,8 @@ namespace Otobur.Views.Admin.Controllers
         }
         public IActionResult Index(string search)
         {
-            IEnumerable<Herbaryum> objAksesyonList = _unitOfWork.Herbaryum.GetAll();
+            // Aksesyon navigation property ile birlikte çek
+            IEnumerable<Herbaryum> objAksesyonList = _unitOfWork.Herbaryum.GetAll(includeProperties: "Aksesyon");
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -56,7 +57,10 @@ namespace Otobur.Views.Admin.Controllers
             {
                 return NotFound();
             }
-            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(
+                u => u.AksesyonNumarasi == id,
+                includeProperties: "Aksesyon"
+            );
 
             if (herbaryumFromDb == null)
             {
@@ -96,7 +100,10 @@ namespace Otobur.Views.Admin.Controllers
             {
                 return NotFound();
             }
-            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            Herbaryum? herbaryumFromDb = _unitOfWork.Herbaryum.Get(
+                u => u.AksesyonNumarasi == id,
+                includeProperties: "Aksesyon"
+            );
 
             if (herbaryumFromDb == null)
             {
@@ -108,7 +115,7 @@ namespace Otobur.Views.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(string id)
         {
-            Herbaryum? obj = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id);
+            Herbaryum? obj = _unitOfWork.Herbaryum.Get(u => u.AksesyonNumarasi == id, includeProperties: "Aksesyon");
             if (obj == null)
             {
                 return NotFound();

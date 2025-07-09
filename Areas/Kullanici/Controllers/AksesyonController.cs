@@ -45,7 +45,39 @@ namespace Otobur.Views.Kullanici.Controllers
         // CREATE
         public IActionResult Create()
         {
-            return View();
+            // Yıl bilgisini al
+            var year = DateTime.Now.Year.ToString();
+
+            // O yıla ait en büyük numarayı bul
+            var last = _unitOfWork.Aksesyon
+                .GetAll()
+                .Where(a => a.AksesyonNumarasi.StartsWith(year + "-"))
+                .OrderByDescending(a => a.AksesyonNumarasi)
+                .FirstOrDefault();
+
+            int nextNumber = 1;
+            if (last != null)
+            {
+                var lastNumberPart = last.AksesyonNumarasi.Substring(5); // "YYYY-XXXXX"
+                if (int.TryParse(lastNumberPart, out int parsed))
+                {
+                    nextNumber = parsed + 1;
+                }
+            }
+
+            var newAksesyonNumarasi = $"{year}-{nextNumber.ToString("D5")}";
+            var kullaniciAdi = User.Identity?.Name ?? "";
+            var kullaniciKodu = User.Claims.FirstOrDefault(c => c.Type == "KullaniciKodu")?.Value ?? "";
+
+
+            var model = new Aksesyon
+            {
+                AksesyonNumarasi = newAksesyonNumarasi,
+                KullaniciAdi = kullaniciAdi,
+                KullaniciKodu = kullaniciKodu
+            };
+
+            return View(model);
         }
 
         [HttpPost]

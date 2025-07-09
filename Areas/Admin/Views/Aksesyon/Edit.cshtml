@@ -10,7 +10,7 @@
             }
         </ul>
     </div>
-}
+}   
 <form method="post">
     <div class="container" style="max-width: 700px;">
         <div class="border p-4 mt-4 bg-white rounded shadow-sm">
@@ -33,9 +33,17 @@
                     <label class="form-label">Materyal Çeşidi</label>
                     <select asp-for="MateryalCesidi" class="form-control" asp-items="Html.GetEnumSelectList<MateryalCesidiEnum>()"></select>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="mb-3">
                     <label class="form-label">Köken</label>
-                    <input asp-for="Koken" class="form-control" />
+                    <select id="KokenSelect" class="form-select" multiple size="6">
+                        <option value="Doğadan. Kökeni biliniyor.">Doğadan. Kökeni biliniyor.</option>
+                        <option value="Kültür. Kökeni bilinmiyor.">Kültür. Kökeni bilinmiyor.</option>
+                        <option value="Kültür. Kökeni biliniyor. - Botanik Bahçeleri veya Arboretumlardan">Kültür. Kökeni biliniyor. - Botanik Bahçeleri veya Arboretumlardan</option>
+                        <option value="Kültür. Kökeni biliniyor. - Firmalardan Satın Alma Yoluyla">Kültür. Kökeni biliniyor. - Firmalardan Satın Alma Yoluyla</option>
+                        <option value="Kültür. Kökeni biliniyor. - Şahıslardan Temin Yoluyla">Kültür. Kökeni biliniyor. - Şahıslardan Temin Yoluyla</option>
+                        <option value="Emin değil veya yeterli veri yok.">Emin değil veya yeterli veri yok.</option>
+                    </select>
+                    <input asp-for="Koken" id="Koken" class="form-control mt-2" readonly />
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Lokasyon</label>
@@ -44,6 +52,22 @@
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Koordinat</label>
                     <input asp-for="Koordinat" class="form-control" />
+                    <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#mapModal">
+                        Haritadan Seç
+                    </button>
+                </div>
+                <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="mapModalLabel">Haritadan Koordinat Seç</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                            </div>
+                            <div class="modal-body" style="height: 500px;">
+                                <div id="map" style="height: 100%; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Toplanma Tarihi</label>
@@ -93,4 +117,66 @@
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    document.getElementById('KokenSelect').addEventListener('change', function () {
+        const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+        document.getElementById('Koken').value = selected.join(', ');
+    });
+
+    // Sayfa yüklendiğinde mevcut değerleri seçili yap (Edit için)
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('Koken');
+        const select = document.getElementById('KokenSelect');
+        if (input && select && input.value) {
+            const selectedValues = input.value.split(',').map(x => x.trim());
+            Array.from(select.options).forEach(opt => {
+                opt.selected = selectedValues.includes(opt.value);
+            });
+        }
+    });
+    </script>
+
+    <script>
+        let map, marker;
+
+        function initMap() {
+            if (map) {
+                map.invalidateSize();
+                return;
+            }
+            map = L.map('map').setView([39.0, 35.0], 6); // Türkiye merkezli
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            map.on('click', function (e) {
+                if (marker) {
+                    marker.setLatLng(e.latlng);
+                } else {
+                    marker = L.marker(e.latlng).addTo(map);
+                }
+                document.getElementById('Koordinat').value = e.latlng.lat.toFixed(6) + ", " + e.latlng.lng.toFixed(6);
+
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}&accept-language=tr`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let city = "";
+                        if (data.address) {
+                            city = data.address.city || data.address.town || data.address.village || data.address.state || "";
+                        }
+                        document.getElementById('Lokasyon').value = city;
+                    });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var mapModal = document.getElementById('mapModal');
+            mapModal.addEventListener('shown.bs.modal', function () {
+                setTimeout(initMap, 200);
+            });
+        });
+    </script>
 }
