@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Otobur.Models.Models.Herbaryum>
+
+<h2 class="text-primary mb-4">Herbaryum Defteri</h2>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <a href="#" class="defter-photo-link" data-photo="@item.Fotograf" data-title="@item.BitkininAdi">
+                    <img src="@item.Fotograf" class="card-img-top" alt="@item.BitkininAdi" style="max-height:200px;object-fit:cover;" />
+                </a>
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="font-size:1.1rem;">@item.BitkininAdi</h5>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Fotoğraf Modalı -->
+<div class="modal fade" id="defterPhotoModal" tabindex="-1" aria-labelledby="defterPhotoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="defterPhotoModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="defterModalPhoto" src="" alt="Herbaryum Fotoğrafı" style="max-width:100%;max-height:400px;" />
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.defter-photo-link').forEach(function (el) {
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+                var photoUrl = this.getAttribute('data-photo');
+                var title = this.getAttribute('data-title');
+                document.getElementById('defterModalPhoto').src = photoUrl;
+                document.getElementById('defterPhotoModalLabel').textContent = title;
+                var modal = new bootstrap.Modal(document.getElementById('defterPhotoModal'));
+                modal.show();
+            });
+        });
+    });
+</script>
+}
+
+<style>
+    body {
+        background: #f8f7f3;
+    }
+    .card {
+        border: 2px solid #8d6748;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(141, 103, 72, 0.08);
+        transition: transform 0.15s;
+    }
+    .card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 16px rgba(34, 139, 34, 0.15);
+        border-color: #228b22;
+    }
+    .card-title {
+        color: #8d6748;
+        font-weight: 600;
+    }
+    .card-img-top {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background: #eaf6ea;
+    }
+    h2.text-primary {
+        color: #228b22 !important;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+    /* Modal özelleştirme */
+    .modal-content {
+        border-radius: 16px;
+        border: 3px solid #228b22;
+        background: #f8f7f3;
+    }
+    .modal-title {
+        color: #8d6748;
+        font-weight: 700;
+    }
+    .btn-close {
+        filter: invert(41%) sepia(18%) saturate(749%) hue-rotate(24deg) brightness(92%) contrast(90%);
+    }
+</style>

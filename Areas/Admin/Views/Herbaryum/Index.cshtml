@@ -1,5 +1,21 @@
 ﻿@using Otobur.Models.Models
 @model List<Herbaryum>
+<style>
+    .btn-herbaryum-defteri {
+        background: #4e2e0e;
+        color: #fff !important;
+        border: none;
+        font-weight: 600;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 8px rgba(78,46,14,0.10);
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-herbaryum-defteri:hover, .btn-herbaryum-defteri:focus {
+        background: #3a2107;
+        color: #fff !important;
+        box-shadow: 0 4px 16px rgba(78,46,14,0.18);
+    }
+</style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <div class="container">
     <div class="row pt-4 pb-3">
@@ -11,6 +27,11 @@
                     </button>
                 </div>
             </form>
+        </div>
+        <div class="col-6 text-end">
+            <a href="@Url.Action("Defter", "Herbaryum", new { area = "Admin" })" class="btn btn-herbaryum-defteri btn-lg mb-4" style="font-size:1.5rem;">
+                Herbaryum Defteri
+            </a>
         </div>
     </div>
     <table class="table table-bordered table-striped">
@@ -40,7 +61,16 @@
                     <td>@obj.Lokasyon</td>
                     <td>@obj.Koordinat</td>
               
-                    <td>@obj.Fotograf</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(obj.Fotograf))
+                        {
+                            <a href="#" class="show-photo" data-photo="@obj.Fotograf">Var</a>
+                        }
+                        else
+                        {
+                            <span>Yok</span>
+                        }
+                    </td>
                     <td>
                     <div class="d-flex gap-2">
                         <a asp-controller="Herbaryum" asp-action="Edit" asp-route-id="@obj.AksesyonNumarasi"
@@ -60,6 +90,16 @@
         </tbody>
     </table>
 </div>
+<!-- Fotoğraf Modalı -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <img id="modalPhoto" src="" alt="Herbaryum Fotoğrafı" style="max-width:100%;max-height:400px;" />
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -69,5 +109,11 @@
                 $(this).toggle($(this).find("td:first").text().toLowerCase().indexOf(value) > -1)
             });
         });
+    });
+    $(document).on('click', '.show-photo', function (e) {
+        e.preventDefault();
+        var photoUrl = $(this).data('photo');
+        $('#modalPhoto').attr('src', photoUrl);
+        $('#photoModal').modal('show');
     });
 </script>

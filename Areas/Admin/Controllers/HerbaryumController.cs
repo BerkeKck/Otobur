@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http; // Ekledik
 using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Data; // DbContext için
 using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
 using Otobur.Utility;
 using System.Linq;
+using System.IO;
 
 namespace Otobur.Views.Admin.Controllers
 {
@@ -72,7 +74,7 @@ namespace Otobur.Views.Admin.Controllers
         // POST: Herbaryum/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, Herbaryum obj)
+        public IActionResult Edit(string id, Herbaryum obj, IFormFile? FotoDosya)
         {
             ModelState.Remove(nameof(Herbaryum.Aksesyon));
 
@@ -83,6 +85,26 @@ namespace Otobur.Views.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                // Fotoğraf yüklendiyse işle
+                if (FotoDosya != null && FotoDosya.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "herbaryum");
+                    if (!Directory.Exists(uploadsFolder))
+                        Directory.CreateDirectory(uploadsFolder);
+
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(FotoDosya.FileName)}";
+                    var filePath = Path.Combine(uploadsFolder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        FotoDosya.CopyTo(stream);
+                    }
+
+                    // Eski fotoğrafı silmek isterseniz burada silebilirsiniz
+
+                    obj.Fotograf = $"/uploads/herbaryum/{fileName}";
+                }
+
                 _unitOfWork.Herbaryum.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Herbaryum kaydı güncellendi.";
@@ -124,6 +146,13 @@ namespace Otobur.Views.Admin.Controllers
             _unitOfWork.Save();
             TempData["success"] = "Herbaryum başarıyla silindi.";
             return RedirectToAction("Index");
+        }
+
+        // GET: Herbaryum/Defter
+        public IActionResult Defter()
+        {
+            var herbaryumlar = _unitOfWork.Herbaryum.GetAll().Where(x => !string.IsNullOrEmpty(x.Fotograf)).ToList();
+            return View(herbaryumlar);
         }
     }
 }

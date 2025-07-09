@@ -11,7 +11,7 @@
         </ul>
     </div>
 }
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
+<form asp-action="Edit" enctype="multipart/form-data" method="post">
     <div class="container" style="max-width: 700px;">
         <div class="border p-4 mt-4 bg-white rounded shadow-sm">
             <div class="row pb-2">
@@ -53,7 +53,14 @@
                 </div>
                 <div class="col-md-12 mb-3">
                     <label class="form-label">Fotoðraf</label>
-                    <input asp-for="Fotograf" class="form-control" />
+                    @if (!string.IsNullOrEmpty(Model.Fotograf))
+                    {
+                        <div class="mb-2">
+                            <img src="@Model.Fotograf" alt="Mevcut Fotoðraf" style="max-width:150px;max-height:150px;" />
+                        </div>
+                    }
+                    <input type="file" name="FotoDosya" class="form-control" accept="image/*" />
+                    <input type="hidden" asp-for="Fotograf" />
                 </div>
             </div>
             <div class="mt-3">
