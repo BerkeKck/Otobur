@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Bitkinin Adı</label>
-                    <input asp-for="BitkininAdi" class="form-control" />
+                    <input id="BitkininAdi" name="BitkininAdi" class="form-control" />
                     <span asp-validation-for="BitkininAdi" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -96,29 +96,15 @@
     </div>
 </form>
 
-
 @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
-    <script>
-        document.getElementById('KokenSelect').addEventListener('change', function () {
-            const selected = Array.from(this.selectedOptions).map(opt => opt.value);
-            document.getElementById('Koken').value = selected.join(', ');
-        });
+    <script src="~/js/autocomplete.js"></script>
 
-        // Sayfa yüklendiğinde mevcut değerleri seçili yap (Edit için)
-        document.addEventListener('DOMContentLoaded', function () {
-            const input = document.getElementById('Koken');
-            const select = document.getElementById('KokenSelect');
-            if (input && select && input.value) {
-                const selectedValues = input.value.split(',').map(x => x.trim());
-                Array.from(select.options).forEach(opt => {
-                    opt.selected = selectedValues.includes(opt.value);
-                });
-            }
-        });
-    </script>
 
     <script>
         let map, marker;

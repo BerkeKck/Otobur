@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Otobur.DataAccess.Repository.IRepository;
 using Otobur.Models.Models;
 using Otobur.Utility;
+using System.IO;
 
 namespace Otobur.Views.Admin.Controllers
 {
@@ -210,6 +211,22 @@ namespace Otobur.Views.Admin.Controllers
             _unitOfWork.Save();
             TempData["success"] = "Aksesyon başarıyla silindi.";
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult PlantNameAutocomplete(string term)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "scientificName.txt");
+            if (!System.IO.File.Exists(filePath))
+                return Json(new List<string>());
+
+            var allNames = System.IO.File.ReadAllLines(filePath);
+            var suggestions = allNames
+                .Where(name => name.Contains(term, StringComparison.OrdinalIgnoreCase))
+                .Take(10)
+                .ToList();
+
+            return Json(suggestions);
         }
     }
 }
